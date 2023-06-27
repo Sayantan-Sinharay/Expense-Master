@@ -20,7 +20,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+# A modern CSS framework based on Flexbox
+gem 'bulma-rails', '~> 0.9.4'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -42,6 +44,22 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Provides a better error page for Rails and other Rack apps. Includes source code inspection, a live REPL and local/instance variable inspection for all stack frames.
+  gem "better_errors", "~> 2.10", ">= 2.10.1"
+
+  # Pry is a runtime developer console and IRB alternative with powerful introspection capabilities. Pry aims to be more than an IRB replacement. It is an attempt to bring REPL driven programming to the Ruby language.
+  gem "pry", "~> 0.14.2"
+
+  # Guard is a command line tool to easily handle events on file system modifications.
+  gem "guard", "~> 2.18"
+
+  # Guard::LiveReload automatically reloads your browser when 'view' files are modified.
+  gem "guard-livereload", "~> 2.5", ">= 2.5.2"
+
+  # Insert LiveReload into your app easily as Rack middleware
+  gem "rack-livereload", "~> 0.5.1"
+
 end
 
 group :test do
