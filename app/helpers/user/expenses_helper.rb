@@ -1,0 +1,2 @@
+module User::ExpensesHelper
+end
