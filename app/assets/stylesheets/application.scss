@@ -14,4 +14,13 @@
  *= require_self
  */
 
+ // Bulma Base
+@import "sass/utilities/_all";
 
+// Bulma Framework
+@import "sass/base/_all";
+@import "sass/elements/_all";
+@import "sass/form/_all";
+@import "sass/components/_all";
+@import "sass/grid/_all";
+@import "sass/layout/_all";

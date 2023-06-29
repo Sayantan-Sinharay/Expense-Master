@@ -1,0 +1,22 @@
+<%= form_with(model: User.new, url: login_path) do |form| %>
+  <div class="field">
+    <%= form.label :email, class: "label" %>
+    <div class="control">
+      <%= form.email_field :email %>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :password, class: "label" %>
+    <div class="control">
+      <%= form.password_field :password %>
+    </div>
+  </div>
+  <div class="field is-grouped">
+    <div class="control">
+      <%= form.submit 'Login', class: "button is-link" %>
+    </div>
+    <%# <div class="control">
+      <button class="button is-link is-light">Cancel</button>
+    </div> %>
+  </div>
+<% end %>

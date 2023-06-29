@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   # PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
 
-  belongs_to :organization, dependent: :destroy
+  belongs_to :organization
 
   # validates :name, :email, presence: true
   # validates :email, uniqueness: { case_sensitive: false }, format: { with: EMAIL_REGEX }
