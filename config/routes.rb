@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   delete "logout", to: "sessions#destroy"
   namespace :admin do
     get "index", to: "admins#index"
+    get "users", to: "users#index"
   end
   scope module: "user" do
     get "index", to: "users#index"
