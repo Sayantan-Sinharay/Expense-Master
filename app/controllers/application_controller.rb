@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :info, :error, :success
   before_action :set_current_user
 
   def set_current_user

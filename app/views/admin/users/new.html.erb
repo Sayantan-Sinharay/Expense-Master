@@ -1,4 +1,13 @@
-<div>
-  <h1 class="font-bold text-4xl">Admin::User#new</h1>
-  <p>Find me in app/views/admin/user/new.html.erb</p>
-</div>
+<%= form_with( model: User.new, url: admin_user_create_path ) do |form| %>
+  <div class="field">
+    <%= form.label :email, class: "label" %>
+    <div class="control">
+      <%= form.text_field :email, class: "input" %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <%= form.submit "invite", class: "button is-link" %>
+    </div>
+  </div>
+<% end %>

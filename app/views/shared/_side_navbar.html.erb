@@ -1,0 +1,21 @@
+<nav class="panel is-primary w-2/5 h-full">
+  <p class="panel-heading">
+    Company Name
+  </p>
+  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+    <span class="panel-icon">
+      <i class="fa-solid fa-users fa-xl"></i>
+    </span>
+    <span>
+      User Management
+    </span>
+  <% end %>
+  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+    <span class="panel-icon">
+      <i class="fas fa-sitemap fa-xl"></i>
+    </span>
+    <span>
+      Category Management
+    </span>
+  <% end %>
+</nav>

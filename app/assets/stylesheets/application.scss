@@ -12,9 +12,19 @@
  *
  *= require_tree .
  *= require_self
+ 
+ #0A0A37; 
+ #143D8F;
  */
 
- // Bulma Base
+$primary: #35BB78;
+$success: $primary;
+
+$link: #4285F4 ;
+$info: #4285F4 ;
+
+
+// Bulma Base
 @import "sass/utilities/_all";
 
 // Bulma Framework
@@ -24,3 +34,16 @@
 @import "sass/components/_all";
 @import "sass/grid/_all";
 @import "sass/layout/_all";
+
+html{
+  height: 100vh;
+  overflow: hidden;
+}
+
+body{
+  height: 100%;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif !important
+}
+
+

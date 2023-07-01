@@ -3,19 +3,22 @@
   <head>
     <title>Expense Master</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/assets/logo.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%# Font Awesome CDN %>
     <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" %>
   </head>
   <body id="app">
     <%= render "shared/navbar" %>
-    <%= render "shared/flash" %>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+    <%= render "shared/flashes" %>
+    <main class="container pt-20 flex h-full w-full overflow-hidden">
+      <%= content_for?(:user) ? yield(:user) : yield %>
     </main>
   </body>
 </html>
