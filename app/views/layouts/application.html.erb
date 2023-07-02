@@ -14,10 +14,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" %>
   </head>
-  <body id="app">
+  <body class="h-full flex flex-col overflow-hidden">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
-    <main class="container pt-20 flex h-full w-full overflow-hidden">
+    <main class="container flex h-full w-full overflow-hidden">
       <%= content_for?(:user) ? yield(:user) : yield %>
     </main>
   </body>

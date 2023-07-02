@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root "homes#index"
+
   get "home", to: "homes#new"
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
+
   namespace :admin do
     get "index", to: "admins#index"
     get "users", to: "users#index"

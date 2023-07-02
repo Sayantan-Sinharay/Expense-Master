@@ -35,15 +35,7 @@ $info: #4285F4 ;
 @import "sass/grid/_all";
 @import "sass/layout/_all";
 
-html{
+html {
   height: 100vh;
   overflow: hidden;
 }
-
-body{
-  height: 100%;
-  overflow: hidden;
-  font-family: "Poppins", sans-serif !important
-}
-
-
