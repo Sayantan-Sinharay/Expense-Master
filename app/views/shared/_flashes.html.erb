@@ -1,22 +1,30 @@
-<div id="flash-message"class="container my-4">
   <% flash.each do |type, message| %>
-    <div class="notification is-<%= type == "error" ? "danger" : type %> is-light">
-      <button class="delete"></button>
-      <div class="notification-content">
-        <%= message %>
-      </div>
+  <div id="flash-message" class="container notification is-<%= type == "error" ? "danger" : type %> is-light">
+    <button class="delete"></button>
+    <div class="notification-content">
+      <%= message %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
 <script>
   function removeFlashMessage() {
-    var flashMessage = document.getElementById('flash-message');
-    flashMessage.style.display = 'none';
+    const flashMessage = document.getElementById('flash-message');
+    flashMessage.remove();
   }
-   function hideFlashMessage() {
-    var flashMessage = document.getElementById('flash-message');
+
+  function hideFlashMessage() {
+    const flashMessage = document.getElementById('flash-message');
     flashMessage.classList.add('hide');
-    setTimeout(removeFlashMessage,500);
+    setTimeout(removeFlashMessage, 500);
   }
-  // setTimeout(hideFlashMessage, 5000);
+
+  function closeFlashMessage() {
+    const closeButton = document.querySelector('#flash-message .delete');
+    closeButton.addEventListener('click', () => {
+      hideFlashMessage();
+    });
+  }
+
+  setTimeout(hideFlashMessage, 3000);
+  closeFlashMessage();
 </script>

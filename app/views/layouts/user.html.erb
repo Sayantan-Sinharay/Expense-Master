@@ -1,7 +1,7 @@
 <%= content_for :user do %>
-  <div class="py-20 px-5 flex w-full h-full overflow-hidden">
+  <div class="p-5 flex w-full h-full overflow-hidden">
     <%= render "shared/side_navbar" %>
-    <div class="section h-full w-full flex-grow overflow-hidden">
+    <div class="section flex flex-col h-full w-full flex-grow overflow-y-auto">
       <%= yield %>
     </div>
   </div>

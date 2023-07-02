@@ -1,4 +1,4 @@
-<%= form_with(model: User.new, url: login_path) do |form| %>
+<%= form_with(model: User.new, url: login_path, class: "is-primary") do |form| %>
   <div class="field">
     <%= form.label :email, class: "label" %>
     <div class="control">

@@ -20,8 +20,8 @@
 $primary: #35BB78;
 $success: $primary;
 
-$link: #4285F4 ;
-$info: #4285F4 ;
+$link: $primary ;
+$info:  $primary ;
 
 
 // Bulma Base
@@ -38,4 +38,31 @@ $info: #4285F4 ;
 html {
   height: 100vh;
   overflow: hidden;
+}
+
+/* Track */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Track when scrollbar is in "drag" state */
+::-webkit-scrollbar-thumb:active {
+  background-color: $primary;
+}
+
+/* Button at the top and bottom of the scrollbar */
+::-webkit-scrollbar-button {
+  display: none;
 }

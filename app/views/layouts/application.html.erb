@@ -17,7 +17,7 @@
   <body class="h-full flex flex-col overflow-hidden">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
-    <main class="container flex h-full w-full overflow-hidden">
+    <main class="container flex px-5 pt-20 h-full w-full overflow-hidden">
       <%= content_for?(:user) ? yield(:user) : yield %>
     </main>
   </body>

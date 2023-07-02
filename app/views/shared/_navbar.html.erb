@@ -1,4 +1,4 @@
-<nav class="navbar w-full top-0 is-light is-spaced shadow-md" role="navigation" aria-label="main navigation">
+<nav class="navbar w-full top-0 is-spaced shadow-md" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
       <%= link_to root_path, class: "flex pr-5" do %>
@@ -12,13 +12,15 @@
     </div>
     <div id="navbar-menu" class="navbar-menu">
       <div class="navbar-start">
-        <%= link_to "Home", home_path, class: "navbar-item hover:font-medium" %>
+        <% if !Current.user %>
+          <%= link_to "Home", home_path, class: "navbar-item hover:font-medium text-primary" %>
+        <% end %>
       </div>
       <div class="navbar-end">
         <div class="navbar-item ">
           <div class="buttons">
             <% if Current.user %>
-              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-primary is-light"%>
+              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-primary is-light border-2 border-primary"%>
             <% else %>
               <%= link_to "Register", login_path, class: "button font-medium is-primary" %>
             <% end %>
