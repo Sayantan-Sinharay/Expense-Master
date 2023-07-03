@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(version: 2023_06_28_102951) do
 
   create_table "subcategories", force: :cascade do |t|
     t.string "name"
-    t.bigint "subcategory_id"
+    t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["subcategory_id"], name: "index_subcategories_on_subcategory_id"
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,6 +47,6 @@ ActiveRecord::Schema.define(version: 2023_06_28_102951) do
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
 
-  add_foreign_key "subcategories", "subcategories"
+  add_foreign_key "subcategories", "categories"
   add_foreign_key "users", "organizations"
 end

@@ -30,33 +30,33 @@
 #   user.update(organization: organization)
 # end
 
-# # Create categories
-# categories = [
-#   { name: "Travel Expense" },
-#   { name: "Event Expense" },
-#   { name: "Goods Purchase" },
-# ]
-# categories.each do |category|
-#   Category.create(category)
-# end
+# Create categories
+categories = [
+  { name: "Travel Expense" },
+  { name: "Event Expense" },
+  { name: "Goods Purchase" },
+]
+categories.each do |category|
+  Category.create(category)
+end
 
-# # Create sub-categories
-# sub_categories = [
-#   { name: "Recruitment Drive", category: Category.find_by(name: "Travel Expense") },
-#   { name: "Client Visits", category: Category.find_by(name: "Travel Expense") },
-#   { name: "Conference", category: Category.find_by(name: "Travel Expense") },
-#   { name: "Exhibitions", category: Category.find_by(name: "Travel Expense") },
-#   { name: "Birthday", category: Category.find_by(name: "Event Expense") },
-#   { name: "Annual Day", category: Category.find_by(name: "Event Expense") },
-#   { name: "Festivals", category: Category.find_by(name: "Event Expense") },
-#   { name: "Food & Beverages", category: Category.find_by(name: "Goods Purchase") },
-#   { name: "Stationeries", category: Category.find_by(name: "Goods Purchase") },
-#   { name: "Cleaning", category: Category.find_by(name: "Goods Purchase") },
-#   { name: "Electronics Accessories", category: Category.find_by(name: "Goods Purchase") },
-# ]
-# sub_categories.each do |sub_category|
-#   SubCategory.create(sub_category)
-# end
+# Create sub-categories
+sub_categories = [
+  { name: "Recruitment Drive", category_id: Category.find_by(name: "Travel Expense") },
+  { name: "Client Visits", category: Category.find_by(name: "Travel Expense") },
+  { name: "Conference", category: Category.find_by(name: "Travel Expense") },
+  { name: "Exhibitions", category: Category.find_by(name: "Travel Expense") },
+  { name: "Birthday", category: Category.find_by(name: "Event Expense") },
+  { name: "Annual Day", category: Category.find_by(name: "Event Expense") },
+  { name: "Festivals", category: Category.find_by(name: "Event Expense") },
+  { name: "Food & Beverages", category: Category.find_by(name: "Goods Purchase") },
+  { name: "Stationeries", category: Category.find_by(name: "Goods Purchase") },
+  { name: "Cleaning", category: Category.find_by(name: "Goods Purchase") },
+  { name: "Electronics Accessories", category: Category.find_by(name: "Goods Purchase") },
+]
+sub_categories.each do |sub_category|
+  SubCategory.create(sub_category)
+end
 
 # # Create sample expenses
 # sample_expenses = [
