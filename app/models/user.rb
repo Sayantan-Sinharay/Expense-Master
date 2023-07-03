@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
   scope :get_users, ->() {
-          where(organization_id: Current.user.organization_id, is_admin: false)
+          where(organization_id: Current.user.organization_id, is_admin?: false)
         }
 
   scope :get_organization_name, ->(organization_id) {

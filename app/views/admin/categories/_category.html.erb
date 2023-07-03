@@ -1,0 +1,8 @@
+<li>
+  <%= category.name %>
+  <ol class="p-2 list-decimal">
+    <% category.subcategories.each do |subcategory| %>
+      <%= render partial: 'subcategory', locals: { subcategory: subcategory } %>
+    <% end %>
+  </ol>
+</li>

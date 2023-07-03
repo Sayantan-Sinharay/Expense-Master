@@ -6,27 +6,32 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+PASSWORD = "123"
+
+# Create organizations
+organizations = [
+  { name: "Organization 1" },
+]
+organizations.each do |organization|
+  Organization.create(organization)
+end
+
 # Create admin users
 admin_users = [
-  { name: "Admin 1", email: "admin1@example.com", password: "admin1password", role: :admin },
-  { name: "Admin 2", email: "admin2@example.com", password: "admin2password", role: :admin },
+  { name: "Admin 1", email: "admin1@test.com", password: PASSWORD, password_confirmation: PASSWORD, organization_id: 1, is_admin?: true },
+  { name: "Admin 2", email: "admin2@test.com", password: PASSWORD, password_confirmation: PASSWORD, organization_id: 1, is_admin?: true },
 ]
 admin_users.each do |admin_user|
   User.create(admin_user)
 end
 
 users = [
-  { name: "Admin 1", email: "admin1@example.com", password: "admin1password", role: :admin },
-  { name: "Admin 2", email: "admin2@example.com", password: "admin2password", role: :admin },
+  { name: "User 1", email: "user1@test.com", password: PASSWORD, password_confirmation: PASSWORD, organization_id: 1 },
+  { name: "User 2", email: "user2@test.com", password: PASSWORD, password_confirmation: PASSWORD, organization_id: 1 },
 ]
 
-# Create organizations
-organizations = [
-  { name: "Organization 1" },
-  { name: "Organization 2" },
-]
-organizations.each do |organization|
-  Organization.create(organization)
+users.each do |user|
+  User.create(user)
 end
 
 # # Assign users to organizations
@@ -47,20 +52,20 @@ end
 
 # Create sub-categories
 sub_categories = [
-  { name: "Recruitment Drive", category_id: Category.find_by(name: "Travel Expense") },
-  { name: "Client Visits", category: Category.find_by(name: "Travel Expense") },
-  { name: "Conference", category: Category.find_by(name: "Travel Expense") },
-  { name: "Exhibitions", category: Category.find_by(name: "Travel Expense") },
-  { name: "Birthday", category: Category.find_by(name: "Event Expense") },
-  { name: "Annual Day", category: Category.find_by(name: "Event Expense") },
-  { name: "Festivals", category: Category.find_by(name: "Event Expense") },
-  { name: "Food & Beverages", category: Category.find_by(name: "Goods Purchase") },
-  { name: "Stationeries", category: Category.find_by(name: "Goods Purchase") },
-  { name: "Cleaning", category: Category.find_by(name: "Goods Purchase") },
-  { name: "Electronics Accessories", category: Category.find_by(name: "Goods Purchase") },
+  { name: "Recruitment Drive", category_id: Category.find_by(name: "Travel Expense")[:id] },
+  { name: "Client Visits", category_id: Category.find_by(name: "Travel Expense")[:id] },
+  { name: "Conference", category_id: Category.find_by(name: "Travel Expense")[:id] },
+  { name: "Exhibitions", category_id: Category.find_by(name: "Travel Expense")[:id] },
+  { name: "Birthday", category_id: Category.find_by(name: "Event Expense")[:id] },
+  { name: "Annual Day", category_id: Category.find_by(name: "Event Expense")[:id] },
+  { name: "Festivals", category_id: Category.find_by(name: "Event Expense")[:id] },
+  { name: "Food & Beverages", category_id: Category.find_by(name: "Goods Purchase")[:id] },
+  { name: "Stationeries", category_id: Category.find_by(name: "Goods Purchase")[:id] },
+  { name: "Cleaning", category_id: Category.find_by(name: "Goods Purchase")[:id] },
+  { name: "Electronics Accessories", category_id: Category.find_by(name: "Goods Purchase")[:id] },
 ]
 sub_categories.each do |sub_category|
-  SubCategory.create(sub_category)
+  Subcategory.create(sub_category)
 end
 
 # # Create sample expenses
@@ -74,7 +79,3 @@ end
 # end
 
 # puts "Seeding complete!"
-
-4.times do |i|
-  User.create(name: "User#{i}", email: "user#{i}@example.com", password: "", password_confirmation: "", organization_id: 1, is_admin: if i % 2 == 0 then true else false end)
-end

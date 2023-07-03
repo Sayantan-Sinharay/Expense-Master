@@ -2,6 +2,7 @@ class Admin::CategoriesController < ApplicationController
   layout "user"
 
   def index
+    @categories = Category.all
   end
 
   def new
