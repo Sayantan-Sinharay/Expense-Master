@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  layout "../admin/admins/index"
+  layout "user"
 
   def index
     @users = User.get_users()
@@ -20,5 +20,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to admin_users_path, notice: "User has been successfully deleted."
   end
 end

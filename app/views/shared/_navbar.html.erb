@@ -13,16 +13,21 @@
     <div id="navbar-menu" class="navbar-menu">
       <div class="navbar-start">
         <% if !Current.user %>
-          <%= link_to "Home", home_path, class: "navbar-item hover:font-medium text-primary" %>
+          <%= link_to "Home", home_path, class: "navbar-item button is-primary is-inverted hover:font-medium" %>
         <% end %>
       </div>
       <div class="navbar-end">
+        <% if Current.user %>
+          <span class="navbar-item font-medium text-xl text-gray-400">
+            <%= Current.user[:email] %>
+          </span>
+        <% end %>
         <div class="navbar-item ">
           <div class="buttons">
             <% if Current.user %>
-              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-primary is-light border-2 border-primary"%>
+              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-primary is-outlined"%>
             <% else %>
-              <%= link_to "Register", login_path, class: "button font-medium is-primary" %>
+              <%= link_to "Register", login_path, class: "button is-primary font-medium" %>
             <% end %>
           </div>
         </div>

@@ -1,19 +1,23 @@
 Rails.application.routes.draw do
-  root "homes#index"
-
-  get "home", to: "homes#new"
-  get "login", to: "sessions#new"
+  root to: "homes#index"
+  get "home", to: "homes#new", as: :home
+  get "login", to: "sessions#new", as: :login
   post "login", to: "sessions#create"
-  delete "logout", to: "sessions#destroy"
+  delete "logout", to: "sessions#destroy", as: :logout
 
   namespace :admin do
     get "index", to: "admins#index"
     get "users", to: "users#index"
-    get "user/create", to: "users#new"
-    post "user/create", to: "users#create"
+    get "user/new", to: "users#new", as: :new_user
+    post "user/create", to: "users#create", as: :create_user
+    delete "user/destroy/:id", to: "users#destroy", as: :delete_user
+    resources :categories
   end
   scope module: "user" do
     get "index", to: "users#index"
   end
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  # get "login", to: "sessions#new", as: :login
+  # post "login", to: "sessions#create"
+  # delete "logout", to: "sessions#destroy", as: :logout
 end

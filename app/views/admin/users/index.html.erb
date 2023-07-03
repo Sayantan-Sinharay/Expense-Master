@@ -1,9 +1,9 @@
-<%= button_to admin_user_create_path, class: "button is-primary font-medium" do %>
+<%= button_to admin_new_user_path, method: :get, class: "button is-primary font-medium" do %>
   <span class="icon-text">
     <span class="icon">
       <i class="fa-solid fa-user-plus"></i>
     </span>
-    <span class="">Add User</span>
+    <span class="font-medium">Add User</span>
   </span>
 <% end %>
 <%= render @users %>

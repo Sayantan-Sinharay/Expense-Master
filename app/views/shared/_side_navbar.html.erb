@@ -2,60 +2,63 @@
   <p class="panel-heading">
     Company Name
   </p>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-users fa-xl"></i>
-    </span>
-    <span>
-      Dashboard 
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-wallet fa-xl"></i>
-    </span>
-    <span>
-      Wallet 
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-chart-column fa-xl"></i>
-    </span>
-    <span>
-      Report 
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-dollar-sign fa-xl"></i>
-    </span>
-    <span>
-      Expense Tracker 
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-calculator fa-xl"></i>
-    </span>
-    <span>
-      Budget Planner 
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fa-solid fa-user-gear fa-xl"></i>
-    </span>
-    <span>
-      User Management
-    </span>
-  <% end %>
-  <%= link_to admin_users_path, class: "panel-block gap-5" do %>
-    <span class="panel-icon">
-      <i class="fas fa-sitemap fa-xl"></i>
-    </span>
-    <span>
-      Category Management
-    </span>
+  <% if Current.user[:is_admin] %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-users fa-xl"></i>
+      </span>
+      <span>
+        Dashboard 
+      </span>
+    <% end %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-user-gear fa-xl"></i>
+      </span>
+      <span>
+        User Management
+      </span>
+    <% end %>
+    <%= link_to admin_categories_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fas fa-sitemap fa-xl"></i>
+      </span>
+      <span>
+        Category Management
+      </span>
+    <% end %>
+  <% else %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-wallet fa-xl"></i>
+      </span>
+      <span>
+        Wallet 
+      </span>
+    <% end %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-chart-column fa-xl"></i>
+      </span>
+      <span>
+        Report 
+      </span>
+    <% end %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-dollar-sign fa-xl"></i>
+      </span>
+      <span>
+        Expense Tracker 
+      </span>
+    <% end %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-calculator fa-xl"></i>
+      </span>
+      <span>
+        Budget Planner 
+      </span>
+    <% end %>
   <% end %>
 </nav>

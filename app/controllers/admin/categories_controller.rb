@@ -1,4 +1,6 @@
 class Admin::CategoriesController < ApplicationController
+  layout "user"
+
   def index
   end
 
