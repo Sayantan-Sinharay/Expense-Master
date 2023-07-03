@@ -39,8 +39,12 @@ ActiveRecord::Schema.define(version: 2023_06_28_102951) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.boolean "remember_me", default: false, null: false
-    t.boolean "is_admin", default: false, null: false
+    t.boolean "remember_me?", default: false, null: false
+    t.boolean "is_admin?", default: false, null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.bigint "organization_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

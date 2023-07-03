@@ -7,22 +7,27 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Create admin users
-# admin_users = [
-#   { name: "Admin 1", email: "admin1@example.com", password: "admin1password", role: :admin },
-#   { name: "Admin 2", email: "admin2@example.com", password: "admin2password", role: :admin },
-# ]
-# admin_users.each do |admin_user|
-#   User.create(admin_user)
-# end
+admin_users = [
+  { name: "Admin 1", email: "admin1@example.com", password: "admin1password", role: :admin },
+  { name: "Admin 2", email: "admin2@example.com", password: "admin2password", role: :admin },
+]
+admin_users.each do |admin_user|
+  User.create(admin_user)
+end
 
-# # Create organizations
-# organizations = [
-#   { name: "Organization 1" },
-#   { name: "Organization 2" },
-# ]
-# organizations.each do |organization|
-#   Organization.create(organization)
-# end
+users = [
+  { name: "Admin 1", email: "admin1@example.com", password: "admin1password", role: :admin },
+  { name: "Admin 2", email: "admin2@example.com", password: "admin2password", role: :admin },
+]
+
+# Create organizations
+organizations = [
+  { name: "Organization 1" },
+  { name: "Organization 2" },
+]
+organizations.each do |organization|
+  Organization.create(organization)
+end
 
 # # Assign users to organizations
 # User.all.each do |user|
