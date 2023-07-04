@@ -26,12 +26,7 @@ class User < ApplicationRecord
                     organization_id: Current.user.organization_id,
                     password: random_user_password,
                     password_confirmation: random_user_password)
-    if user.valid?
-      user.save
-    else
-      user.errors.add(:email, "User already exists.")
-    end
-    user
+    user if user.valid?
   end
 
   private
