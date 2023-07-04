@@ -6,6 +6,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def new
+    respond_to do |format|
+      # render
+    end
   end
 
   def create
