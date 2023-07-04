@@ -1,0 +1,20 @@
+<%= form_with( model: User.new, url: admin_create_user_path, remote: true, class: "pb-8", id: "invite-user-form") do |form| %>
+  <div class="field w-2/5">
+    <%= form.label :email, "Enter the Email:" , class: "label" %>
+    <div class="control">
+      <%= form.text_field :email, class: "input" %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <%= form.button(type: :submit, class: "button is-link") do %>
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fa-solid fa-user-plus"></i>
+          </span>
+          <span class="font-medium">Invite User</span>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

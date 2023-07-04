@@ -1,9 +1,5 @@
-<%= button_to admin_new_user_path, method: :get, class: "button is-primary font-medium" do %>
-  <span class="icon-text">
-    <span class="icon">
-      <i class="fa-solid fa-user-plus"></i>
-    </span>
-    <span class="font-medium">Add User</span>
-  </span>
-<% end %>
-<%= render @users %>
+<h1 class="title has-text-primary">User Management</h1>
+<%= render "form" %>
+<div class="flex flex-col  h-full overflow-y-auto">
+  <%= render @users %>
+</div>

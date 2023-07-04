@@ -1,9 +1,9 @@
 <%= content_for :user do %>
   <div class="p-5 flex flex-col w-full h-full overflow-hidden">
     <span class="title">Welcome back, <%= Current.user[:name] %> </span>
-    <div class="flex ">
+    <div class="flex flex-row w-full h-full overflow-hidden">
       <%= render "shared/side_navbar" %>
-      <div class="section flex flex-col h-full w-full flex-grow overflow-y-auto">
+      <div class="section pt-0 flex flex-col h-full w-full flex-grow overflow-y-auto">
         <%= yield %>
       </div>
     </div>
