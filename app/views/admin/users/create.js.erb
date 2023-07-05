@@ -1,11 +1,32 @@
-function inviteUser () {  
-  const emailInput = document.querySelector("#invite_user-form #email-input");
-  const submitButton = document.querySelector("#invite_user-form button[type=submit]");
-
-  submitButton.addEventListener("click", (e) => {
+$(document).ready(function() {
+  // Bind click event to the create button
+  $("#invite_user-form button[type=submit]").click(function(e) {
     e.preventDefault();
-    
-  });
-}
 
-inviteUser();
+    // Get the form data
+    const form = $("#invite_user-form");
+    const url = form.attr('action');
+    const method = form.attr('method');
+    const data = $("#invite_user-form input#email-input").attr('data');
+
+    console.log(data);
+
+
+    // Send the AJAX request
+    $.ajax({
+      url: url,
+      method: method,
+      data: formData,
+      success: function(response) {
+        // Handle the success response
+        console.log("User created successfully!");
+        // Optionally, you can perform additional actions like updating the UI or redirecting to another page.
+      },
+      error: function(xhr, status, error) {
+        // Handle the error response
+        console.error("Failed to create user:", error);
+        // Optionally, you can display an error message or perform other error handling tasks.
+      }
+    });
+  });
+});
