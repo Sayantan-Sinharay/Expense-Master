@@ -5,6 +5,9 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
 
   belongs_to :organization
+  has_many :budgets
+  has_many :expenses
+  has_one :wallet
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }, format: { with: EMAIL_REGEX }
