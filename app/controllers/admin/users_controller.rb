@@ -13,8 +13,8 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.invite_user(params[:user][:email])
-    response_to do |format|
-      if user && user.save
+    respond_to do |format|
+      if @user && @user.save
         # format.html { redirect_to
         format.js
         UserMailer.with(user: @user).invitation_email.deliver_later

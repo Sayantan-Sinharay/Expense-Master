@@ -1,14 +1,11 @@
 function inviteUser () {  
-  const emailInput = document.getElementById('');
-  formContainer.innerHTML = "<%= j render 'your_controller/form_partial' %>";
-  <% if flash[:notice].present? %>
-    toastr.success("<%= j flash[:notice] %>");
-  <% elsif flash[:alert].present? %>
-    toastr.error("<%= j flash[:alert] %>");
-  <% end %>
-  var emailInput = document.getElementById('user_email');
-  emailInput.value = '';
-}
-console.log("hi");
+  const emailInput = document.querySelector("#invite_user-form #email-input");
+  const submitButton = document.querySelector("#invite_user-form button[type=submit]");
 
-//inviteUser();
+  submitButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    
+  });
+}
+
+inviteUser();
