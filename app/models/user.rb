@@ -32,7 +32,8 @@ class User < ApplicationRecord
   private
 
   def self.generate_random_password
-    SecureRandom.urlsafe_base64(12)
+    # SecureRandom.urlsafe_base64(12)
+    "123"
   end
 
   def self.generate_name
