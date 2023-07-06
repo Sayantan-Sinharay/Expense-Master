@@ -1,8 +1,8 @@
-<%= form_with( model: User.new, url: admin_create_user_path, local: false, class: "pb-8", id: "invite_user-form") do |form| %>
+<%= form_with(model: User.new, url: admin_create_user_path, local: false, class: "pb-8", id: "invite_user-form") do |form| %>
   <div class="field w-2/5">
     <%= form.label :email, "Enter the Email:" , class: "label" %>
     <div class="control">
-      <%= form.text_field :email, class: "input" %>
+      <%= form.text_field :email, class: "input", id: "email-input" %>
     </div>
   </div>
   <div class="field">

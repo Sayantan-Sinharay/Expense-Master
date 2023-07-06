@@ -181,8 +181,6 @@ GEM
     rack (2.2.7)
     rack-livereload (0.5.1)
       rack
-    rack-mini-profiler (2.3.4)
-      rack (>= 1.2.0)
     rack-protection (3.0.6)
       rack
     rack-proxy (0.7.6)
@@ -316,7 +314,6 @@ DEPENDENCIES
   pry (~> 0.14.2)
   puma (~> 5.0)
   rack-livereload (~> 0.5.1)
-  rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.3)
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)

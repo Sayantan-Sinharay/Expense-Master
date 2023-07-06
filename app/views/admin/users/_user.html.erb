@@ -1,6 +1,6 @@
 <div class="box flex flex-row item-center w-full p-5">
   <span class="flex my-auto"><%= user.email %></span>
-  <%= link_to admin_delete_user_path(user), method: :delete, class: "ml-auto" do %>
+  <%= link_to admin_delete_user_path(user), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto" do %>
     <span class="button is-danger is-outlined border-2">
       <span class="icon">
         <i class="fa-solid fa-trash"></i>

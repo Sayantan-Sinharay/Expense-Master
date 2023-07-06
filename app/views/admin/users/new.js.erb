@@ -1,6 +1,8 @@
-function insertForm() {
-  const button = document.getElementById("form-toggle_button");
-  button.insertAdjacentHTML("afterend", "<%= escape_javascript( render partial: "form" ) %>");
-  button.remove();
-}
-insertForm();
+$(document).ready(function() {
+  function insertForm() {
+    const button = $("#form-toggle_button");
+    button.after("<%= escape_javascript(render partial: 'form') %>");
+    button.remove();
+  }
+  insertForm();
+});

@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   end
   scope module: "user" do
     get "index", to: "users#index"
+    resources :budgets
+    resources :expenses
+    resources :credits
+    resources :wallets
   end
-
-  # get "login", to: "sessions#new", as: :login
-  # post "login", to: "sessions#create"
-  # delete "logout", to: "sessions#destroy", as: :logout
 end
