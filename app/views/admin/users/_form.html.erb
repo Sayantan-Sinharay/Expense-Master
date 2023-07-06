@@ -1,4 +1,4 @@
-<%= form_with(model: @user, url: admin_create_user_path, local: false, class: "pb-8", id: "invite_user-form") do |form| %>
+<%= form_with(model: @user, url: admin_create_user_path, local: false, id: "invite_user-form") do |form| %>
   <div class="field w-2/5">
     <%= form.label :email, "Enter the Email:" , class: "label" %>
     <div class="control">
@@ -12,7 +12,7 @@
           <span class="icon">
             <i class="fa-solid fa-user-plus"></i>
           </span>
-          <span class="font-medium">Invite User</span>
+          <span class="font-bold">Invite User</span>
         </span>
       <% end %>
     </div>
@@ -33,10 +33,10 @@
           method: method,
           data: { "user[email]": email, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
           success: function(response) {
-            console.log("response: ", response);
+            form.find('input#email-input').val("");
           },
           error: function(xhr, status, error) {
-            console.log("error: ", error);
+
           }
         });
       };

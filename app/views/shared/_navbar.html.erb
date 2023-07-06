@@ -18,14 +18,14 @@
       </div>
       <div class="navbar-end">
         <% if Current.user %>
-          <span class="navbar-item font-medium text-xl text-gray-400">
+          <span class="navbar-item font-medium text-md text-neutral-400 ">
             <%= Current.user[:email] %>
           </span>
         <% end %>
         <div class="navbar-item ">
           <div class="buttons">
             <% if Current.user %>
-              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-primary is-outlined"%>
+              <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-danger is-light border-2 "%>
             <% else %>
               <%= link_to "Register", login_path, class: "button is-primary font-medium" %>
             <% end %>
@@ -46,5 +46,5 @@
     });
   }
 
-  // toggleNavbar();
+  toggleNavbar();
 </script>

@@ -1,4 +1,4 @@
-  <% flash.each do |type, message| %>
+<% flash.each do |type, message| %>
   <div id="flash-message" class="container notification is-<%= type == "error" ? "danger" : type %> is-light">
     <button class="delete"></button>
     <div class="notification-content">
@@ -25,6 +25,6 @@
     });
   }
 
-  // setTimeout(hideFlashMessage, 3000);
-  // closeFlashMessage();
+  setTimeout(hideFlashMessage, 3000);
+  closeFlashMessage();
 </script>
