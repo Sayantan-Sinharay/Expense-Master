@@ -1,4 +1,6 @@
 class User::CreditsController < ApplicationController
+  layout "user"
+
   def index
   end
 

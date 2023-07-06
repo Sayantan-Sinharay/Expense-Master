@@ -1,4 +1,6 @@
 class User::BudgetsController < ApplicationController
+  layout "user"
+
   def index
   end
 
