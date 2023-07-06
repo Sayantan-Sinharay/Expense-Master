@@ -17,10 +17,9 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       if @user && @user.save
         format.html {
-          redirect_to admin_users_path
-          flash[:notice] = "Invitation sent to #{@user.email}!"
+          redirect_to admin_users_path, success: "Invitation sent to #{@user.email}!"
         }
-        format.js { flash[:notice] = "Invitation sent to #{@user.email}!" }
+        format.js { flash[:success] = "Invitation sent to #{@user.email}!" }
         UserMailer.with(user: @user).invitation_email.deliver_later
       else
         format.html {
@@ -35,6 +34,9 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_users_path, notice: "User has been successfully deleted."
+    respond_to do |format|
+      format.html { redirect_to admin_users_path, error: "User has been successfully deleted." }
+      format.js { render :layout => false }
+    end
   end
 end

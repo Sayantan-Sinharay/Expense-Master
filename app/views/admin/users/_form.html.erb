@@ -1,5 +1,5 @@
 <%= form_with(model: @user, url: admin_create_user_path, local: false, id: "invite_user-form") do |form| %>
-  <div class="field w-2/5">
+  <div class="field w-1/2">
     <%= form.label :email, "Enter the Email:" , class: "label" %>
     <div class="control">
       <%= form.text_field :email, class: "input", id: "email-input" %>
@@ -22,7 +22,6 @@
   $(document).ready(function () {
     $("#invite_user-form button[type=submit]").click(function () {
       const submitForm = function(event) {
-        console.log(event);
         event.preventDefault();
         const form = $(this);
         const url = form.attr('action');

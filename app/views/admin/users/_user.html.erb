@@ -1,6 +1,6 @@
 <div class="box flex flex-row item-center w-full p-5">
   <span class="flex font-medium text-lg my-auto"><%= user.email %></span>
-  <%= link_to admin_delete_user_path(user), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto" do %>
+  <%= link_to admin_delete_user_path(user), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto", id: "user_delete-button", remote: true do %>
     <span class="button is-danger is-outlined border-2">
       <span class="icon">
         <i class="fa-solid fa-trash"></i>
@@ -8,3 +8,23 @@
     </span>
   <% end %>
 </div>
+<script>
+  $(document).ready(function () {
+    $("#user_delete-button").click(function () {
+      const deleteUser = function(event) {
+        event.preventDefault();
+        const button = $(this);
+        const url = button.attr('action');
+        const method = button.attr('method');;
+        $.ajax({
+          url: url,
+          method: method,
+          success: function(response) {
+          },
+          error: function(xhr, status, error) {
+          }
+        });
+      };
+    });
+  });
+</script>
