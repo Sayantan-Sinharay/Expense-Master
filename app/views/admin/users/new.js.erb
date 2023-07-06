@@ -2,7 +2,7 @@ $(document).ready(function() {
   function insertForm() {
     const button = $("#form-toggle_button");
     button.after("<%= escape_javascript(render partial: 'form') %>");
-    button.remove();
+    button.hide();
   }
   insertForm();
 });

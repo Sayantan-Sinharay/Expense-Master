@@ -1,37 +1,7 @@
 $(document).ready(function() {
-  // Bind click event to the create button
-  $("#invite_user-form button[type=submit]").click(function(e) {
-    e.preventDefault();
-
-    // Get the form data
-    const form = $("#invite_user-form");
-    const url = form.attr('action');
-    const method = form.attr('method');
-    const email = $("#invite_user-form input#email-input").val();
-
-    // Send the AJAX request
-    $.ajax({
-      url: url,
-      method: method,
-      data: { email: email },
-      success: function(response) {
-        // Handle the success response
-        console.log("User created successfully!");
-
-        // Update the UI with the newly created user HTML
-        $("#user-container").append(response);
-
-        // Optionally, you can perform additional actions like showing a success message or clearing the form.
-        $("#invite_user-form input#email-input").val(""); // Clear the email input field
-        $("#success-message").text("User created successfully!"); // Show a success message
-      },
-      error: function(xhr, status, error) {
-        // Handle the error response
-        console.error("Failed to create user:", error);
-
-        // Optionally, you can display an error message or perform other error handling tasks.
-        $("#error-message").text("Failed to create user: " + error); // Show an error message
-      }
-    });
-  });
+  $("<%= escape_javascript(render @user) %>").appendTo("#users_list");
+  $("#invite_user-form").remove();
+  $("#form-toggle_button").show();
 });
+
+

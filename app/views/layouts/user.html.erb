@@ -11,7 +11,7 @@
 <% end %>
 <%= render template: "layouts/application" %>
 <script>
-  console.log(
-    "Application"
-  );
+  $(window).on('load', function() {
+    console.log('Reload finished');
+  });
 </script>

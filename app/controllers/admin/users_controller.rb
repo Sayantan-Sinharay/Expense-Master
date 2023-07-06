@@ -6,6 +6,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def new
+    @user = User.new
     respond_to do |format|
       format.js
     end
@@ -15,7 +16,6 @@ class Admin::UsersController < ApplicationController
     @user = User.invite_user(params[:user][:email])
     respond_to do |format|
       if @user && @user.save
-        # format.html { redirect_to
         format.js
         UserMailer.with(user: @user).invitation_email.deliver_later
         flash[:notice] = "Invitation sent to #{@user.email}!"
