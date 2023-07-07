@@ -1,10 +1,17 @@
-<%= button_to new_admin_category_path, method: :get do %>
-  <span class="button is-primary text-medium">
-    <span class="icon-text">
-    </span>
-    <span>Add Category</span>
-  </span>
-<% end %>
-<ul class="list-disc">
+<h2 class="font-bold text-4xl">Category Management</h2>
+<div id="#category_form-container" class="my-5 mx-2">
+  <%= render "form" %>
+</div>
+<div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
   <%= render @categories %>
-</ul>
+</div>
+<script>
+  $(document).ready(function() {
+    $('.accordion-content').hide();
+    $('.accordion-toggle').click(function() {
+      $(this).toggleClass('active');
+      $(this).parent().siblings('.accordion-content').slideToggle();
+      $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+    });
+  });
+</script>

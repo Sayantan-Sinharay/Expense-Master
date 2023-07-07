@@ -1,0 +1,15 @@
+<%= form_with(model: Category.new, url: admin_categories_path) do |form| %>
+  <div class="field">
+    <%= form.label :name, "Enter new Category" ,class: "label" %>
+    <div class="control">
+      <%= form.text_field :name, class: "input w-1/2" %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <%= form.button(type: :submit) do %>
+        <%= render "button" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

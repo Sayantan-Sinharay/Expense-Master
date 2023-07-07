@@ -1,8 +1,27 @@
-<li>
-  <%= category.name %>
-  <ol class="p-2 list-decimal">
-    <% category.subcategories.each do |subcategory| %>
-      <%= render partial: 'subcategory', locals: { subcategory: subcategory } %>
+<div class="box accordion-item">
+  <div class="flex gap-5 flex-row items-center accordion-header">
+    <h3 class="font-bold text-xl flex my-auto accordion-title"><%= category.name %></h3>
+    <%= link_to new_admin_category_subcategory_path(category), class: "flex my-auto", remote: true do %>
+      <span class="icon  text-2xl font-bold text-primary">
+        <i class="fa-solid fa-plus"></i>
+      </span>
     <% end %>
-  </ol>
-</li>
+    <%= link_to admin_category_path(category), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto", id: "user_delete-button", remote: true do %>
+      <span class="button is-danger is-outlined border-2">
+        <span class="icon">
+          <i class="fa-solid fa-trash"></i>
+        </span>
+      </span>
+    <% end %>
+    <button class="accordion-toggle">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </div>
+  <div class="accordion-content mt-4 border-t-2 border-primary">
+    <div class="p-5 flex flex-col gap-5">
+      <% category.subcategories.each do |subcategory| %>
+        <%= render partial: 'subcategory', locals: { subcategory: subcategory } %>
+      <% end %>
+    </div>
+  </div>
+</div>
