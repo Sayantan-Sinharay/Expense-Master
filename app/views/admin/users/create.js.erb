@@ -1,9 +1,9 @@
 $(document).ready(function() {
-  $("<%= escape_javascript(render @user) %>").appendTo("#users_list");
+  $("#users_list").append('<%= escape_javascript(render @user) %>');
   $("#invite_user-form").remove();
-  $("#form-toggle_button").show();
-
-  $("#flash-container").html("<%= j render partial: "shared/flashes" %>");
+  $("#form_toggle-button").show();
+  $('#flash-container').html('<%= j render "layouts/flashes" %>');
 });
+
 
 

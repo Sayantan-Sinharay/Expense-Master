@@ -1,5 +1,5 @@
-<% flash.each do |type, message| %>
-  <div id="flash-message" class="container notification is-<%= type == "error" ? "danger" : type %> is-light">
+  <% flash.each do |type, message| %>
+  <div id="flash-message" class="container notification is-<%= type %> is-light">
     <button class="delete"></button>
     <div class="notification-content">
       <%= message %>
@@ -12,13 +12,12 @@
       $(ele).fadeOut("slow", function() {
         $(this).remove();
       });
-  }
+    }
+    $('#flash-message .delete').click(function() {
+      hideFlashMessage("#flash-message");
+    });
 
-  $('#flash-message .delete').click(function() {
-    hideFlashMessage("#flash-message");
-  });
-
-  setTimeout(function() {
+    setTimeout(function() {
       hideFlashMessage("#flash-message");
     }, 3000);
   });

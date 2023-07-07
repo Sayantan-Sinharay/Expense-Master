@@ -18,27 +18,3 @@
     </div>
   </div>
 <% end %>
-<script>
-  $(document).ready(function () {
-    $("#invite_user-form button[type=submit]").click(function () {
-      const submitForm = function(event) {
-        event.preventDefault();
-        const form = $(this);
-        const url = form.attr('action');
-        const method = form.attr('method');
-        const email = form.find('input#email-input').val();
-        $.ajax({
-          url: url,
-          method: method,
-          data: { "user[email]": email, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
-          success: function(response) {
-            form.find('input#email-input').val("");
-          },
-          error: function(xhr, status, error) {
-
-          }
-        });
-      };
-    });
-  });
-</script>

@@ -8,23 +8,4 @@
     </span>
   <% end %>
 </div>
-<script>
-  $(document).ready(function () {
-    $("#user_delete-button").click(function () {
-      const deleteUser = function(event) {
-        event.preventDefault();
-        const button = $(this);
-        const url = button.attr('action');
-        const method = button.attr('method');;
-        $.ajax({
-          url: url,
-          method: method,
-          success: function(response) {
-          },
-          error: function(xhr, status, error) {
-          }
-        });
-      };
-    });
-  });
-</script>
+
