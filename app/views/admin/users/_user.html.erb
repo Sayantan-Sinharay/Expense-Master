@@ -1,6 +1,6 @@
-<div class="box flex flex-row item-center w-full p-5">
-  <span class="flex my-auto"><%= user.email %></span>
-  <%= link_to admin_delete_user_path(user), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto" do %>
+<div class="box flex flex-row item-center w-full p-5" id="user_<%= user.id %>">
+  <span class="flex font-medium text-lg my-auto"><%= user.email %></span>
+  <%= link_to admin_delete_user_path(user), method: :delete, data: {confirm: "Are you sure ?"}, class: "ml-auto", id: "user_delete-button", remote: true do %>
     <span class="button is-danger is-outlined border-2">
       <span class="icon">
         <i class="fa-solid fa-trash"></i>
@@ -8,3 +8,4 @@
     </span>
   <% end %>
 </div>
+

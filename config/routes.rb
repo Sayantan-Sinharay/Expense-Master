@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     get "user/new", to: "users#new", as: :new_user
     post "user/create", to: "users#create", as: :create_user
     delete "user/destroy/:id", to: "users#destroy", as: :delete_user
-    resources :categories
+    resources :categories do
+      resources :subcategories
+    end
   end
   scope module: "user" do
     get "index", to: "users#index"

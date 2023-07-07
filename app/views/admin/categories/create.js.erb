@@ -1,0 +1,5 @@
+$(document).ready(function() {
+  $("#category_list").append('<%= escape_javascript(render @category) %>');
+  $("#create_category-form")[0].reset();
+  $('#flash-container').html('<%= j render "layouts/flashes" %>');
+});

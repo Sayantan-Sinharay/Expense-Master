@@ -1,8 +1,4 @@
 $(document).ready(function() {
-  function insertForm() {
-    const button = $("#form-toggle_button");
-    button.after("<%= escape_javascript(render partial: 'form') %>");
-    button.remove();
-  }
-  insertForm();
+    $("#form_toggle-button").after("<%= escape_javascript(render partial: 'form') %>");
+    $("#form_toggle-button").hide();
 });

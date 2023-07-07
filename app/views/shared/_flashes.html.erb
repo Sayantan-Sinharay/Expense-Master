@@ -1,5 +1,5 @@
   <% flash.each do |type, message| %>
-  <div id="flash-message" class="container notification is-<%= type == "error" ? "danger" : type %> is-light">
+  <div id="flash-message" class="container notification is-<%= type %> is-light">
     <button class="delete"></button>
     <div class="notification-content">
       <%= message %>
@@ -7,24 +7,18 @@
   </div>
 <% end %>
 <script>
-  function removeFlashMessage() {
-    const flashMessage = document.getElementById('flash-message');
-    flashMessage.remove();
-  }
-
-  function hideFlashMessage() {
-    const flashMessage = document.getElementById('flash-message');
-    flashMessage.classList.add('hide');
-    setTimeout(removeFlashMessage, 500);
-  }
-
-  function closeFlashMessage() {
-    const closeButton = document.querySelector('#flash-message .delete');
-    closeButton.addEventListener('click', () => {
-      hideFlashMessage();
+  $(document).ready(function() {
+    function hideFlashMessage(ele) {
+      $(ele).fadeOut("slow", function() {
+        $(this).remove();
+      });
+    }
+    $('#flash-message .delete').click(function() {
+      hideFlashMessage("#flash-message");
     });
-  }
 
-  // setTimeout(hideFlashMessage, 3000);
-  // closeFlashMessage();
+    setTimeout(function() {
+      hideFlashMessage("#flash-message");
+    }, 3000);
+  });
 </script>

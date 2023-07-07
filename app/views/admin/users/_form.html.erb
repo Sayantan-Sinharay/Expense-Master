@@ -1,5 +1,5 @@
-<%= form_with(model: User.new, url: admin_create_user_path, local: false, class: "pb-8", id: "invite_user-form") do |form| %>
-  <div class="field w-2/5">
+<%= form_with(model: @user, url: admin_create_user_path, local: false, id: "invite_user-form") do |form| %>
+  <div class="field w-1/2">
     <%= form.label :email, "Enter the Email:" , class: "label" %>
     <div class="control">
       <%= form.text_field :email, class: "input", id: "email-input" %>
@@ -12,7 +12,7 @@
           <span class="icon">
             <i class="fa-solid fa-user-plus"></i>
           </span>
-          <span class="font-medium">Invite User</span>
+          <span class="font-bold">Invite User</span>
         </span>
       <% end %>
     </div>

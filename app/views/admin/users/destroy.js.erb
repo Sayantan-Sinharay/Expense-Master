@@ -1,0 +1,5 @@
+$(document).ready(function () {
+  $("#user_<%= @user.id %>").fadeOut("fast", function() {
+    $(this).remove();
+  });;
+});
