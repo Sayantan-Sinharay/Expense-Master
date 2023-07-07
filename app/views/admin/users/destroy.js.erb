@@ -1,3 +1,5 @@
 $(document).ready(function () {
-  $("#user_delete-button").parent().remove();
+  $("#user_<%= @user.id %>").fadeOut("fast", function() {
+    $(this).remove();
+  });;
 });

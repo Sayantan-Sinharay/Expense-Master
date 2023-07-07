@@ -7,24 +7,19 @@
   </div>
 <% end %>
 <script>
-  function removeFlashMessage() {
-    const flashMessage = document.getElementById('flash-message');
-    flashMessage.remove();
+  $(document).ready(function() {
+    function hideFlashMessage(ele) {
+      $(ele).fadeOut("slow", function() {
+        $(this).remove();
+      });
   }
 
-  function hideFlashMessage() {
-    const flashMessage = document.getElementById('flash-message');
-    flashMessage.classList.add('hide');
-    setTimeout(removeFlashMessage, 500);
-  }
+  $('#flash-message .delete').click(function() {
+    hideFlashMessage("#flash-message");
+  });
 
-  function closeFlashMessage() {
-    const closeButton = document.querySelector('#flash-message .delete');
-    closeButton.addEventListener('click', () => {
-      hideFlashMessage();
-    });
-  }
-
-  setTimeout(hideFlashMessage, 3000);
-  closeFlashMessage();
+  setTimeout(function() {
+      hideFlashMessage("#flash-message");
+    }, 3000);
+  });
 </script>
