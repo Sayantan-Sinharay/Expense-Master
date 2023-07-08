@@ -14,28 +14,38 @@ class Admin::CategoriesController < ApplicationController
     @category = Category.new(name: params[:name])
     respond_to do |format|
       if @category.save
-        flash[:success] = "Category was successfully created"
+        flash[:success] = "Category was successfully created."
         format.html { redirect_to admin_categories_path }
         format.js
       else
-        flash[:danger] = "Category could not be created"
-        format.html { render :new }
+        flash[:danger] = "Category could not be created."
+        format.html { redirect_to admin_categories_path }
         format.js
       end
     end
   end
 
   def edit
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update
+    respond_to do |format|
+      if @category.update(category_params)
+        flash[:success] = "Category updated successfully."
+      else
+        flash[:danger] = "Failed to update category."
+      end
+      format.html { redirect_to admin_categories_path }
+      format.js
+    end
   end
 
   def destroy
     if @category.destroy
-      flash[:success] = "Category was successfully destroyed."
-    else
-      flash[:danger] = "Failed to destroy category."
+      flash[:danger] = "Category was successfully destroyed."
     end
     respond_to do |format|
       format.html { redirect_to admin_categories_path }

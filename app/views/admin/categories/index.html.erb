@@ -5,13 +5,4 @@
 <div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
   <%= render @categories %>
 </div>
-<script>
-  $(document).ready(function() {
-    $('.accordion-content').hide();
-    $('.accordion-toggle').click(function() {
-      $(this).toggleClass('active');
-      $(this).parent().parent().siblings('.accordion-content').slideToggle();
-      $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
-    });
-  });
-</script>
+

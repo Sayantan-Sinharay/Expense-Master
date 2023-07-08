@@ -1,0 +1,23 @@
+<%= form_with(model: @category, url: admin_category_path(@category), class: "flex flex-row flex-grow items-center gap-5", id: "edit_category-form", local: false) do |form| %>
+  <div class="field flex my-auto">
+    <div class="control">
+      <%= form.text_field :name, class: "input", id: "category-input" %>
+    </div>
+  </div>
+  <div class="field is-grouped ml-auto flex flex-row gap-5">
+    <div class="control">
+      <%= form.button( type: :submit ) do %>
+        <span class="icon text-2xl text-primary font-bold">
+          <i class="fa-solid fa-check"></i>
+        </span>
+      <% end %>
+    </div>
+    <div class="control">
+      <%= form.button( type: :cancel ) do %>
+        <span class="icon text-2xl has-text-danger font-bold">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

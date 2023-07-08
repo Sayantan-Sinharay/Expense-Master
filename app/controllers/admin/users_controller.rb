@@ -16,18 +16,21 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.invite_user(params[:user][:email])
     respond_to do |format|
-      if @user && @user.save
-        format.html {
-          redirect_to admin_users_path, success: "Invitation sent to #{@user.email}!"
-        }
-        format.js
-        UserMailer.with(user: @user).invitation_email.deliver_later
+      if @user.nil?
+        flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
+        format.html { render :new }
+        format.js { render :new } #TODO: create template error.js.erb to handel errors if any.
       else
-        format.html {
+        if @user.save
+          flash[:success] = "Invitation sent to #{@user.email}!"
+          format.html { redirect_to admin_users_path }
+          format.js { }
+          UserMailer.with(user: @user).invitation_email.deliver_later
+        else
           flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
-          render :new
-        }
-        format.js
+          format.html { render :new }
+          format.js { render :new } #TODO: create template error.js.erb to handel errors if any. Add status as well.
+        end
       end
     end
   end
@@ -35,7 +38,8 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to admin_users_path, error: "User has been successfully deleted." }
+      flash[:danger] = "User has been successfully deleted."
+      format.html { redirect_to admin_users_path }
       format.js
     end
   end
