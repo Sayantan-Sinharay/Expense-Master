@@ -1,0 +1,5 @@
+$(document).ready(function () {
+  $('#category_<%= @category.id %> .accordion-content').show(function (){
+    $("#category_<%= @category.id %> #subcategory_list").append('<%= j render "form" %>');
+  });
+});

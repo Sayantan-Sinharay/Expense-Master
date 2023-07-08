@@ -1,6 +1,4 @@
 $(document).ready(function () {
-  console.log($('#category_<%= @category.id %> #edit_category-button'));
-  $('#category_<%= @category.id %> .accordion-title').parent().replaceWith('<%= j render "edit_category-form", category: @category %>');
-  $('#category_<%= @category.id %> #category_edit-button').hide();
+    $('#category_<%= @category.id %> #category-header').replaceWith('<%= j render "edit_category-form", category: @category %>');
 });
 

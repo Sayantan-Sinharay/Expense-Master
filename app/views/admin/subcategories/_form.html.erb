@@ -1,4 +1,4 @@
-<%= form_with(model: @category, url: admin_category_path(@category), class: "flex flex-row flex-grow items-center gap-5", id: "edit_category-form", local: false) do |form| %>
+<%= form_with(model: @subcategory, url: @subcategory.id.nil? ? admin_category_subcategories_path(@subcategory.category) : admin_category_subcategory_path(@subcategory.category, @subcategory), class: "flex flex-row flex-grow items-center gap-5", id: "subcategory-form", local: false) do |form| %>
   <div class="field flex my-auto">
     <div class="control">
       <%= form.text_field :name, class: "input", id: "category-input" %>
