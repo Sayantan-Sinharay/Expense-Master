@@ -2,7 +2,7 @@ $(document).ready(function() {
   $("#users_list").append('<%= escape_javascript(render @user) %>');
   $("#invite_user-form").remove();
   $("#form_toggle-button").show();
-  $('#flash-container').html('<%= j render "layouts/flashes" %>');
+  $('#flash-container').html('<%= j render "shared/flashes" %>');
 });
 
 

@@ -1,0 +1,4 @@
+$(document).ready(function () {
+  $('#category_<%= @category.id %>').replaceWith('<%= j render @category %>');
+  $('#category_<%= @category.id %> .accordion-content').hide();
+});
