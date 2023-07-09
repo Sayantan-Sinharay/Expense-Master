@@ -2,9 +2,11 @@ class User::BudgetsController < ApplicationController
   layout "user"
 
   def index
+    @budgets = Budget.all
   end
 
   def new
+    @budget = Budget.new
   end
 
   def create

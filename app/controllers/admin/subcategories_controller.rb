@@ -2,6 +2,10 @@ class Admin::SubcategoriesController < ApplicationController
   before_action :set_category
   before_action :set_subcategory, only: [:edit, :update, :destroy]
 
+  def index
+    @subcategories = @category.subcategories
+  end
+
   def new
     @subcategory = @category.subcategories.build
     respond_to do |format|

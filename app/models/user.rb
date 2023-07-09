@@ -18,10 +18,6 @@ class User < ApplicationRecord
           where(organization_id: Current.user.organization_id, is_admin?: false)
         }
 
-  scope :get_organization_name, ->(organization_id) {
-          joins(:organization).where("organizations.id = ?", Current.user.organization_id).pluck("organizations.name")
-        }
-
   def self.invite_user(email)
     random_user_password = generate_random_password
     user = User.new(name: generate_name,
