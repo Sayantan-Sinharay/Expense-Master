@@ -2,7 +2,7 @@ class User::BudgetsController < ApplicationController
   layout "user"
 
   def index
-      @budgets = budgets_create_by(Current.user)
+    @budgets = Budget.budgets_created_by(Current.user)
   end
 
   def new
@@ -11,15 +11,12 @@ class User::BudgetsController < ApplicationController
 
   def create
     @budget = Budget.new(budget_params)
-
+    binding.pry
     if @budget.save
       redirect_to budgets_path, notice: "Budget created successfully."
     else
       render :new
     end
-  end
-
-  def show
   end
 
   def edit

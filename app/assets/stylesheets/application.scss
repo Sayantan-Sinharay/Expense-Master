@@ -16,16 +16,11 @@
 
 $primary: #35BB78;
 $success: $primary;
-
 $link: $primary ;
 $info:  $primary ;
 
 @import "bulma";
 
-html {
-  height: 100vh;
-  overflow: hidden;
-}
 
 /* Track */
 ::-webkit-scrollbar {
@@ -52,4 +47,16 @@ html {
 /* Button at the top and bottom of the scrollbar */
 ::-webkit-scrollbar-button {
   display: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

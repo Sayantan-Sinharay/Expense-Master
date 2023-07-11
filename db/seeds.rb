@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 PASSWORD = "123"
 
 # Create organizations
@@ -33,12 +25,6 @@ users = [
 users.each do |user|
   User.create(user)
 end
-
-# # Assign users to organizations
-# User.all.each do |user|
-#   organization = Organization.all.sample
-#   user.update(organization: organization)
-# end
 
 # Create categories
 categories = [
@@ -68,7 +54,26 @@ sub_categories.each do |sub_category|
   Subcategory.create(sub_category)
 end
 
-# # Create sample expenses
+# Create sample Budgets
+budgets = [
+  { user_id: User.find_by(email: "user1@test.com").id, category_id: Category.find_by(name: "Travel Expense").id, subcategory_id: Subcategory.find_by(name: "Recruitment Drive").id, amount: 500.0, notes: "Recruitment drive expenses", month: Date.today },
+
+  { user_id: User.find_by(email: "user1@test.com").id, category_id: Category.find_by(name: "Travel Expense").id, subcategory_id: Subcategory.find_by(name: "Client Visits").id, amount: 800.0, notes: "Client visits expenses", month: Date.today },
+
+  { user_id: User.find_by(email: "user2@test.com").id, category_id: Category.find_by(name: "Event Expense").id, subcategory_id: Subcategory.find_by(name: "Birthday").id, amount: 200.0, notes: "Birthday celebration expenses", month: Date.today },
+
+  { user_id: User.find_by(email: "user2@test.com").id, category_id: Category.find_by(name: "Event Expense").id, subcategory_id: Subcategory.find_by(name: "Annual Day").id, amount: 300.0, notes: "Annual day expenses", month: Date.today },
+
+  { user_id: User.find_by(email: "user2@test.com").id, category_id: Category.find_by(name: "Goods Purchase").id, subcategory_id: Subcategory.find_by(name: "Food & Beverages").id, amount: 150.0, notes: "Food and beverages purchase", month: Date.today },
+
+  { user_id: User.find_by(email: "user2@test.com").id, category_id: Category.find_by(name: "Goods Purchase").id, subcategory_id: Subcategory.find_by(name: "Stationeries").id, amount: 50.0, notes: "Stationery purchase", month: Date.today },
+]
+
+budgets.each do |budget|
+  Budget.create(budget)
+end
+
+# Create sample Expense
 # sample_expenses = [
 #   { user: User.all.sample, sub_category: SubCategory.all.sample, date: Date.today, amount: 100, notes: "Sample expense 1" },
 #   { user: User.all.sample, sub_category: SubCategory.all.sample, date: Date.today, amount: 200, notes: "Sample expense 2" },

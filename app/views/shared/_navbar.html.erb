@@ -24,7 +24,7 @@
       <div class="navbar-item ">
         <div class="buttons">
           <% if Current.user %>
-            <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-danger is-light border-2 border-red-500 "%>
+            <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-danger is-light border-2 border-red-600 "%>
           <% else %>
             <%= link_to "Register", login_path, class: "button is-primary font-medium" %>
           <% end %>
