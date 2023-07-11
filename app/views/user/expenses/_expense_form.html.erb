@@ -1,0 +1,129 @@
+<%= form_with(model: @expense, url: expenses_path, class: "expense-form flex flex-col gap-2", id: "new_expense_form") do |form| %>
+  <div class="flex flex-row w-full justify-between gap-16">
+    <div class="field flex-grow">
+      <%= form.label :category_id, "Select Category", class: "label" %>
+      <div class="control">
+        <%= form.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }, nil), { prompt: "Select Category" }, class: "input", id: "category_select" %>
+      </div>
+    </div>
+    <div class="field flex-grow">
+      <%= form.label :subcategory_id, "Select Subcategory", class: "label" %>
+      <div class="control">
+        <%= form.select :subcategory_id, options_for_select([], nil), { prompt: "Select Sub-category" }, class: "input", id: "subcategory_select", disabled: true %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :date, "Date", class: "label" %>
+    <div class="control">
+      <%= form.date_field :date, class: "input" %>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :amount, class: "label" %>
+    <p class="control has-icons-left">
+      <%= form.number_field :amount, class: "input" %>
+      <span class="icon is-small is-left">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :notes, class: "label" %>
+    <div class="control">
+      <%= form.text_area :notes, class: "textarea" %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <div id="attachment-input" class="file has-name flex flex-col">
+        <%= form.label :attachment, class: "label" %>
+        <div class="flex ">
+          <label class="file-label">
+            <%= form.file_field :attachment, class: "file-input", accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png" %>
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label ">
+                Choose a file...
+              </span>
+            </span>
+          </label>
+          <span class="file-name flex gap-5 justify-evenly">
+            <span>
+              No file chosen
+            </span>
+            <span id="remove_file-button" class="icon cursor-pointer">
+              <i class="fa-solid fa-xmark"></i>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field is-grouped gap-2">
+    <div class="control">
+      <%= form.submit "Create", class: "button is-primary" %>
+    </div>
+    <div class="control">
+      <%= button_tag "Add Another", class: "button is-info", id: "add_another_button" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", expenses_path, class: "button is-secondary" %>
+    </div>
+  </div>
+</div>
+<% end %>
+<script>
+  $(document).ready(function () {
+
+    $('#subcategory_select').prop('disabled', true);
+    $("#attachment-input #remove_file-button").hide();
+    $('#category_select').change(function() {
+      const selectedCategoryId = $(this).val();
+      $('#subcategory_select').empty();
+      $('<option>', {
+        value: null,
+        text: "Select Sub-category"
+      }).appendTo('#subcategory_select');
+      $('#subcategory_select').prop('disabled', true);
+
+      if (selectedCategoryId) {
+        $.ajax({
+          url: "/admin/categories/" + selectedCategoryId + "/subcategories",
+          method: "GET",
+          success: function(response) {
+            response.forEach(function(subcategory) {
+              $('<option>', {
+                value: subcategory.id,
+                text: subcategory.name
+              }).appendTo('#subcategory_select');
+            });
+
+            $('#subcategory_select').prop('disabled', false);
+          },
+          error: function(xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+      else {
+        $('#subcategory_select').prop('disabled', true);
+      }
+    });
+    $('#attachment-input input[type=file]').change(function () {
+      const fileInput = $(this)[0];
+      if (fileInput.files.length > 0) {
+        const fileName = $('#attachment-input .file-name > span:first-child');
+        fileName.text(fileInput.files[0].name);
+        $("#attachment-input #remove_file-button").show();
+      }
+    });
+    $("#attachment-input #remove_file-button").click(function () {
+      $('#attachment-input input[type=file]').val('');
+      $('#attachment-input .file-name > span:first-child').text('No file chosen');
+      $(this).hide();
+    });
+  });
+</script>

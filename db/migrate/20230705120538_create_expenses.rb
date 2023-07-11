@@ -7,7 +7,7 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.date :date
       t.decimal :amount, precision: 10, scale: 2
       t.text :notes
-      t.string :attachments
+      t.string :attachment
       t.integer :status
       t.timestamps
     end

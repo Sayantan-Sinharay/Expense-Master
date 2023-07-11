@@ -1,4 +1,5 @@
-<div>
-  <h1 class="font-bold text-4xl">User::Expenses#index</h1>
-  <p>Find me in app/views/user/expenses/index.html.erb</p>
+<h2 class="font-bold text-4xl">Expense Tracker</h2>
+<div id="create-container" class="flex gap-5 my-8 mx-2">
+  <%= link_to "Create Expense", new_expense_path, class: "button is-primary font-bold border-2 is-outlined w-fit"%>
+  <%= link_to "Create Credits", new_credit_path, class: "button is-primary font-bold border-2 is-outlined w-fit"%>
 </div>

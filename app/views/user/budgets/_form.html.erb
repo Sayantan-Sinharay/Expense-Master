@@ -1,0 +1,90 @@
+<%= form_with(model: @budget, url: budgets_path, class: "budget-form flex flex-col gap-2", id: "new_budget_form") do |form| %>
+  <div class="flex flex-row w-full justify-between gap-16">
+    <div class="field flex-grow">
+      <%= form.label :category_id, "Select Category", class: "label" %>
+      <div class="control">
+        <%= form.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }, nil), { prompt: "Select Category" }, class: "input", id: "category_select" %>
+      </div>
+    </div>
+    <div class="field flex-grow">
+      <%= form.label :subcategory_id, "Select Sub-category", class: "label" %>
+      <div class="control">
+        <%= form.select :subcategory_id, options_for_select([], nil), { prompt: "Select Sub-category" }, class: "input", id: "subcategory_select", disabled: true %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :month, class: "label" %>
+    <div class="control">
+      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month_name, index| [month_name, index] }, nil), { prompt: "Select Month" }, class: "input", id: "month_select" do %>
+        <% Date::MONTHNAMES.compact.each_with_index do |month_name, index| %>
+          <option value="<%= index %>" class="py-2 px-4 hover:bg-gray-100">
+            <%= month_name %>
+          </option>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="field">
+    <%= form.label :amount, class: "label" %>
+    <p class="control has-icons-left">
+      <%= form.number_field :amount, class: "input" %>
+      <span class="icon is-small is-left">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :notes, class: "label" %>
+    <div class="control">
+      <%= form.text_area :notes, class: "textarea" %>
+    </div>
+  </div>
+  <div class="field is-grouped font-medium gap-2">
+    <div class="control">
+      <%= form.submit "Create", class: "button is-primary" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", budgets_path, class: "button" %>
+    </div>
+  </div>
+</div>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $('#subcategory_select').prop('disabled', true);
+
+    $('#category_select').change(function() {
+      const selectedCategoryId = $(this).val();
+      $('#subcategory_select').empty();
+      $('<option>', {
+        value: null,
+        text: "Select Sub-category"
+      }).appendTo('#subcategory_select');
+      $('#subcategory_select').prop('disabled', true);
+
+      if (selectedCategoryId) {
+        $.ajax({
+          url: "/admin/categories/" + selectedCategoryId + "/subcategories",
+          method: "GET",
+          success: function(response) {
+            response.forEach(function(subcategory) {
+              $('<option>', {
+                value: subcategory.id,
+                text: subcategory.name
+              }).appendTo('#subcategory_select');
+            });
+
+            $('#subcategory_select').prop('disabled', false);
+          },
+          error: function(xhr, status, error) {
+            console.log(error);
+          }
+        });
+      }
+      else {
+        $('#subcategory_select').prop('disabled', true);
+      }
+    });
+  });
+</script>

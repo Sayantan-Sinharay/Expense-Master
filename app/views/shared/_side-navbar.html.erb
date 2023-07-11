@@ -1,6 +1,6 @@
 <nav class="panel is-primary w-2/5 h-fit">
   <p class="panel-heading">
-    Company Name
+    <%= Current.user.organization.name %>
   </p>
   <% if Current.user[:is_admin?] %>
     <%= link_to admin_users_path, class: "panel-block gap-5" do %>
@@ -64,6 +64,6 @@
 </nav>
 <script>
   $(document).ready(function() {
-
+    console.log("app")
   });
 </script>

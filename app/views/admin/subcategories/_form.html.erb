@@ -1,19 +1,19 @@
 <%= form_with(model: @subcategory, url: @subcategory.id.nil? ? admin_category_subcategories_path(@subcategory.category) : admin_category_subcategory_path(@subcategory.category, @subcategory), class: "flex flex-row flex-grow items-center gap-5", id: "subcategory-form", local: false) do |form| %>
   <div class="field flex my-auto">
     <div class="control">
-      <%= form.text_field :name, class: "input", id: "category-input" %>
+      <%= form.text_field :name, class: "input", id: "subcategory-input" %>
     </div>
   </div>
   <div class="field is-grouped ml-auto flex flex-row gap-5">
     <div class="control">
-      <%= form.button( type: :submit ) do %>
+      <%= form.button(type: :submit) do %>
         <span class="icon text-2xl text-primary font-bold">
           <i class="fa-solid fa-check"></i>
         </span>
       <% end %>
     </div>
     <div class="control">
-      <%= form.button( type: :cancel ) do %>
+      <%= link_to admin_categories_path do %>
         <span class="icon text-2xl has-text-danger font-bold">
           <i class="fa-solid fa-xmark"></i>
         </span>

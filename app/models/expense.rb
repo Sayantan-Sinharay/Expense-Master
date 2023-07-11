@@ -1,5 +1,5 @@
 class Expense < ApplicationRecord
-  has_one_attachment :attachments
+  has_one_attachment :attachment
   belongs_to :user
 
   validates :category, presence: true
