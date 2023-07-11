@@ -1,3 +1,4 @@
 $(document).ready(function() {
   $("#category_<%= @category.id %> #subcategory_<%= @subcategory.id %>").replaceWith('<%= j render "form" %>');
+  $("#category_<%= @category.id %> #subcategory-input").focus();
 });

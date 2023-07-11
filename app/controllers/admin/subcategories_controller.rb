@@ -4,6 +4,9 @@ class Admin::SubcategoriesController < ApplicationController
 
   def index
     @subcategories = @category.subcategories
+    respond_to do |format|
+      format.json { render json: @subcategories }
+    end
   end
 
   def new

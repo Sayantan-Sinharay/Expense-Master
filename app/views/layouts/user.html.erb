@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full h-full overflow-hidden">
     <h1 class="title">Welcome back, <%= Current.user[:name] %> </h1>
     <div class="flex p-5 flex-row w-full h-full overflow-hidden">
-      <%= render "shared/side_navbar" %>
+      <%= render "shared/side-navbar" %>
       <div class="section pt-0 flex flex-col h-full w-full flex-grow overflow-y-auto">
         <%= yield %>
       </div>

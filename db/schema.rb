@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.date "date"
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
-    t.string "attachments"
+    t.string "attachment"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

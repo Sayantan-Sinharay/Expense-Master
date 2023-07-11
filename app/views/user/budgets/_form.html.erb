@@ -1,77 +1,38 @@
-<%= form_with(model: @budget, url: budgets_path, class: "budget-form flex flex-col ", id: "new_budget_form") do |form| %>
-  <div class="flex flex-row gap-14">
-    <div class="field">
+<%= form_with(model: @budget, url: budgets_path, class: "budget-form flex flex-col gap-2", id: "new_budget_form") do |form| %>
+  <div class="flex flex-row w-full justify-between gap-16">
+    <div class="field flex-grow">
       <%= form.label :category_id, "Select Category", class: "label" %>
       <div class="control">
-        <div class="dropdown is-hoverable">
-          <div class="dropdown-trigger">
-            <button class="button is-primary is-outlined border-2 dropdown-button" aria-haspopup="true" aria-controls="category-dropdown">
-              <span id="selected-category">Select Category</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          <div class="dropdown-menu" id="category-dropdown" role="menu">
-            <div class="dropdown-content">
-              <% Category.all.each do |category| %>
-                <%= link_to category.name, "#", class: "dropdown-item", data: { value: category.id } %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+        <%= form.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }, nil), { prompt: "Select Category" }, class: "input", id: "category_select" %>
       </div>
     </div>
-    <div class="field">
+    <div class="field flex-grow">
       <%= form.label :subcategory_id, "Select Sub-category", class: "label" %>
       <div class="control">
-        <div class="dropdown is-hoverable">
-          <div class="dropdown-trigger">
-            <button class="button is-primary is-outlined border-2 dropdown-button" aria-haspopup="true" aria-controls="subcategory-dropdown">
-              <span id="selected-subcategory">Select Sub-category</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          <div class="dropdown-menu" id="subcategory-dropdown" role="menu">
-            <div class="dropdown-content">
-              <% Subcategory.all.each do |subcategory| %>
-                <%= link_to subcategory.name, "#", class: "dropdown-item", data: { value: subcategory.id } %>
-              <% end %>
-            </div>
-          </div>
-        </div>
+        <%= form.select :subcategory_id, options_for_select([], nil), { prompt: "Select Sub-category" }, class: "input", id: "subcategory_select", disabled: true %>
       </div>
     </div>
   </div>
   <div class="field">
     <%= form.label :month, class: "label" %>
     <div class="control">
-      <div class="dropdown is-hoverable">
-        <div class="dropdown-trigger">
-          <button class="button is-primary is-outlined border-2 dropdown-button" aria-haspopup="true" aria-controls="month-dropdown">
-            <span id="selected-month">Select Month</span>
-            <span class="icon is-small">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
-          </button>
-        </div>
-        <div class="dropdown-menu" id="month-dropdown" role="menu">
-          <div class="dropdown-content">
-            <% Date::MONTHNAMES.compact.each_with_index do |month_name, index| %>
-              <%= link_to month_name, "#", class: "dropdown-item", data: { value: index } %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month_name, index| [month_name, index] }, nil), { prompt: "Select Month" }, class: "input", id: "month_select" do %>
+        <% Date::MONTHNAMES.compact.each_with_index do |month_name, index| %>
+          <option value="<%= index %>" class="py-2 px-4 hover:bg-gray-100">
+            <%= month_name %>
+          </option>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div class="field">
     <%= form.label :amount, class: "label" %>
-    <div class="control">
+    <p class="control has-icons-left">
       <%= form.number_field :amount, class: "input" %>
-    </div>
+      <span class="icon is-small is-left">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </span>
+    </p>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
@@ -79,56 +40,51 @@
       <%= form.text_area :notes, class: "textarea" %>
     </div>
   </div>
-  <div class="field">
+  <div class="field is-grouped font-medium gap-2">
     <div class="control">
-      <%= form.submit "Save", class: "button is-primary" %>
-      <%= link_to "Cancel", budgets_path, class: "button is-secondary" %>
+      <%= form.submit "Create", class: "button is-primary" %>
+    </div>
+    <div class="control">
+      <%= link_to "Cancel", budgets_path, class: "button" %>
     </div>
   </div>
+</div>
 <% end %>
 <script>
   $(document).ready(function() {
-  $('#subcategory-dropdown').addClass('is-disabled');
-  $('#subcategory-dropdown .dropdown-trigger').attr('aria-disabled', true);
+    $('#subcategory_select').prop('disabled', true);
 
-  $('#category-dropdown .dropdown-item').click(function(e) {
-    e.preventDefault();
-    var categoryId = $(this).data('value');
-    var categoryName = $(this).text();
-    $('#selected-category').text(categoryName);
-    $('#subcategory-dropdown .dropdown-trigger').attr('aria-disabled', false);
-    $('#subcategory-dropdown').removeClass('is-disabled');
-    $('#subcategory-dropdown .dropdown-content').empty();
-    $.ajax({
-      url: "admin/categories/" + categoryId + "/subcategories",
-      method: "GET",
-      success: function(response) {
-        console.log(response);
-        response.forEach(function(subcategory) {
-          $('<a>', {
-            class: 'dropdown-item',
-            href: '#',
-            text: subcategory.name,
-            data: { value: subcategory.id }
-          }).appendTo('#subcategory-dropdown .dropdown-content');
+    $('#category_select').change(function() {
+      const selectedCategoryId = $(this).val();
+      $('#subcategory_select').empty();
+      $('<option>', {
+        value: null,
+        text: "Select Sub-category"
+      }).appendTo('#subcategory_select');
+      $('#subcategory_select').prop('disabled', true);
+
+      if (selectedCategoryId) {
+        $.ajax({
+          url: "/admin/categories/" + selectedCategoryId + "/subcategories",
+          method: "GET",
+          success: function(response) {
+            response.forEach(function(subcategory) {
+              $('<option>', {
+                value: subcategory.id,
+                text: subcategory.name
+              }).appendTo('#subcategory_select');
+            });
+
+            $('#subcategory_select').prop('disabled', false);
+          },
+          error: function(xhr, status, error) {
+            console.log(error);
+          }
         });
-      },
-      error: function(xhr, status, error) {
-        console.log(error);
+      }
+      else {
+        $('#subcategory_select').prop('disabled', true);
       }
     });
-  });
-  $('#subcategory-dropdown .dropdown-item').click(function(e) {
-    e.preventDefault();
-    var subcategoryId = $(this).data('value');
-    var subcategoryName = $(this).text();
-    $('#selected-subcategory').text(subcategoryName);
-  });
-  $('#month-dropdown .dropdown-item').click(function(e) {
-    e.preventDefault();
-    var monthValue = $(this).data('value');
-    var monthName = $(this).text();
-    $('#selected-month').text(monthName);
-  });
   });
 </script>

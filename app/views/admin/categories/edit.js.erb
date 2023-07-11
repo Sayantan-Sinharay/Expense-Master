@@ -1,4 +1,5 @@
 $(document).ready(function () {
     $('#category_<%= @category.id %> #category-header').replaceWith('<%= j render "edit_category-form", category: @category %>');
+    $('#category_<%= @category.id %> #category-input').focus(); 
 });
 
