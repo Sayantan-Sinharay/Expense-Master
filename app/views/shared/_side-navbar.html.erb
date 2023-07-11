@@ -3,7 +3,7 @@
     <%= Current.user.organization.name %>
   </p>
   <% if Current.user[:is_admin?] %>
-    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+    <%= link_to admin_dashboard_path, class: "panel-block gap-5" do %>
       <span class="panel-icon">
         <i class="fa-solid fa-users fa-xl"></i>
       </span>

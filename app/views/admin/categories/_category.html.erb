@@ -30,7 +30,7 @@
       <i class="fas fa-chevron-down"></i>
     </button>
   </div>
-  <div class="accordion-content mt-4 border-t-2 border-primary">
+  <div class="accordion-content mt-4 border-t-2 border-primary" style="display: none;">
     <div id="subcategory_list" class="p-5 flex flex-col gap-5">
       <% category.subcategories.each do |subcategory| %>
         <%= render partial: 'admin/subcategories/subcategory', locals: { subcategory: subcategory } %>
@@ -40,7 +40,6 @@
 </div>
 <script>
   $(document).ready(function() {
-    $('#category_<%= category.id %> .accordion-content').hide();
     $('#category_<%= category.id %> .accordion-toggle').click(function() {
       $(this).toggleClass('active');
       $(this).parent().siblings('.accordion-content').slideToggle();

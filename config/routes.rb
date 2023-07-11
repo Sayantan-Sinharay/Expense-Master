@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "user/new", to: "users#new", as: :new_user
     post "user/create", to: "users#create", as: :create_user
     delete "user/destroy/:id", to: "users#destroy", as: :delete_user
+    get "dashboard", to: "users#index"
     resources :categories do
       resources :subcategories
     end
