@@ -11,7 +11,6 @@ class User::BudgetsController < ApplicationController
 
   def create
     @budget = Budget.new(budget_params)
-    binding.pry
     if @budget.save
       redirect_to budgets_path, notice: "Budget created successfully."
     else
