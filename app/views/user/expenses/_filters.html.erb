@@ -1,0 +1,97 @@
+<%= form_with(model: @expenses, url: expenses_path, class: "flex", id: "expenses_filter") do |form| %>
+  <div class="field flex flex-col flex-grow">
+    <%= form.label :filter_period, "Filter Period", class: "label" %>
+    <div class="control">
+      <div class="dropdown w-3/4">
+        <div class="dropdown-trigger w-full">
+          <div class="button is-primary flex w-full dropdown-button font-bold" aria-haspopup="true" aria-controls="period-dropdown">
+            <span class="flex-grow text-left" id="selected-period">Monthly</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown-menu w-full" id="period-dropdown" role="menu">
+          <div class="dropdown-content">
+            <a href="#" class="dropdown-item is-active" data-value="monthly">Monthly</a>
+            <a href="#" class="dropdown-item" data-value="quarterly">Quarterly</a>
+            <a href="#" class="dropdown-item" data-value="yearly">Yearly</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field flex flex-col flex-grow">
+    <%= form.label :filter_status, "Filter Status", class: "label" %>
+    <div class="control">
+      <div class="dropdown w-3/4">
+        <div class="dropdown-trigger w-full">
+          <div class="button is-primary dropdown-button flex w-full ml-auto font-bold" aria-haspopup="true" aria-controls="status-dropdown">
+            <span class="flex w-fit flex-grow text-left" id="selected-status">All Status</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown-menu w-full" id="status-dropdown" role="menu">
+          <div class="dropdown-content">
+            <a href="#" class="dropdown-item is-active" data-value="">All Status</a>
+            <a href="#" class="dropdown-item" data-value="approve">Approve</a>
+            <a href="#" class="dropdown-item" data-value="pending">Pending</a>
+            <a href="#" class="dropdown-item" data-value="rejected">Rejected</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<script>
+  $(document).ready(function() {
+  $(".dropdown").on("click", function(e) {
+    const dropdown = $(this);
+    const isActive = dropdown.hasClass("is-active");
+    $(".dropdown").removeClass("is-active");
+    if (!isActive) {
+      dropdown.addClass("is-active");
+    }
+  });
+
+  $(document).on("click", function(e) {
+    const target = $(e.target);
+    if (!target.closest(".dropdown").length) {
+      $(".dropdown").removeClass("is-active");
+    }
+  });
+
+  $(".dropdown-item").on("click", function(e) {
+    e.preventDefault();
+
+    const value = $(this).data('value');
+    const text = $(this).text();
+    const dropdownMenu = $(this).closest('.dropdown-menu');
+    const dropdownTrigger = dropdownMenu.siblings('.dropdown-trigger').find('.dropdown-button');
+
+    dropdownTrigger.attr('data-value', value);
+    dropdownTrigger.find('span:first-child').text(text);
+
+    dropdownMenu.find(".is-active").removeClass("is-active");
+    $(this).addClass("is-active");
+
+    const selectedPeriod = $("#selected-period").parent().attr('data-value');
+    const selectedStatus = $("#selected-status").parent().attr('data-value');
+
+    $("div#expense-item").each(function(){
+      const period = $(this).data('period');
+      const status = $(this).data('status');
+
+      if ((!selectedPeriod || selectedPeriod === period) && (!selectedStatus || selectedStatus === status)) {
+        $(this).addClass("flex");
+        $(this).show();
+      } else {
+        $(this).removeClass("flex");
+        $(this).hide();
+      }
+    });
+  });
+  });
+</script>

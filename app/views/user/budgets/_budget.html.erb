@@ -1,0 +1,43 @@
+<div id="budget-item" class="box flex flex-col gap-5" data-category-id="<%= budget.category_id %>" data-month="<%= budget.month %>">
+  <div class="flex flex-col gap-1">
+    <div class="title flex items-center justify-between">
+      <span class="flex items-center gap-2">
+        <span class="text-2xl">Category:</span>
+        <span class="text-xl">
+          <%= Category.find_by(id: budget.category_id).name %>
+        </span>
+      </span>
+      <span class="icon-text has-text-grey">
+        <span class="icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </span>
+        <span>
+          <%= budget.amount %>
+        </span>
+      </span>
+    </div>
+    <div class="subtitle flex items-center has-text-grey gap-2">
+      <span class="text-lg">Sub-Category:</span>
+      <span class="text-base">
+        <%= Subcategory.find_by(id: budget.subcategory_id).name %>
+      </span>
+    </div>
+  </div>
+  <div class="flex flex-col gap-3">
+    <div>
+      <span class="font-bold flex gap-2">
+        <span>Month:</span>
+        <%= budget.month %>
+      </span>
+    </div>
+    <div class="flex font-bold flex-col gap-2">
+      <span>Note:</span>
+      <p class="font-light">
+        <%= budget.notes %>
+      </p>
+    </div>
+  </div>
+  <span class="ml-auto has-text-grey font-light text-sm">
+    <%= time_ago_in_words(budget.created_at) %>
+  </span>
+</div>

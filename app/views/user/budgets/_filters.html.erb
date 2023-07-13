@@ -1,0 +1,98 @@
+<%= form_with(model: @budgets, url: budgets_path, class: "flex", id: "budgets_filter") do |form| %>
+  <div class="field flex flex-col flex-grow">
+    <%= form.label :category_id, "Select Category", class: "label" %>
+    <div class="control">
+      <div class="dropdown w-3/4">
+        <div class="dropdown-trigger w-full">
+          <div class="button is-primary flex w-full dropdown-button font-bold" aria-haspopup="true" aria-controls="category-dropdown">
+            <span class="flex-grow text-left" id="selected-category">All Category</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown-menu w-full" id="category-dropdown" role="menu">
+          <div class="dropdown-content">
+            <a href="#" class="dropdown-item is-active" data-value=""><%= "All Category" %></a>
+            <% Category.all.each do |category| %>
+              <a href="#" class="dropdown-item" data-value="<%= category.id %>"><%= category.name %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field flex flex-col flex-grow">
+    <%= form.label :month_id, "Select Month", class: "label" %>
+    <div class="control">
+      <div class="dropdown w-3/4">
+        <div class="dropdown-trigger w-full">
+          <div class="button is-primary dropdown-button flex w-full ml-auto font-bold" aria-haspopup="true" aria-controls="month-dropdown">
+            <span class="flex w-fit flex-grow text-left" id="selected-month">All Months</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+        <div class="dropdown-menu w-full" id="month-dropdown" role="menu">
+          <div class="dropdown-content">
+            <a href="#" class="dropdown-item is-active" data-value=""><%= "All Months" %></a>
+            <% Date::MONTHNAMES.drop(1).each_with_index do |month, index| %>
+              <a href="#" class="dropdown-item" data-value="<%= index + 1 %>"><%= month %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<script>
+  $(document).ready(function() {
+    $(".dropdown").on("click", function(e) {
+      const dropdown = $(this);
+      const isActive = dropdown.hasClass("is-active");
+      $(".dropdown").removeClass("is-active");
+      if (!isActive) {
+        dropdown.addClass("is-active");
+      }
+    });
+
+    $(document).on("click", function(e) {
+      const target = $(e.target);
+      if (!target.closest(".dropdown").length) {
+        $(".dropdown").removeClass("is-active");
+      }
+    });
+
+    $(".dropdown-item").on("click", function(e) {
+      e.preventDefault();
+
+      const value = $(this).data('value');
+      const text = $(this).text();
+      const dropdownMenu = $(this).closest('.dropdown-menu');
+      const dropdownTrigger = dropdownMenu.siblings('.dropdown-trigger').find('.dropdown-button');
+
+      dropdownTrigger.attr('data-value', value);
+      dropdownTrigger.find('span:first-child').text(text);
+
+      dropdownMenu.find(".is-active").removeClass("is-active");
+      $(this).addClass("is-active");
+
+      const selectedCategoryId = parseInt($("#selected-category").parent().attr('data-value'));
+      const selectedMonth = parseInt($("#selected-month").parent().attr('data-value'));
+
+      $("div#budget-item").each(function(){
+        const categoryId = $(this).data('category-id');
+        const month = $(this).data('month');
+
+        if ((!selectedCategoryId || selectedCategoryId === categoryId) && (!selectedMonth || selectedMonth === month)) {
+          $(this).addClass("flex")
+          $(this).show();
+        } else {
+          $(this).removeClass("flex")
+          $(this).hide();
+        }
+      });
+    });
+  });
+</script>

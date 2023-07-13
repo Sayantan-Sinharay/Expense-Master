@@ -1,4 +1,6 @@
-<div>
-  <h1 class="font-bold text-4xl">User::Wallets#index</h1>
-  <p>Find me in app/views/user/wallets/index.html.erb</p>
-</div>
+<section class="flex flex-col gap-5">
+  <span class="flex items-center justify-between">
+    <h2 class="font-bold text-4xl">Wallet</h2>
+    <%= link_to "Add to wallet", new_budget_path, class: "button is-primary font-bold border-2 is-outlined w-fit"%>
+  </span>
+</section>

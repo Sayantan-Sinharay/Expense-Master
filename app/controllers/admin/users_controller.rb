@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   layout "user"
 
   def index
-    @users = User.get_users()
+    @users = User.get_non_admin_users(Current.user[:organization_id])
   end
 
   def new
@@ -14,7 +14,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.invite_user(params[:user][:email])
+    @user = User.invite_user(Current.user,params[:user][:email])
     respond_to do |format|
       if @user.nil?
         flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."

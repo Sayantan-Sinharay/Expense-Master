@@ -2,7 +2,7 @@ class User::BudgetsController < ApplicationController
   layout "user"
 
   def index
-    @budgets = Budget.all
+    @budgets = Budget.budgets_created_by(Current.user)
   end
 
   def new
@@ -10,9 +10,12 @@ class User::BudgetsController < ApplicationController
   end
 
   def create
-  end
-
-  def show
+    @budget = Budget.new(budget_params)
+    if @budget.save
+      redirect_to budgets_path, notice: "Budget created successfully."
+    else
+      render :new
+    end
   end
 
   def edit
@@ -22,5 +25,9 @@ class User::BudgetsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def budget_params
+    params.require(:budget).permit(:category_id, :subcategory_id, :amount, :notes, :month)
   end
 end

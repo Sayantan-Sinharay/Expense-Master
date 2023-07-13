@@ -1,20 +1,22 @@
 <%= form_with(model: @user, url: admin_create_user_path, local: false, id: "invite_user-form") do |form| %>
-  <div class="field w-1/2">
-    <%= form.label :email, "Enter the Email:" , class: "label" %>
-    <div class="control">
-      <%= form.text_field :email, class: "input", id: "email-input" %>
+  <div class="flex items-end gap-10">
+    <div class="field w-1/2 m-0">
+      <%= form.label :email, "Enter the Email:" , class: "label" %>
+      <div class="control">
+        <%= form.text_field :email, class: "input", id: "email-input" %>
+      </div>
     </div>
-  </div>
-  <div class="field">
-    <div class="control">
-      <%= form.button(type: :submit, class: "button is-primary") do %>
-        <span class="icon-text">
-          <span class="icon">
-            <i class="fa-solid fa-user-plus"></i>
+    <div class="field">
+      <div class="control">
+        <%= form.button(type: :submit, class: "button is-primary") do %>
+          <span class="icon-text">
+            <span class="icon">
+              <i class="fa-solid fa-user-plus"></i>
+            </span>
+            <span class="font-bold">Invite User</span>
           </span>
-          <span class="font-bold">Invite User</span>
-        </span>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>

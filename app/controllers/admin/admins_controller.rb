@@ -1,5 +1,5 @@
 class Admin::AdminsController < ApplicationController
   def index
-    redirect_to admin_users_path
+    redirect_to admin_dashboard_path
   end
 end
