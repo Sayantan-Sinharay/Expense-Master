@@ -1,8 +1,9 @@
-<h2 class="font-bold text-4xl">Category Management</h2>
-<div id="#category_form-container" class="my-5 mx-2">
-  <%= render "form" %>
-</div>
-<div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
-  <%= render @categories %>
-</div>
-
+<section class="flex flex-col gap-5">
+  <h2 class="font-bold text-4xl">Category Management</h2>
+  <div id="#category_form-container">
+    <%= render "form" %>
+  </div>
+  <div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
+    <%= render @categories %>
+  </div>
+</section>

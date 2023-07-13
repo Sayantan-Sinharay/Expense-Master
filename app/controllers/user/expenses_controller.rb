@@ -1,7 +1,9 @@
 class User::ExpensesController < ApplicationController
   layout "user"
-  
+
   def index
+    @expenses = Expense.expenses_created_by(Current.user)
+    @credits = Credit.credits_created_by(Current.user)
   end
 
   def new
