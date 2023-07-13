@@ -16,13 +16,7 @@
   <div class="field">
     <%= form.label :month, class: "label" %>
     <div class="control">
-      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month_name, index| [month_name, index] }, nil), { prompt: "Select Month" }, class: "input", id: "month_select" do %>
-        <% Date::MONTHNAMES.compact.each_with_index do |month_name, index| %>
-          <option value="<%= index %>" class="py-2 px-4 hover:bg-gray-100">
-            <%= month_name %>
-          </option>
-        <% end %>
-      <% end %>
+      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
     </div>
   </div>
   <div class="field">

@@ -6,7 +6,7 @@ class CreateBudgets < ActiveRecord::Migration[6.1]
       t.references :subcategory, foreign_key: true
       t.decimal :amount, precision: 10, scale: 2
       t.text :notes
-      t.date :month
+      t.integer :month
       t.timestamps
     end
   end

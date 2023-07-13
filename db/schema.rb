@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.bigint "subcategory_id"
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
-    t.date "month"
+    t.integer "month"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_budgets_on_category_id"
@@ -63,17 +63,6 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "credits", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.decimal "amount", precision: 10, scale: 2
-    t.date "date"
-    t.bigint "beneficiary_user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["beneficiary_user_id"], name: "index_credits_on_beneficiary_user_id"
-    t.index ["user_id"], name: "index_credits_on_user_id"
-  end
-
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
@@ -82,7 +71,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.string "attachment"
-    t.integer "status"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_expenses_on_category_id"
@@ -123,7 +112,7 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
   create_table "wallets", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.decimal "amount_given", precision: 10, scale: 2
-    t.date "month"
+    t.integer "month"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wallets_on_user_id"
@@ -134,8 +123,6 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "subcategories"
   add_foreign_key "budgets", "users"
-  add_foreign_key "credits", "users"
-  add_foreign_key "credits", "users", column: "beneficiary_user_id"
   add_foreign_key "expenses", "categories"
   add_foreign_key "expenses", "subcategories"
   add_foreign_key "expenses", "users"
