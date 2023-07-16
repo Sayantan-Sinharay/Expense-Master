@@ -89,6 +89,7 @@ budgets = [
     amount: 500.0,
     notes: "Recruitment drive expenses",
     month: 1,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user1@test.com").id,
@@ -97,6 +98,7 @@ budgets = [
     amount: 800.0,
     notes: "Client visits expenses",
     month: 2,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -105,6 +107,7 @@ budgets = [
     amount: 200.0,
     notes: "Birthday celebration expenses",
     month: 2,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -113,6 +116,7 @@ budgets = [
     amount: 300.0,
     notes: "Annual day expenses",
     month: 1,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -121,6 +125,7 @@ budgets = [
     amount: 150.0,
     notes: "Food and beverages purchase",
     month: 5,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -129,6 +134,7 @@ budgets = [
     amount: 50.0,
     notes: "Stationery purchase",
     month: 3,
+    year: Date.current.year,
   },
 ]
 budgets.each do |budget|
@@ -145,6 +151,8 @@ expenses = [
     amount: 100.0,
     notes: "Expense 1",
     status: 0,
+    month: Date.current.month,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user1@test.com").id,
@@ -154,6 +162,8 @@ expenses = [
     amount: 200.0,
     notes: "Expense 2",
     status: 1,
+    month: Date.current.month,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -163,6 +173,8 @@ expenses = [
     amount: 150.0,
     notes: "Expense 3",
     status: 2,
+    month: Date.current.month,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -172,6 +184,8 @@ expenses = [
     amount: 300.0,
     notes: "Expense 4",
     status: 0,
+    month: Date.current.month,
+    year: Date.current.year,
   },
   {
     user_id: User.find_by(email: "user2@test.com").id,
@@ -181,8 +195,29 @@ expenses = [
     amount: 50.0,
     notes: "Expense 5",
     status: 1,
+    month: Date.current.month,
+    year: Date.current.year,
   },
 ]
 expenses.each do |expense|
   Expense.create(expense)
+end
+
+# Create sample wallets
+wallets = [
+  {
+    user_id: User.find_by(email: "user1@test.com").id,
+    amount: 500.0,
+    month: Date.current.month,
+    year: Date.current.year,
+  },
+  {
+    user_id: User.find_by(email: "user2@test.com").id,
+    amount: 800.0,
+    month: Date.current.month,
+    year: Date.current.year,
+  },
+]
+wallets.each do |wallet|
+  Wallet.create(wallet)
 end

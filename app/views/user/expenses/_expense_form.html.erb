@@ -1,4 +1,4 @@
-<%= form_with(model: @expense, url: expenses_path, class: "expense-form flex flex-col gap-2", id: "new_expense_form") do |form| %>
+<%= form_with(model: @expense, url: expenses_path, class: "expense-form flex flex-col gap-2", id: "new_expense_form", multipart: true) do |form| %>
   <div class="flex flex-row w-full justify-between gap-16">
     <div class="field flex-grow">
       <%= form.label :category_id, "Select Category", class: "label" %>
@@ -41,12 +41,12 @@
           <%= form.label :attachment, "Invoice/Bill", class: "label" %>
           <div class="flex ">
             <label class="file-label">
-              <%= form.file_field :attachment, class: "file-input", accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png" %>
+              <%= form.file_field :attachment, class: "file-input", accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png", name: "expense[attachment]" %>
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-upload"></i>
                 </span>
-                <span class="file-label ">
+                <span class="file-label">
                   Choose a file...
                 </span>
               </span>
@@ -79,24 +79,24 @@
 <% end %>
 <script>
   $(document).ready(function () {
-
     $('#subcategory_select').prop('disabled', true);
-    $("#attachment-input #remove_file-button").hide();
-    $('#category_select').change(function() {
+    $('#attachment-input #remove_file-button').hide();
+
+    $('#category_select').change(function () {
       const selectedCategoryId = $(this).val();
       $('#subcategory_select').empty();
       $('<option>', {
         value: null,
-        text: "Select Sub-category"
+        text: 'Select Sub-category'
       }).appendTo('#subcategory_select');
       $('#subcategory_select').prop('disabled', true);
 
       if (selectedCategoryId) {
         $.ajax({
-          url: "/admin/categories/" + selectedCategoryId + "/subcategories",
-          method: "GET",
-          success: function(response) {
-            response.forEach(function(subcategory) {
+          url: '/admin/categories/' + selectedCategoryId + '/subcategories',
+          method: 'GET',
+          success: function (response) {
+            response.forEach(function (subcategory) {
               $('<option>', {
                 value: subcategory.id,
                 text: subcategory.name
@@ -105,26 +105,34 @@
 
             $('#subcategory_select').prop('disabled', false);
           },
-          error: function(xhr, status, error) {
+          error: function (xhr, status, error) {
             console.log(error);
           }
         });
-      }
-      else {
+      } else {
         $('#subcategory_select').prop('disabled', true);
       }
     });
+
     $('#attachment-input input[type=file]').change(function () {
       const fileInput = $(this)[0];
+      const fileNameSpan = $('#attachment-input .file-name > span:first-child');
+
       if (fileInput.files.length > 0) {
-        const fileName = $('#attachment-input .file-name > span:first-child');
-        fileName.text(fileInput.files[0].name);
-        $("#attachment-input #remove_file-button").show();
+        fileNameSpan.text(fileInput.files[0].name);
+        $('#attachment-input #remove_file-button').show();
+      } else {
+        fileNameSpan.text('No file chosen');
+        $('#attachment-input #remove_file-button').hide();
       }
     });
-    $("#attachment-input #remove_file-button").click(function () {
-      $('#attachment-input input[type=file]').val('');
-      $('#attachment-input .file-name > span:first-child').text('No file chosen');
+
+    $('#attachment-input #remove_file-button').click(function () {
+      const fileInput = $('#attachment-input input[type=file]');
+      const fileNameSpan = $('#attachment-input .file-name > span:first-child');
+
+      fileInput.val('');
+      fileNameSpan.text('No file chosen');
       $(this).hide();
     });
   });

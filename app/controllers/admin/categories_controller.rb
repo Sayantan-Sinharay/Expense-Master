@@ -1,6 +1,5 @@
 class Admin::CategoriesController < ApplicationController
   before_action :set_category, only: [:edit, :update, :destroy]
-  layout "user"
 
   def index
     @categories = Category.all

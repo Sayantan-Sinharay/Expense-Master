@@ -49,7 +49,8 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.bigint "subcategory_id"
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
-    t.integer "month"
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_budgets_on_category_id"
@@ -68,6 +69,8 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.bigint "category_id", null: false
     t.bigint "subcategory_id"
     t.date "date"
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.string "attachment"
@@ -111,8 +114,9 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
 
   create_table "wallets", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.decimal "amount_given", precision: 10, scale: 2
-    t.integer "month"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wallets_on_user_id"

@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:destroy]
-  layout "user"
 
   def index
     @users = User.get_non_admin_users(Current.user[:organization_id])

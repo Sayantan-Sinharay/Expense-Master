@@ -1,8 +1,7 @@
 class User::BudgetsController < ApplicationController
-  layout "user"
 
   def index
-    @budgets = Budget.budgets_created_by(Current.user)
+    @budgets = Current.user.budgets.order(month: :asc)
   end
 
   def new
@@ -10,21 +9,15 @@ class User::BudgetsController < ApplicationController
   end
 
   def create
-    @budget = Budget.new(budget_params)
+    @budget = Current.user.budgets.new(budget_params)
+    @budget.update(year: Date.current.year)
+
     if @budget.save
-      redirect_to budgets_path, notice: "Budget created successfully."
+      redirect_to budgets_path, success: "Budget created successfully."
     else
+      flash.now[:danger] = "Budget could not be created."
       render :new
     end
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   def budget_params

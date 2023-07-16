@@ -5,7 +5,6 @@ class Expense < ApplicationRecord
   belongs_to :subcategory
 
   validates :category, presence: true
-  validates :subcategory, presence: true
   validates :date, presence: true
   validates :amount, numericality: { greater_than_or_equal_to: 0 }
   validates :notes, length: { maximum: 255 }

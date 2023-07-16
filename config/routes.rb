@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get "index", to: "users#index"
     resources :budgets
     resources :expenses
-    resources :credits
     resources :wallets
+    resources :reports
   end
 end

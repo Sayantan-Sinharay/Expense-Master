@@ -7,7 +7,7 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :budgets
   has_many :expenses
-  has_one :wallet
+  has_many :wallets
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }, format: { with: EMAIL_REGEX }
