@@ -38,12 +38,4 @@
     </div>
   </div>
 </div>
-<script>
-  $(document).ready(function() {
-    $('#category_<%= category.id %> .accordion-toggle').click(function() {
-      $(this).toggleClass('active');
-      $(this).parent().siblings('.accordion-content').slideToggle();
-      $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
-    });
-  });
-</script>
+

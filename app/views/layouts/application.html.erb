@@ -21,7 +21,13 @@
       <%= render "shared/flashes" %>
     </div>
     <main class="container py-16 px-5 flex h-full w-full overflow-hidden">
-      <%= content_for?(:user) ? yield(:user) : yield %>
+      <% if Current.user %>
+        <%= render "layouts/user" do %>
+          <%= yield %>
+        <% end %>
+      <% else %>
+        <%= yield %>
+      <% end %>
     </main>
   </body>
 </html>

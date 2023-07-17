@@ -1,11 +1,10 @@
-<%= render "layouts/user" do %>
-  <section class="flex flex-col h-full overflow-hidden gap-5">
-    <h2 class="font-bold text-4xl">Category Management</h2>
-    <div id="category_form-container">
-      <%= render "form" %>
-    </div>
-    <div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
-      <%= render partial: @categories %>
-    </div>
-  </section>
-<% end %>
+<section class="flex flex-col h-full overflow-hidden gap-5">
+  <h2 class="font-bold text-4xl">Category Management</h2>
+  <div id="category_form-container">
+    <%= render "form" %>
+  </div>
+  <div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
+    <%= render partial: @categories %>
+  </div>
+</section>
+<%= javascript_pack_tag 'admin/categories/index' %>
