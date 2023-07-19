@@ -22,10 +22,12 @@ class SessionsController < ApplicationController
 
   def log_in(user)
     session[:user_id] = user.id
+    cookies.signed[:user_id] = user.id
     set_current_user
   end
 
   def log_out
     reset_session
+    cookies.delete :user_id
   end
 end

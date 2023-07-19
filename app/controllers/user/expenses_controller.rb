@@ -1,4 +1,6 @@
 class User::ExpensesController < ApplicationController
+  include User::ExpensesHelper
+
   def index
     @expenses = Current.user.expenses.order(date: :asc)
   end
@@ -8,31 +10,16 @@ class User::ExpensesController < ApplicationController
   end
 
   def create
-    @expense = Expense.new(expense_params)
-    @expense.user = Current.user
+    @expense = Current.user.expenses.new(expense_params)
     @expense.attachment.attach(params[:expense][:attachment])
-    year = @expense[:date].year
-    month = @expense[:date].month
-    @expense.update(year: year, month: month)
-    binding.pry
+    update_month_and_year(@expense)
     if @expense.save
+      send_notifications(Current.user, @expense)
       redirect_to expenses_path, success: "Expense created successfully."
     else
       flash.now[:danger] = "Expense could not be created."
       render :new
     end
-  end
-
-  def approve
-    @expense = find_expense
-    @expense.approved!
-    redirect_to expenses_path, success: "Expense approved successfully."
-  end
-
-  def reject
-    @expense = find_expense
-    @expense.rejected!
-    redirect_to expenses_path, success: "Expense rejected successfully."
   end
 
   private

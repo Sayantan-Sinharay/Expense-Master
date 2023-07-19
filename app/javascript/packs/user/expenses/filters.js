@@ -44,7 +44,7 @@ $(document).ready(function () {
             .parent()
             .attr("data-value");
 
-        $("div#expense-item").each(function () {
+        $('div[id^="expense-item-"]').each(function () {
             const month = $(this).data("month");
             const quarter = $(this).data("quarter");
             const year = $(this).data("year");

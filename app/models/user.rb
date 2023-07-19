@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :budgets
   has_many :expenses
   has_many :wallets
+  has_many :notifications, dependent: :destroy
 
   validates :name, :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }, format: { with: EMAIL_REGEX }
@@ -16,6 +17,10 @@ class User < ApplicationRecord
 
   scope :get_non_admin_users, ->(organization_id) {
           where(organization_id: organization_id, is_admin?: false)
+        }
+
+  scope :get_admin_users, ->(organization_id) {
+          where(organization_id: organization_id, is_admin?: true)
         }
 
   def self.invite_user(admin_user, email)

@@ -1,0 +1,35 @@
+<section class="flex flex-col h-full overflow-hidden gap-5">
+  <%= render "modal"%>
+  <h2 class="font-bold text-4xl">Dashboard</h2>
+  <div class="tabs text-lg m-0">
+    <ul class="font-medium border-primary border-b-2">
+      <li class="is-active font-bold" data-tab="pending-tab">
+        <%= link_to "Pending", "#", class: "tab-link " %>
+      </li>
+      <li data-tab="approved-tab">
+        <%= link_to "Approved", "#", class: "tab-link" %>
+      </li>
+      <li data-tab="rejected-tab">
+        <%= link_to "Rejected", "#", class: "tab-link" %>
+      </li>
+    </ul>
+  </div>
+  <div class="flex flex-col p-2 h-full overflow-y-auto">
+    <div class="tab-content" id="pending-tab">
+      <% @expenses.where(status: "pending").each do |expense| %>
+        <%= render "user/expenses/expense", { expense: expense } %>
+      <% end %>
+    </div>
+    <div class="tab-content hidden" id="approved-tab">
+      <% @expenses.where(status: "approved").each do |expense| %>
+        <%= render "user/expenses/expense", { expense: expense } %>
+      <% end %>
+    </div>
+    <div class="tab-content hidden" id="rejected-tab">
+      <% @expenses.where(status: "rejected").each do |expense| %>
+        <%= render "user/expenses/expense", { expense: expense } %>
+      <% end %>
+    </div>
+  </div>
+</section>
+<%= javascript_pack_tag "admin/dashboards/index" %>

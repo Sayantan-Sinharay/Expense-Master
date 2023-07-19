@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "login", to: "sessions#new", as: :login
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy", as: :logout
+  resources :notifications, only: [:index]
 
   namespace :admin do
     get "index", to: "admins#index"
@@ -11,16 +12,19 @@ Rails.application.routes.draw do
     get "user/new", to: "users#new", as: :new_user
     post "user/create", to: "users#create", as: :create_user
     delete "user/destroy/:id", to: "users#destroy", as: :delete_user
-    get "dashboard", to: "users#index"
+    resources :dashboards, only: [:index] do
+      put :approve, on: :member
+      put :reject, on: :member
+    end
     resources :categories do
       resources :subcategories
     end
   end
   scope module: "user" do
     get "index", to: "users#index"
-    resources :budgets
-    resources :expenses
-    resources :wallets
-    resources :reports
+    resources :budgets, only: [:index, :new, :create]
+    resources :expenses, only: [:index, :new, :create]
+    resources :wallets, only: [:index, :new, :create]
+    resources :reports, only: [:index]
   end
 end
