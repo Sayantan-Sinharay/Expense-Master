@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Controller for handling home-related actions.
 class HomesController < ApplicationController
   def index
     if Current.user
@@ -11,6 +14,5 @@ class HomesController < ApplicationController
     end
   end
 
-  def new
-  end
+  def new; end
 end

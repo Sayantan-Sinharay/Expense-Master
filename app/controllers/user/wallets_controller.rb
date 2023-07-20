@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User::WalletsController < ApplicationController
   def index
     @wallets = Current.user.wallets.order(month: :asc)
@@ -12,9 +14,9 @@ class User::WalletsController < ApplicationController
     @wallet = Current.user.wallets.build(wallet_params)
     @wallet.year = Date.today.year
     if @wallet.save
-      redirect_to wallets_path, success: "Wallet created successfully."
+      redirect_to wallets_path, success: 'Wallet created successfully.'
     else
-      flash.now[:danger] = "Wallet could not be created."
+      flash.now[:danger] = 'Wallet could not be created.'
       render :new
     end
   end

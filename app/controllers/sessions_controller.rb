@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
+# Controller for handling user sessions (login and logout).
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(email: params[:user][:email].downcase)
-    if user && user.authenticate(params[:user][:password])
+    if user&.authenticate(params[:user][:password])
       log_in(user)
-      redirect_to root_path, success: "Successfully logged in"
+      redirect_to root_path, success: 'Successfully logged in'
     else
-      flash.now[:danger] = "Invalid email/password combination"
+      flash.now[:danger] = 'Invalid email/password combination'
       render :new
     end
   end

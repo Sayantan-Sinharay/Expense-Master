@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Expense < ApplicationRecord
   has_one_attached :attachment
   belongs_to :user

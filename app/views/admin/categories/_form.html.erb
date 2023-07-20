@@ -1,4 +1,4 @@
-<%= form_with(model: @category, url: admin_categories_path, local: false, id: "create_category-form") do |form| %>
+<%= form_with(model: Category.new, url: admin_categories_path, local: false, id: "create_category-form") do |form| %>
   <div class="flex items-end gap-10">
     <div class="field m-0">
       <%= form.label :name, "Enter new Category" ,class: "label" %>

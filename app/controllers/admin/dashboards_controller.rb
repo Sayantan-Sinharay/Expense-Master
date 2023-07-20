@@ -1,27 +1,32 @@
-class Admin::DashboardsController < ApplicationController
-  include Admin::DashboardsHelper
+# frozen_string_literal: true
 
-  def index
-    @expenses = Expense.order(created_at: :desc).all
-  end
+module Admin
+  # Controller for managing dashboards in the admin panel.
+  class DashboardsController < ApplicationController
+    include Admin::DashboardsHelper
 
-  def approve
-    @expense = find_expense
-    @expense.update(status: "approved")
-    send_approve_notification(Current.user, @expense)
-    redirect_to admin_dashboards_path, success: "Expense approved successfully."
-  end
+    def index
+      @expenses = Expense.order(created_at: :desc).all
+    end
 
-  def reject
-    @expense = find_expenses
-    expense.update(status: "rejected")
-    send_reject_notification(Current.user, @expense)
-    redirect_to admin_dashboards_path, danger: "Expense rejected successfully."
-  end
+    def approve
+      @expense = find_expense
+      @expense.update(status: 'approved')
+      send_approve_notification(Current.user, @expense)
+      redirect_to admin_dashboards_path, success: 'Expense approved successfully.'
+    end
 
-  private
+    def reject
+      @expense = find_expense
+      @expense.update(status: 'rejected')
+      send_reject_notification(Current.user, @expense)
+      redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
+    end
 
-  def find_expense
-    Expense.find(params[:id])
+    private
+
+    def find_expense
+      Expense.find(params[:id])
+    end
   end
 end

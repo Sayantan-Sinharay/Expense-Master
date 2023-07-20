@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -15,13 +17,13 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 3 }
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
-  scope :get_non_admin_users, ->(organization_id) {
-          where(organization_id: organization_id, is_admin?: false)
-        }
+  scope :get_non_admin_users, lambda { |organization_id|
+                                where(organization_id: organization_id, is_admin?: false)
+                              }
 
-  scope :get_admin_users, ->(organization_id) {
-          where(organization_id: organization_id, is_admin?: true)
-        }
+  scope :get_admin_users, lambda { |organization_id|
+                            where(organization_id: organization_id, is_admin?: true)
+                          }
 
   def self.invite_user(admin_user, email)
     password = SecureRandom.urlsafe_base64(12)
@@ -33,11 +35,8 @@ class User < ApplicationRecord
     user if user.valid?
   end
 
-  private
-
   def self.generate_name(organization_name)
-    organization_name = organization_name
     last_user_id = User.last.id
-    "#{organization_name}" + "#User" + "#{last_user_id + 1}"
+    "#{organization_name}#User#{last_user_id + 1}"
   end
 end

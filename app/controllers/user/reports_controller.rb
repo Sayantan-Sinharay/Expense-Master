@@ -1,5 +1,5 @@
-class User::ReportsController < ApplicationController
+# frozen_string_literal: true
 
-  def index
-  end
+class User::ReportsController < ApplicationController
+  def index; end
 end
