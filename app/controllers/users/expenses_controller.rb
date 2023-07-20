@@ -14,9 +14,7 @@ module Users
     end
 
     def create
-      @expense = Current.user.expenses.new(expense_params)
-      @expense.attachment.attach(params[:expense][:attachment])
-      update_month_and_year(@expense)
+      @expense = build_expense_from_params
 
       if @expense.save
         send_notifications(Current.user, @expense)
@@ -28,6 +26,15 @@ module Users
     end
 
     private
+
+    # Build an expense object from the submitted parameters.
+    def build_expense_from_params
+      expense = Current.user.expenses.new(expense_params)
+      attachment = params[:expense][:attachment]
+      expense.attachment.attach(attachment)
+      update_month_and_year(expense)
+      expense
+    end
 
     # Finds an expense based on the ID parameter.
     def find_expense

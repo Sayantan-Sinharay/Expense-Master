@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents the mailer for user-related emails.
 class UserMailer < ApplicationMailer
   def invitation_email
     @user = params[:user]

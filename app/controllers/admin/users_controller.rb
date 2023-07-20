@@ -16,16 +16,12 @@ module Admin
 
     def create
       @user = User.invite_user(Current.user, params[:user][:email])
+
       respond_to do |format|
         if invitation_sent_successfully?
-          flash[:success] = "Invitation sent to #{params[:user][:email]}!"
-          format.html { redirect_to admin_users_path }
-          format.js {}
-          send_invitation_email
+          handle_successful_invitation(format)
         else
-          flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
-          format.html { render :new }
-          format.js { render :new } # TODO: create template error.js.erb to handle errors if any. Add status as well.
+          handle_failed_invitation(format)
         end
       end
     end
@@ -50,6 +46,21 @@ module Admin
     # Finds and sets the user based on the ID parameter.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    # Handles successful user invitation.
+    def handle_successful_invitation(format)
+      flash[:success] = "Invitation sent to #{params[:user][:email]}!"
+      format.html { redirect_to admin_users_path }
+      format.js {}
+      send_invitation_email
+    end
+
+    # Handles failed user invitation.
+    def handle_failed_invitation(format)
+      flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
+      format.html { render :new }
+      format.js { render :new } # TODO: create template error.js.erb to handle errors if any. Add status as well.
     end
   end
 end

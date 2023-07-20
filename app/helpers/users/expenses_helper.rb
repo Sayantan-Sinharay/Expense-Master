@@ -9,7 +9,7 @@ module Users
     def update_month_and_year(expense)
       year = expense[:date].year
       month = expense[:date].month
-      expense.update(year: year, month: month)
+      expense.update(year:, month:)
     end
 
     # Sends notifications to admins about the newly created expense.

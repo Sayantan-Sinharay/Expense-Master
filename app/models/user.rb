@@ -19,20 +19,20 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
   scope :get_non_admin_users, lambda { |organization_id|
-                                where(organization_id: organization_id, is_admin?: false)
+                                where(organization_id:, is_admin?: false)
                               }
 
   scope :get_admin_users, lambda { |organization_id|
-                            where(organization_id: organization_id, is_admin?: true)
+                            where(organization_id:, is_admin?: true)
                           }
 
   # Creates and returns a new user instance with a generated name and password.
   def self.invite_user(admin_user, email)
     password = SecureRandom.urlsafe_base64(12)
     user = User.new(name: generate_name(admin_user.organization.name),
-                    email: email,
+                    email:,
                     organization_id: admin_user[:organization_id],
-                    password: password,
+                    password:,
                     password_confirmation: password)
     user if user.valid?
   end

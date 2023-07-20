@@ -20,14 +20,12 @@ module Admin
 
     def create
       @subcategory = @category.subcategories.build(subcategory_params)
+
       respond_to do |format|
-        if @subcategory.save
-          flash[:success] = 'Successfully created subcategory.'
-          format.html { redirect_to admin_category_path(@category) }
+        if save_subcategory(format)
           format.js
         else
-          flash[:danger] = 'Error creating subcategory.'
-          format.js {}
+          handle_failed_subcategory_creation(format)
         end
       end
     end
@@ -68,6 +66,22 @@ module Admin
     # Permits the subcategory parameters.
     def subcategory_params
       params.require(:subcategory).permit(:name)
+    end
+
+    # Saves the subcategory and handles success.
+    def save_subcategory(format)
+      if @subcategory.save
+        flash[:success] = 'Successfully created subcategory.'
+        format.html { redirect_to admin_category_path(@category) }
+      else
+        false
+      end
+    end
+
+    # Handles failed subcategory creation.
+    def handle_failed_subcategory_creation(format)
+      flash[:danger] = 'Error creating subcategory.'
+      format.js {}
     end
   end
 end

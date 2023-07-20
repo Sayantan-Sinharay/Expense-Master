@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Contains helper methods for handling notifications.
 module NotificationsHelper
   # Creates notifications for all admin users with the given notification message.
   def create_notification_for_admins(notification_message)
@@ -8,7 +9,7 @@ module NotificationsHelper
       notification = Notification.create(user_id: admin.id, message: notification_message)
       NotificationChannel.broadcast_to(admin.id,
                                        partial: render_to_string(partial: 'notifications/notification',
-                                                                 locals: { notification: notification }))
+                                                                 locals: { notification: }))
     end
   end
 
@@ -17,6 +18,6 @@ module NotificationsHelper
     notification = Notification.create(user_id: user.id, message: notification_message)
     NotificationChannel.broadcast_to(user.id,
                                      partial: render_to_string(partial: 'notifications/notification',
-                                                               locals: { notification: notification }))
+                                                               locals: { notification: }))
   end
 end
