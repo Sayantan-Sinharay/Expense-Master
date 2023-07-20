@@ -1,6 +1,5 @@
 class Admin::CategoriesController < ApplicationController
   before_action :set_category, only: [:edit, :update, :destroy]
-  layout "user"
 
   def index
     @categories = Category.all
@@ -14,13 +13,12 @@ class Admin::CategoriesController < ApplicationController
     @category = Category.new(name: params[:name])
     respond_to do |format|
       if @category.save
-        flash[:success] = "Category was successfully created."
         format.html { redirect_to admin_categories_path }
-        format.js
+        format.js { flash[:success] = "Category was successfully created." }
       else
         flash[:danger] = "Category could not be created."
         format.html { redirect_to admin_categories_path }
-        format.js
+        format.js { }
       end
     end
   end

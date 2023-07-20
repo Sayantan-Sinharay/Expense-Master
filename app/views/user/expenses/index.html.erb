@@ -1,39 +1,11 @@
-<section class="flex flex-col gap-5">
+<section class="flex flex-col h-full overflow-hidden gap-5">
   <span class="flex items-center justify-between">
     <h2 class="font-bold text-4xl">Expense Tracker</h2>
-    <div id="create-container" class="flex gap-5">
-      <%= link_to "Create Expense", new_expense_path, class: "button is-primary font-bold border-2 is-outlined w-fit" %>
-      <%= link_to "Create Credit", new_credit_path, class: "button is-primary font-bold border-2 is-outlined w-fit" %>
-    </div>
+    <%= link_to "Create Expense", new_expense_path, class: "button is-primary font-bold border-2 is-outlined w-fit" %>
   </span>
-  <div>
-    <div class="tabs is-fullwidth">
-      <ul class="font-medium">
-        <li class="<%= 'is-active' if params[:tab] == 'expenses' || params[:tab].blank? %>">
-          <%= link_to 'Expenses', expenses_path(tab: 'expenses'), class: "border-b-2" %>
-        </li>
-        <li class="<%= 'is-active' if params[:tab] == 'credits' %>">
-          <%= link_to 'Credits', expenses_path(tab: 'credits'), class: "border-b-2" %>
-        </li>
-      </ul>
-    </div>
-    <% if params[:tab] == 'expenses' || params[:tab].blank? %>
-      <div class="flex flex-col gap-5 h-full overflow-hidden">
-        <h3 class="text-xl font-medium">Expenses</h3>
-        <%= render "filters" %>
-        <div class="flex flex-col p-2 h-full overflow-y-auto" id="expense_list">
-          <%= render @expenses %>
-        </div>
-      </div>
-    <% elsif params[:tab] == 'credits' %>
-      <div>
-        <h3 class="text-xl font-medium">Credits</h3>
-        <div class="flex flex-col p-2 h-full overflow-y-auto" id="credit_list">
-          <% @credits.each do |credit| %>
-            <%= render partial: "user/credits/credit", locals: { credit: credit } %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+  <%= render "filters" %>
+  <div class="flex flex-col p-2 h-full overflow-y-auto" id="expense_list">
+    <%= render @expenses %>
   </div>
 </section>
+

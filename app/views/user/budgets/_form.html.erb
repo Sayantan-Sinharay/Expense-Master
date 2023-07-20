@@ -16,23 +16,17 @@
   <div class="field">
     <%= form.label :month, class: "label" %>
     <div class="control">
-      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |month_name, index| [month_name, index] }, nil), { prompt: "Select Month" }, class: "input", id: "month_select" do %>
-        <% Date::MONTHNAMES.compact.each_with_index do |month_name, index| %>
-          <option value="<%= index %>" class="py-2 px-4 hover:bg-gray-100">
-            <%= month_name %>
-          </option>
-        <% end %>
-      <% end %>
+      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
     </div>
   </div>
   <div class="field">
     <%= form.label :amount, class: "label" %>
-    <p class="control has-icons-left">
+    <span class="control has-icons-left">
       <%= form.number_field :amount, class: "input" %>
       <span class="icon is-small is-left">
         <i class="fa-solid fa-indian-rupee-sign"></i>
       </span>
-    </p>
+    </span>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
@@ -50,41 +44,4 @@
   </div>
 </div>
 <% end %>
-<script>
-  $(document).ready(function() {
-    $('#subcategory_select').prop('disabled', true);
-
-    $('#category_select').change(function() {
-      const selectedCategoryId = $(this).val();
-      $('#subcategory_select').empty();
-      $('<option>', {
-        value: null,
-        text: "Select Sub-category"
-      }).appendTo('#subcategory_select');
-      $('#subcategory_select').prop('disabled', true);
-
-      if (selectedCategoryId) {
-        $.ajax({
-          url: "/admin/categories/" + selectedCategoryId + "/subcategories",
-          method: "GET",
-          success: function(response) {
-            response.forEach(function(subcategory) {
-              $('<option>', {
-                value: subcategory.id,
-                text: subcategory.name
-              }).appendTo('#subcategory_select');
-            });
-
-            $('#subcategory_select').prop('disabled', false);
-          },
-          error: function(xhr, status, error) {
-            console.log(error);
-          }
-        });
-      }
-      else {
-        $('#subcategory_select').prop('disabled', true);
-      }
-    });
-  });
-</script>
+<%= javascript_pack_tag 'user/budgets/form' %>

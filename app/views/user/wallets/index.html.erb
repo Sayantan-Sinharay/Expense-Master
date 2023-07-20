@@ -1,6 +1,18 @@
 <section class="flex flex-col gap-5">
   <span class="flex items-center justify-between">
     <h2 class="font-bold text-4xl">Wallet</h2>
-    <%= link_to "Add to wallet", new_budget_path, class: "button is-primary font-bold border-2 is-outlined w-fit"%>
+    <%= link_to "Add to wallet", new_wallet_path, class: "button is-primary font-bold border-2 is-outlined w-fit"%>
   </span>
+  <span class="text-2xl font-bold flex items-center gap-2">
+    Total amount:
+    <span class="icon-text text-primary">
+      <span class="icon">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </span>
+      <span>
+        <%= @total_amount %>
+      </span>
+    </span>
+  </span>
+  <%= render @wallets %>
 </section>

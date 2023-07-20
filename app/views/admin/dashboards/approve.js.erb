@@ -1,0 +1,16 @@
+$(document).ready(function() {
+  const expenseElement = $("#expense-item-<%= @expense.id %>");
+  const dropdownElement = expenseElement.find('.dropdown');
+  const statusElement = expenseElement.find('.tag');
+  const pendingTabContent = $('#pending-tab');
+  const approvedTabContent = $('#approved-tab');
+  
+  dropdownElement.remove();
+  statusElement.text('Approved');
+  statusElement.parent().addClass("flex");
+  statusElement.removeClass('is-warning');
+  statusElement.addClass('is-success');
+  
+  // Move the expense item to the "Approved" tab
+  expenseElement.detach().appendTo(approvedTabContent);
+});

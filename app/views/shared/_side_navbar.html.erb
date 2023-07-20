@@ -1,0 +1,65 @@
+<nav class="panel is-primary w-2/5 h-fit">
+  <p class="panel-heading">
+    <%= Current.user.organization.name %>
+  </p>
+  <% if Current.user[:is_admin?] %>
+    <%= link_to admin_dashboards_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-users fa-xl"></i>
+      </span>
+      <span>
+        Dashboard 
+      </span>
+    <% end %>
+    <%= link_to admin_users_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-user-gear fa-xl"></i>
+      </span>
+      <span>
+        User Management
+      </span>
+    <% end %>
+    <%= link_to admin_categories_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fas fa-sitemap fa-xl"></i>
+      </span>
+      <span>
+        Category Management
+      </span>
+    <% end %>
+  <% else %>
+    <%= link_to budgets_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-calculator fa-xl"></i>
+      </span>
+      <span>
+        Budget Planner 
+      </span>
+    <% end %>
+    <%= link_to expenses_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-dollar-sign fa-xl"></i>
+      </span>
+      <span>
+        Expense Tracker 
+      </span>
+    <% end %>
+    <%= link_to wallets_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-wallet fa-xl"></i>
+      </span>
+      <span>
+        Wallet 
+      </span>
+    <% end %>
+    <%= link_to reports_path, class: "panel-block gap-5" do %>
+      <span class="panel-icon">
+        <i class="fa-solid fa-chart-column fa-xl"></i>
+      </span>
+      <span>
+        Report 
+      </span>
+    <% end %>
+  <% end %>
+</nav>
+<%= javascript_pack_tag 'shared/side_navbar' %>

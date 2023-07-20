@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_05_123459) do
+ActiveRecord::Schema.define(version: 2023_07_18_104828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,8 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.bigint "subcategory_id"
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
-    t.date "month"
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_budgets_on_category_id"
@@ -63,31 +64,31 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "credits", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.decimal "amount", precision: 10, scale: 2
-    t.date "date"
-    t.bigint "beneficiary_user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["beneficiary_user_id"], name: "index_credits_on_beneficiary_user_id"
-    t.index ["user_id"], name: "index_credits_on_user_id"
-  end
-
   create_table "expenses", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "category_id", null: false
     t.bigint "subcategory_id"
     t.date "date"
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.string "attachment"
-    t.integer "status"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_expenses_on_category_id"
     t.index ["subcategory_id"], name: "index_expenses_on_subcategory_id"
     t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "message"
+    t.boolean "read", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -122,8 +123,9 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
 
   create_table "wallets", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.decimal "amount_given", precision: 10, scale: 2
-    t.date "month"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "month", null: false
+    t.integer "year", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wallets_on_user_id"
@@ -134,11 +136,10 @@ ActiveRecord::Schema.define(version: 2023_07_05_123459) do
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "subcategories"
   add_foreign_key "budgets", "users"
-  add_foreign_key "credits", "users"
-  add_foreign_key "credits", "users", column: "beneficiary_user_id"
   add_foreign_key "expenses", "categories"
   add_foreign_key "expenses", "subcategories"
   add_foreign_key "expenses", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "subcategories", "categories"
   add_foreign_key "users", "organizations"
   add_foreign_key "wallets", "users"

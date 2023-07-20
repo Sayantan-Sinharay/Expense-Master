@@ -1,0 +1,7 @@
+<%# <%= link_to %>
+<div class="box flex flex-col gap-2 text-lg <%= notification.read ? "font-normal" : "font-bold" %>">
+  <p>
+    <%= notification.message %>
+  </p>
+  <span class="text-sm ml-auto font-thin"><%= time_ago_in_words(notification.created_at) %> </span>
+</div>

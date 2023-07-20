@@ -1,0 +1,24 @@
+<%= form_with(model: @wallet, url: wallets_path, class: "flex flex-col gap-5") do |form| %>
+  <div class="flex items-center gap-16">
+    <div class="field flex-grow">
+      <%= form.label :amount, class: "label" %>
+      <p class="control has-icons-left">
+        <%= form.number_field :amount, class: "input" %>
+        <span class="icon is-small is-left">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field flex-grow">
+      <%= form.label :month, "Select Month", class: "label" %>
+      <div class="control">
+        <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control font-medium">
+      <%= form.submit "Add Wallet Amount", class: "button is-primary " %>
+    </div>
+  </div>
+<% end %>

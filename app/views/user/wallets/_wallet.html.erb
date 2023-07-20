@@ -1,0 +1,26 @@
+<div id="wallet-item" class="box flex flex-col gap-5">
+  <div class="flex flex-col gap-1">
+    <div class="title flex items-center justify-between">
+      <span class="text-2xl">Wallet Amount:</span>
+      <span class="icon-text text-primary">
+        <span class="icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </span>
+        <span>
+          <%= wallet.amount %>
+        </span>
+      </span>
+    </div>
+    <div class="subtitle flex items-center has-text-grey gap-2">
+      <span class="text-lg">Month:</span>
+      <span class="text-base">
+        <%= Date::MONTHNAMES[wallet.month] %>
+      </span>
+    </div>
+  </div>
+  <div class="flex">
+    <span class="ml-auto has-text-grey text-sm font-thin">
+      <%= time_ago_in_words(wallet.created_at) %>
+    </span>
+  </div>
+</div>

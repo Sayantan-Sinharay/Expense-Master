@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:destroy]
-  layout "user"
 
   def index
     @users = User.get_non_admin_users(Current.user[:organization_id])
@@ -14,7 +13,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def create
-    @user = User.invite_user(Current.user,params[:user][:email])
+    @user = User.invite_user(Current.user, params[:user][:email])
     respond_to do |format|
       if @user.nil?
         flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
@@ -38,7 +37,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      flash[:danger] = "User has been successfully deleted."
+      # flash[:danger] = "User has been successfully deleted."
       format.html { redirect_to admin_users_path }
       format.js
     end

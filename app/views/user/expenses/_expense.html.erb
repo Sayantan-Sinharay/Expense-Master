@@ -1,1 +1,87 @@
-expenses
+<div id="expense-item-<%= expense.id %>" class="box flex flex-col gap-2" data-month="<%= expense.month %>" data-quarter="<%= (expense.month.to_f / 4).ceil %>" data-year="<%= expense.year %>" data-status="<%= expense.status %>">
+  <div class="title m-0 flex items-center justify-between">
+    <span class="flex items-center gap-2">
+      <span class="text-2xl">Category:</span>
+      <span class="text-xl">
+        <%= Category.find_by(id: expense.category_id)&.name %>
+      </span>
+    </span>
+    <span class="icon-text has-text-danger">
+      <span> - </span>
+      <span class="icon">
+        <i class="fa-solid fa-indian-rupee-sign"></i>
+      </span>
+      <span>
+        <%= expense.amount %>
+      </span>
+    </span>
+  </div>
+  <% if expense.subcategory_id %>
+    <div class="subtitle m-0 flex items-center has-text-grey gap-2">
+      <span class="text-lg">Sub-Category:</span>
+      <span class="text-base">
+        <%= Subcategory.find_by(id: expense.subcategory_id)&.name %>
+      </span>
+    </div>
+  <% end %>
+  <span class="font-bold flex gap-2">
+    <span>Date:</span>
+    <%= expense.date %>
+  </span>
+  <% if expense.notes.length > 0 %>
+    <div class="flex font-bold flex-col gap-2">
+      <span>Note:</span>
+      <p class="pr-40 py-2 pl-2 font-light">
+        <%= expense.notes %>
+      </p>
+    </div>
+  <% end %>
+  <% if expense.attachment.attached? %>
+    <span class="flex py-4 w-fit group">
+      <%= link_to url_for(expense.attachment), target: "_blank", rel: "noopener noreferrer", class: "icon-text text-primary" do %>
+        <span class="icon">
+          <i class="fa-solid fa-file-invoice fa-xl"></i>
+        </span>
+        <span class="font-bold group-hover:underline underline-offset-4">
+          <%= expense.attachment.filename %>
+        </span>
+      <% end %>
+    </span>
+  <% end %>
+  <% if Current.user[:is_admin?] && expense.status == "pending" %>
+    <div class="dropdown w-fit is-hoverable">
+      <div class="dropdown-trigger">
+        <button id="expense_action-button" class="button text-sm is-primary is-outlined border-2 font-bold" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span>Action</span>
+          <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <%= link_to "Approve", approve_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put %>
+          <%= link_to "Reject", reject_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put, "data-toggle": "modal", "data-target": "#rejectModal" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div id="expense-status" class="flex py-2">
+    <span class="tag font-bold is-small is-light is-<%= expense.status_before_type_cast == 0 ? 'warning' : (expense.status_before_type_cast == 1 ? 'success' : 'danger')  %>">
+      <%= expense.status.humanize %>
+    </span>
+  </div>
+  <div class="flex items-center justify-between">
+    <% if Current.user[:is_admin?] %>
+      <div class="flex gap-2 font-bold text-sm mt-2">
+        <span>Created by:</span>
+        <span class="">
+          <%= expense.user.name %>
+        </span>
+      </div>
+    <% end %>
+    <span class="ml-auto has-text-grey text-sm font-thin">
+      <%= time_ago_in_words(expense.created_at) %>
+    </span>
+  </div>
+</div>
