@@ -25,6 +25,7 @@ module Admin
 
     private
 
+    # Finds an expense based on the ID parameter.
     def find_expense
       Expense.find(params[:id])
     end

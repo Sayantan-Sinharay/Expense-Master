@@ -39,9 +39,9 @@ module Admin
     def update
       respond_to do |format|
         if @subcategory.update(subcategory_params)
-          flash[:success] = 'Category updated successfully.'
+          flash[:success] = 'Subcategory updated successfully.'
         else
-          flash[:danger] = 'Failed to update category.'
+          flash[:danger] = 'Failed to update subcategory.'
         end
         format.html { redirect_to admin_categories_path }
         format.js
@@ -49,20 +49,23 @@ module Admin
     end
 
     def destroy
-      flash[:danger] = 'Category was successfully destroyed.' if @subcategory.destroy
+      flash[:danger] = 'Subcategory was successfully destroyed.' if @subcategory.destroy
       respond_to(&:js)
     end
 
     private
 
+    # Finds and sets the category based on the category_id parameter.
     def set_category
       @category = Category.find(params[:category_id])
     end
 
+    # Finds and sets the subcategory based on the ID parameter.
     def set_subcategory
       @subcategory = @category.subcategories.find(params[:id])
     end
 
+    # Permits the subcategory parameters.
     def subcategory_params
       params.require(:subcategory).permit(:name)
     end

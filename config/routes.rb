@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
-  scope module: 'user' do
+  scope module: 'users' do
     get 'index', to: 'users#index'
     resources :budgets, only: %i[index new create]
     resources :expenses, only: %i[index new create]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module User
+module Users
   # Controller for managing budgets for users.
   class BudgetsController < ApplicationController
     def index
@@ -25,6 +25,7 @@ module User
 
     private
 
+    # Permits the budget parameters.
     def budget_params
       params.require(:budget).permit(:category_id, :subcategory_id, :amount, :notes, :month)
     end

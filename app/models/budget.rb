@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents the budget model in the application.
 class Budget < ApplicationRecord
   belongs_to :user
   belongs_to :category

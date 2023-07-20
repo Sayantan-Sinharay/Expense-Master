@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents a migration to create the expenses table.
 class CreateExpenses < ActiveRecord::Migration[6.1]
   def change
     create_table :expenses do |t|

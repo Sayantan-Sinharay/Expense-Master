@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module User
+module Users
   # Controller for managing expenses for users.
   class ExpensesController < ApplicationController
-    include User::ExpensesHelper
+    include Users::ExpensesHelper
 
     def index
       @expenses = Current.user.expenses.order(date: :asc)
@@ -29,10 +29,12 @@ module User
 
     private
 
+    # Finds an expense based on the ID parameter.
     def find_expense
       Expense.find(params[:id])
     end
 
+    # Permits the expense parameters.
     def expense_params
       params.require(:expense).permit(:category_id, :subcategory_id, :amount, :attachment, :notes, :date)
     end

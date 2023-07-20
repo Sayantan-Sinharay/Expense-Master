@@ -22,12 +22,14 @@ class SessionsController < ApplicationController
 
   private
 
+  # Logs in the given user and sets session and cookie information.
   def log_in(user)
     session[:user_id] = user.id
     cookies.signed[:user_id] = user.id
     set_current_user
   end
 
+  # Logs out the current user by resetting session and deleting cookies.
   def log_out
     reset_session
     cookies.delete :user_id

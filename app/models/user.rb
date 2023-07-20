@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents the user model in the application.
 class User < ApplicationRecord
   has_secure_password
 
@@ -25,6 +26,7 @@ class User < ApplicationRecord
                             where(organization_id: organization_id, is_admin?: true)
                           }
 
+  # Creates and returns a new user instance with a generated name and password.
   def self.invite_user(admin_user, email)
     password = SecureRandom.urlsafe_base64(12)
     user = User.new(name: generate_name(admin_user.organization.name),
@@ -35,6 +37,7 @@ class User < ApplicationRecord
     user if user.valid?
   end
 
+  # Generates a name for the user based on the organization's name and the last user ID.
   def self.generate_name(organization_name)
     last_user_id = User.last.id
     "#{organization_name}#User#{last_user_id + 1}"

@@ -37,17 +37,19 @@ module Admin
 
     private
 
+    # Checks if the user invitation was sent successfully.
     def invitation_sent_successfully?
       @user.present? && @user.save
     end
 
+    # Sends an invitation email to the invited user.
     def send_invitation_email
       UserMailer.with(user: @user).invitation_email.deliver_later
     end
 
+    # Finds and sets the user based on the ID parameter.
     def set_user
       @user = User.find(params[:id])
     end
   end
 end
-

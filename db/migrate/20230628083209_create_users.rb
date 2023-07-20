@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents a migration to create the users table.
 class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
