@@ -7,8 +7,7 @@ module NotificationsHelper
     end
   end
 
-  def create_notification_for_user(user_id, notification_message)
-    user = User.find(user_id)
+  def create_notification_for_user(user, notification_message)
     notification = Notification.create(user_id: user.id, message: notification_message)
     NotificationChannel.broadcast_to(user.id, partial: render_to_string(partial: "notifications/notification", locals: { notification: notification }))
   end

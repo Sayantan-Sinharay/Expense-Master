@@ -8,7 +8,7 @@ module User::ExpensesHelper
   end
 
   def send_notifications(user, expense)
-    message = "#{user.name} has created a new expense of an amount #{expense.amount}."
+    message = "#{user.name} has created a new expense of an amount #{expense.amount} dated at #{expense.date}."
     create_notification_for_admins(message)
   end
 end
