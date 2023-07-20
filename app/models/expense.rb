@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents the expense model in the application.
 class Expense < ApplicationRecord
   has_one_attached :attachment
   belongs_to :user

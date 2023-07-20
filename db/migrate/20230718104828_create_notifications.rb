@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents a migration to create the notifications table.
 class CreateNotifications < ActiveRecord::Migration[6.1]
   def change
     create_table :notifications do |t|

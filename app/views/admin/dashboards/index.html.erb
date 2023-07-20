@@ -17,17 +17,17 @@
   <div class="flex flex-col p-2 h-full overflow-y-auto">
     <div class="tab-content" id="pending-tab">
       <% @expenses.where(status: "pending").each do |expense| %>
-        <%= render "user/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", { expense: expense } %>
       <% end %>
     </div>
     <div class="tab-content hidden" id="approved-tab">
       <% @expenses.where(status: "approved").each do |expense| %>
-        <%= render "user/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", { expense: expense } %>
       <% end %>
     </div>
     <div class="tab-content hidden" id="rejected-tab">
       <% @expenses.where(status: "rejected").each do |expense| %>
-        <%= render "user/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", { expense: expense } %>
       <% end %>
     </div>
   </div>

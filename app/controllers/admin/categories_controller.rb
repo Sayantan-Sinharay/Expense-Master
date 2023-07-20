@@ -1,63 +1,64 @@
-class Admin::CategoriesController < ApplicationController
-  before_action :set_category, only: [:edit, :update, :destroy]
+# frozen_string_literal: true
 
-  def index
-    @categories = Category.all
-  end
+module Admin
+  # Controller for managing categories in the admin panel.
+  class CategoriesController < ApplicationController
+    before_action :set_category, only: %i[edit update destroy]
 
-  def new
-    @category = Category.new
-  end
-
-  def create
-    @category = Category.new(name: params[:name])
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to admin_categories_path }
-        format.js { flash[:success] = "Category was successfully created." }
-      else
-        flash[:danger] = "Category could not be created."
-        format.html { redirect_to admin_categories_path }
-        format.js { }
-      end
+    def index
+      @categories = Category.all
     end
-  end
 
-  def edit
-    respond_to do |format|
-      format.js
+    def create
+      @category = Category.new(category_params)
+      save_category_and_respond
     end
-  end
 
-  def update
-    respond_to do |format|
+    def edit
+      respond_to(&:js)
+    end
+
+    def update
       if @category.update(category_params)
-        flash[:success] = "Category updated successfully."
+        flash[:success] = 'Category updated successfully.'
       else
-        flash[:danger] = "Failed to update category."
+        flash[:danger] = 'Failed to update category.'
       end
-      format.html { redirect_to admin_categories_path }
-      format.js
+      respond_to do |format|
+        format.html { redirect_to admin_categories_path }
+        format.js
+      end
     end
-  end
 
-  def destroy
-    if @category.destroy
-      flash[:danger] = "Category was successfully destroyed."
+    def destroy
+      flash[:danger] = 'Category was successfully destroyed.' if @category.destroy
+      respond_to(&:js)
     end
-    respond_to do |format|
-      format.html { redirect_to admin_categories_path }
-      format.js
+
+    private
+
+    # Finds and sets the category based on the ID parameter.
+    def set_category
+      @category = Category.find(params[:id])
     end
-  end
 
-  private
+    # Permits the category parameters.
+    def category_params
+      params.require(:category).permit(:name)
+    end
 
-  def set_category
-    @category = Category.find(params[:id])
-  end
-
-  def category_params
-    params.require(:category).permit(:name)
+    # Saves the category and responds to the corresponding format.
+    def save_category_and_respond
+      respond_to do |format|
+        if @category.save
+          format.html { redirect_to admin_categories_path }
+          format.js { flash[:success] = 'Category was successfully created.' }
+        else
+          flash[:danger] = 'Category could not be created.'
+          format.html { redirect_to admin_categories_path }
+          format.js {}
+        end
+      end
+    end
   end
 end
