@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: :login
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy', as: :logout
+  get 'user_registration', to: 'users#new'
+  post 'user_registration', to: 'users#create'
   resources :notifications, only: [:index]
 
   namespace :admin do
