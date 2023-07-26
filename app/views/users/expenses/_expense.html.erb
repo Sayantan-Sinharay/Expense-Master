@@ -61,15 +61,27 @@
       <div class="dropdown-menu" id="dropdown-menu" role="menu">
         <div class="dropdown-content">
           <%= link_to "Approve", approve_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put %>
-          <%= link_to "Reject", reject_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put, "data-toggle": "modal", "data-target": "#rejectModal" %>
+          <%= link_to "#", class: "dropdown-item reject", data: { toggle: "modal", target: "#rejectModal" } do %>
+            Reject
+          <% end %>
         </div>
       </div>
     </div>
   <% end %>
-  <div id="expense-status" class="flex py-2">
+  <div id="expense-status" class="flex items-center gap-5 py-2">
     <span class="tag font-bold is-small is-light is-<%= expense.status_before_type_cast == 0 ? 'warning' : (expense.status_before_type_cast == 1 ? 'success' : 'danger')  %>">
       <%= expense.status.humanize %>
     </span>
+    <% if expense.status == "rejected" %>
+      <div class="relative flex items-center w-full">
+        <span class="button icon is-danger is-light text-lg p-4 rounded-full tooltip" data-tooltip>
+          <i class="fa-solid fa-circle-info"></i>
+        </span>
+        <div class="box tooltip-text has-background-danger-light opacity-0 p-3 z-10 flex-grow absolute has-text-danger-dark font-medium text-sm rounded bottom-full left-14 h-fit top-0 pointer-events-none after:content-[''] after:block after:p-2 after:bg-inherit after:top-0 after:left-0 after:absolute after:rotate-45 after:-translate-x-1/2 after:rounded-sm after:translate-y-3">
+          <%= expense.rejection_reason %>
+        </div>
+      </div>
+    <% end %>
   </div>
   <div class="flex items-center justify-between">
     <% if Current.user[:is_admin?] %>
@@ -85,3 +97,5 @@
     </span>
   </div>
 </div>
+<%= render "admin/dashboards/modal", {expense: expense} %>
+<%= javascript_pack_tag "users/expenses/expense" %>

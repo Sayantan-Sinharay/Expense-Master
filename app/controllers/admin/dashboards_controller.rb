@@ -18,10 +18,11 @@ module Admin
 
     def reject
       @expense = find_expense
-      @expense.update(status: 'rejected')
+      @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
       send_reject_notification(Current.user, @expense)
       redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
     end
+    
 
     private
 
