@@ -1,8 +1,6 @@
-<h2 class="text-4xl">Welcome to Expense Master Application!</h2>
-<p>Hello <%= @user.name %>,</p>
-<p>You have been invited to join Expense Master Application. Please click on the link below to complete your registration:</p>
-<p><%= link_to "Complete Registration", user_registration_url(@token) %></p>
-<p>This link will expire in 24 hours for security reasons.</p>
-<p>If you did not request this invitation, you can safely ignore this email.</p>
-<p>Best regards,</p>
-<p>Your Expense Master Team</p>
+<%= render "layouts/mail_template" do %>
+  <p>You have been invited to join Expense Master Application. Please click on the link below to complete your registration:</p>
+  <%= link_to "Complete Registration", user_registration_url(token: @token), class: "bg-primary w-fit mx-auto text-white py-3 px-7 rounded-md font-medium text-lg hover:text-white mouse-pointer  shadow-md hover:shadow-none" %>
+  <p>This link will expire in 24 hours for security reasons.</p>
+  <p>If you did not request this invitation, you can safely ignore this email.</p>
+<% end %>

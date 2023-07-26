@@ -14,7 +14,8 @@ end
 # Create admin users
 admin_users = [
   {
-    name: 'Admin 1',
+    first_name: 'Admin 1',
+    last_name: 'test',
     email: 'admin1@test.com',
     password: PASSWORD,
     password_confirmation: PASSWORD,
@@ -22,7 +23,8 @@ admin_users = [
     is_admin?: true
   },
   {
-    name: 'Admin 2',
+    first_name: 'Admin 2',
+    last_name: 'test',
     email: 'admin2@test.com',
     password: PASSWORD,
     password_confirmation: PASSWORD,
@@ -37,14 +39,16 @@ end
 # Create regular users
 users = [
   {
-    name: 'User 1',
+    first_name: 'User 1',
+    last_name: 'test',
     email: 'user1@test.com',
     password: PASSWORD,
     password_confirmation: PASSWORD,
     organization_id: 1
   },
   {
-    name: 'User 2',
+    first_name: 'User 2',
+    last_name: 'test',
     email: 'user2@test.com',
     password: PASSWORD,
     password_confirmation: PASSWORD,

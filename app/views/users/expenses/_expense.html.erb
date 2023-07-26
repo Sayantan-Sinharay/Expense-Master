@@ -87,8 +87,8 @@
     <% if Current.user[:is_admin?] %>
       <div class="flex gap-2 font-bold text-sm mt-2">
         <span>Created by:</span>
-        <span class="">
-          <%= expense.user.name %>
+        <span>
+          <%= expense.user.first_name %> <%= expense.user.last_name %>
         </span>
       </div>
     <% end %>

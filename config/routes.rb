@@ -1,14 +1,18 @@
 # rubocop:disable all
 # frozen_string_literal: true
 
+
 Rails.application.routes.draw do
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   root to: 'homes#index'
   get 'home', to: 'homes#new', as: :home
   get 'login', to: 'sessions#new', as: :login
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy', as: :logout
   get 'user_registration', to: 'users#new'
-  post 'user_registration', to: 'users#create'
+  patch 'user_registration', to: 'users#create'
   resources :notifications, only: [:index]
 
   namespace :admin do
