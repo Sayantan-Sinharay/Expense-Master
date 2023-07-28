@@ -26,7 +26,7 @@ group :development do
   gem 'guard', '~> 2.18'
   gem 'guard-livereload', '~> 2.5', '>= 2.5.2'
   gem 'listen', '~> 3.3'
-  gem 'mailcatcher'
+  gem 'letter_opener_web'
   gem 'pry', '~> 0.14.2'
   gem 'rack-livereload', '~> 0.5.1'
   gem 'spring'

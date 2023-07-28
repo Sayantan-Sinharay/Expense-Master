@@ -1,0 +1,14 @@
+<p>Category: <%= @expense.category.name %></p>
+<% if !@expense.subcategory.nil? %>
+  <p>Sub-category: <%= @expense.subcategory.name %></p>
+<% end %>
+<p>Amount: <%= @expense.amount %> </p>
+<% if !@expense.notes.nil? %>
+  <p>Notes: <%= @expense.notes %> </p>
+<% end %>
+<p>Date: <%= @expense.date %></p>
+<% if @expense.status == "rejected" %>
+  <p class="has-text-danger font-bold my-2">
+    Reason: <%= @expense.rejection_reason %>
+  </p>
+<% end %>

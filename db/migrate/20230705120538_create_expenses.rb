@@ -15,6 +15,7 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.text :notes
       t.string :attachment
       t.integer :status, default: 0, null: false
+      t.text :rejection_reason
       t.timestamps
     end
   end

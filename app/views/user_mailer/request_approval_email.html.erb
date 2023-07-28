@@ -1,0 +1,6 @@
+<p class="font-bold text-xl">An expense entry requires your approval:</p>
+<div class="text-lg font-medium">
+  <p>User: <%= @user.email %></p>
+  <%= render "expense" %>
+</div>
+<p>Please log in to the application to approve or reject this expense.</p>

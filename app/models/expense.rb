@@ -4,7 +4,7 @@
 class Expense < ApplicationRecord
   has_one_attached :attachment
   belongs_to :user
-  belongs_to :category
+  belongs_to :category 
   belongs_to :subcategory
 
   validates :category, presence: true
