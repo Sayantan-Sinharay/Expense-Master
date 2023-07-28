@@ -5,7 +5,7 @@ module Users
   module ReportsHelper
     def yearly_report(user)
       User.year_wise_expenses(user)
-    end 
+    end
 
     def category_wise_report(user)
       category_wise_expenses_hash = {}

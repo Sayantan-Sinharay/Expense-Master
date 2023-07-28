@@ -16,7 +16,7 @@ module Admin
 
     def create
       @user = User.invite_user(Current.user, params[:user][:email])
-      @user.update(invitation_sent_at: Time.now);
+      @user.update(invitation_sent_at: Time.now)
       respond_to do |format|
         if invitation_sent_successfully?
           handle_successful_invitation(format)

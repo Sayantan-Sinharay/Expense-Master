@@ -19,23 +19,23 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { password.present? }
 
   scope :get_non_admin_users, lambda { |organization_id|
-    where(organization_id: organization_id, is_admin?: false)
+    where(organization_id:, is_admin?: false)
   }
 
   scope :get_admin_users, lambda { |organization_id|
-    where(organization_id: organization_id, is_admin?: true)
+    where(organization_id:, is_admin?: true)
   }
 
   scope :year_wise_expenses, lambda { |user|
     joins(:expenses)
-      .where(expenses: { user: user, status: 'approved' })
+      .where(expenses: { user:, status: 'approved' })
       .group('expenses.year')
       .sum('expenses.amount')
   }
 
   scope :category_wise_expenses, lambda { |user|
     joins(:expenses)
-      .where(expenses: { user: user, status: 'approved' })
+      .where(expenses: { user:, status: 'approved' })
       .group('expenses.category_id')
       .sum('expenses.amount')
   }

@@ -22,7 +22,6 @@ module Admin
       send_expense_status_update_notification(Current.user, @expense)
       redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
     end
-    
 
     private
 
