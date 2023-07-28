@@ -17,6 +17,8 @@
     </script>
   </head>
   <body>
-    <%= yield %>
+    <%= render "layouts/mail_template" do %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

@@ -12,14 +12,14 @@ module Admin
     def approve
       @expense = find_expense
       @expense.update(status: 'approved')
-      send_approve_notification(Current.user, @expense)
+      send_expense_status_update_notification(Current.user, @expense)
       redirect_to admin_dashboards_path, success: 'Expense approved successfully.'
     end
 
     def reject
       @expense = find_expense
       @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
-      send_reject_notification(Current.user, @expense)
+      send_expense_status_update_notification(Current.user, @expense)
       redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
     end
     
