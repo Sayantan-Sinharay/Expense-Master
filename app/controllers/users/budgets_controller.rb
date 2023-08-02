@@ -14,7 +14,6 @@ module Users
     def create
       @budget = Current.user.budgets.new(budget_params)
       @budget.update(year: Date.current.year)
-
       if @budget.save
         redirect_to budgets_path, success: 'Budget created successfully.'
       else

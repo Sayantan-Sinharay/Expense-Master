@@ -14,4 +14,8 @@ class Expense < ApplicationRecord
   validates :status, presence: true
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
+
+  scope :get_approved_expenses, lambda { |user|
+    joins(:user).where(expenses: { user_id: user.id, status: "approved" })
+  }
 end

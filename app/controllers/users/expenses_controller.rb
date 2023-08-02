@@ -15,6 +15,7 @@ module Users
 
     def create
       @expense = build_expense_from_params
+
       if @expense.save
         send_notifications(Current.user, @expense)
         redirect_to expenses_path, success: 'Expense created successfully.'

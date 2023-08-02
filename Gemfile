@@ -10,12 +10,15 @@ gem 'bulma-rails', '~> 0.9.4'
 gem 'chartkick', '~> 5.0', '>= 5.0.2'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '~> 1.1'
+gem 'prawn', '~> 2.4'
+gem 'prawn-table', '~> 0.2.2'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.3'
 gem 'rubocop', require: false
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
