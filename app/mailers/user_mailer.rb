@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Signup Confirmation - Expense Master')
   end
 
-  def request_approval_email
+  def request_expense_approval_email
     @admin = params[:admin]
     @expense = params[:expense]
     @user = @expense.user

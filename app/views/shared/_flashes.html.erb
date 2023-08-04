@@ -1,9 +1,11 @@
+<section class="flash-container relative h-fit p-2">
   <% flash.each do |type, message| %>
-  <div id="flash-message" class="container notification is-<%= type %> is-light">
-    <button class="delete"></button>
-    <div class="notification-content">
-      <%= message %>
+    <div id="flash-message" class="container notification is-<%= type %> is-light fixed flex mx-auto h-fit z-50 w-1/2 right-1/2 transform translate-x-1/2">
+      <button class="delete"></button>
+      <div class="notification-content">
+        <%= message %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</section>
 <%= javascript_pack_tag 'shared/flashes' %>

@@ -1,25 +1,35 @@
 $(document).ready(function () {
-    $("#subcategory_select").prop("disabled", true);
-    $("#attachment-input #remove_file-button").hide();
+    // Get the selected category on page load
+    const selectedCategoryId = $("#category_select").val();
 
-    $("#category_select").change(function () {
-        const selectedCategoryId = $(this).val();
+    if (selectedCategoryId) {
+        // Populate sub-category select field on page load
+        populateSubcategories(selectedCategoryId);
+    } else {
+        $("#subcategory_select").prop("disabled", true);
+        // Handle category select change event
+        $("#category_select").change(function () {
+            const categoryId = $(this).val();
+            populateSubcategories(categoryId);
+        });
+    }
+
+    // Function to populate sub-category select field
+    function populateSubcategories(categoryId) {
         $("#subcategory_select").empty();
-        $("<option>", {
-            value: null,
-            text: "Select Sub-category",
-        }).appendTo("#subcategory_select");
         $("#subcategory_select").prop("disabled", true);
 
-        if (selectedCategoryId) {
+        if (categoryId) {
             $.ajax({
-                url:
-                    "/admin/categories/" +
-                    selectedCategoryId +
-                    "/subcategories",
+                url: "/admin/categories/" + categoryId + "/subcategories",
                 method: "GET",
                 success: function (response) {
                     response.forEach(function (subcategory) {
+                        $("<option>", {
+                            value: null,
+                            text: "Select Sub-category",
+                        }).appendTo("#subcategory_select");
+
                         $("<option>", {
                             value: subcategory.id,
                             text: subcategory.name,
@@ -32,10 +42,10 @@ $(document).ready(function () {
                     console.log(error);
                 },
             });
-        } else {
-            $("#subcategory_select").prop("disabled", true);
         }
-    });
+    }
+
+    $("#attachment-input #remove_file-button").hide();
 
     $("#attachment-input input[type=file]").change(function () {
         const fileInput = $(this)[0];

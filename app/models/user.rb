@@ -8,9 +8,9 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
 
   belongs_to :organization
-  has_many :budgets
-  has_many :expenses
-  has_many :wallets
+  has_many :budgets, dependent: :destroy
+  has_many :expenses, dependent: :destroy
+  has_many :wallets, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
   validates :first_name, :email, presence: true

@@ -14,12 +14,11 @@ module Users
 
     def create
       @wallet = Current.user.wallets.build(wallet_params)
-      @wallet.year = Date.today.year
+      
       if @wallet.save
         redirect_to wallets_path, success: 'Wallet created successfully.'
       else
-        flash.now[:danger] = 'Wallet could not be created.'
-        render :new
+        handle_failed_wallet_creation
       end
     end
 
@@ -28,6 +27,12 @@ module Users
     # Permits the wallet parameters.
     def wallet_params
       params.require(:wallet).permit(:amount, :month)
+    end
+
+    # Handles failed wallet creation.
+    def handle_failed_wallet_creation
+      flash.now[:danger] = 'Wallet could not be created.'
+      render :new
     end
   end
 end
