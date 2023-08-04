@@ -49,8 +49,6 @@ $(document).ready(function () {
             const quarter = $(this).data("quarter");
             const year = $(this).data("year");
             const status = $(this).data("status");
-
-            console.log(selectedStatus, status);
             if (
                 (!selectedMonth || selectedMonth === month) &&
                 (!selectedQuarter || selectedQuarter === quarter) &&

@@ -17,7 +17,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Signup Confirmation - Expense Master')
   end
 
-  def request_approval_email
+  def request_expense_approval_email
     @admin = params[:admin]
     @expense = params[:expense]
     @user = @expense.user
@@ -30,13 +30,16 @@ class UserMailer < ApplicationMailer
     @admin = params[:admin]
     @expense = params[:expense]
     @user = @expense.user
+    @title = "Your Expense is #{ @expense.status.humanize }!"
 
-    @title = if @expense.status == 'approved'
-               'Your Expense is Approved!'
-             else
-               'Your Expense is Rejected!'
-             end
-
-    mail(to: @user.email, subject: 'Expense Approval - Expense Master')
+    mail(to: @user.email, subject: "Expense #{ @expense.status.humanize } - Expense Master")
   end
+
+  def monthly_expense_report
+    @user = params[:user]
+    @title = "Your Monthly Expense Report"
+    attachments["#{params[:pdf_filename]}"] = File.read(params[:pdf_filename])
+    mail(to: @user.email, subject: 'Monthly Expense Report')
+  end
+
 end

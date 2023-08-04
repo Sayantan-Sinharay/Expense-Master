@@ -24,6 +24,12 @@ module NotificationsHelper
   end
 end
 
+private
+
+def send_request_approval_email_notification(admin, expense)
+  UserMailer.with(admin:, expense:).request_expense_approval_email.deliver_later
+end
+
 def send_expense_status_update_email_notification(admin, expense)
   UserMailer.with(admin:, expense:).expense_status_update_email.deliver_later
 end

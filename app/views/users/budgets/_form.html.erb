@@ -1,38 +1,47 @@
-<%= form_with(model: @budget, url: budgets_path, class: "budget-form flex flex-col gap-2", id: "new_budget_form") do |form| %>
+<%= form_with(model: @budget, url: budgets_path, class: "budget-form flex flex-col", id: "new_budget_form", multipart: true, method: :post) do |form| %>
   <div class="flex flex-row w-full justify-between gap-16">
     <div class="field flex-grow">
-      <%= form.label :category_id, "Select Category", class: "label" %>
+      <%= form.label :category_id, "Select Category", class: "label required" %>
       <div class="control">
-        <%= form.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }, nil), { prompt: "Select Category" }, class: "input", id: "category_select" %>
+        <%= form.select :category_id, 
+               options_for_select(Category.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
+               { include_blank: "Select Category" },
+               class: "input",
+               id: "category_select" %>
       </div>
+      <%= render "shared/form_error_message", object: @budget, field: :category %>
     </div>
     <div class="field flex-grow">
       <%= form.label :subcategory_id, "Select Sub-category", class: "label" %>
       <div class="control">
-        <%= form.select :subcategory_id, options_for_select([], nil), { prompt: "Select Sub-category" }, class: "input", id: "subcategory_select", disabled: true %>
+        <%= form.select :subcategory_id, options_for_select([], nil), { include_blank: "Select Sub-Category" }, class: "input", id: "subcategory_select", disabled: true %>
       </div>
+      <%= render "shared/form_error_message", object: @budget, field: :subcategory %>
     </div>
   </div>
   <div class="field">
-    <%= form.label :month, class: "label" %>
+    <%= form.label :month, class: "label required" %>
     <div class="control">
       <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
     </div>
+    <%= render "shared/form_error_message", object: @budget, field: :month %>
   </div>
   <div class="field">
-    <%= form.label :amount, class: "label" %>
-    <span class="control has-icons-left">
+    <%= form.label :amount, class: "label required" %>
+    <div class="control has-icons-left">
       <%= form.number_field :amount, class: "input" %>
       <span class="icon is-small is-left">
         <i class="fa-solid fa-indian-rupee-sign"></i>
       </span>
-    </span>
+    </div>
+    <%= render "shared/form_error_message", object: @budget, field: :amount %>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
     <div class="control">
       <%= form.text_area :notes, class: "textarea" %>
     </div>
+    <%= render "shared/form_error_message", object: @budget, field: :notes %>
   </div>
   <div class="field is-grouped font-medium gap-2">
     <div class="control">
@@ -42,6 +51,5 @@
       <%= link_to "Cancel", new_budget_path, class: "button" %>
     </div>
   </div>
-</div>
 <% end %>
 <%= javascript_pack_tag 'users/budgets/form' %>

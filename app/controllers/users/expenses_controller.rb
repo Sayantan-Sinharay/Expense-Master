@@ -14,10 +14,10 @@ module Users
     end
 
     def create
-      @expense = build_expense_from_params
-      if @expense.save
-        send_notifications(Current.user, @expense)
-        redirect_to expenses_path, success: 'Expense created successfully.'
+      @expense = Current.user.expenses.new(expense_params)
+      
+      if @expense.valid?
+        process_valid_expense
       else
         flash.now[:danger] = 'Expense could not be created.'
         render :new
@@ -26,23 +26,35 @@ module Users
 
     private
 
-    # Build an expense object from the submitted parameters.
-    def build_expense_from_params
-      expense = Current.user.expenses.new(expense_params)
-      attachment = params[:expense][:attachment]
-      expense.attachment.attach(attachment)
-      update_month_and_year(expense)
-      expense
-    end
-
-    # Finds an expense based on the ID parameter.
-    def find_expense
-      Expense.find(params[:id])
-    end
-
     # Permits the expense parameters.
     def expense_params
-      params.require(:expense).permit(:category_id, :subcategory_id, :amount, :attachment, :notes, :date)
+      params.require(:expense).permit(:category_id, :amount, :attachment, :notes, :date)
+    end
+
+    # Processes a valid expense.
+    def process_valid_expense
+      attachment = params[:expense][:attachment]
+      @expense.attachment.attach(attachment)
+      update_month_and_year(@expense)
+      set_subcategory
+      save_and_notify_expense
+    end
+
+    # Sets the subcategory based on the parameters.
+    def set_subcategory
+      subcategory_id = params[:subcategory_id] == '0' ? nil : params[:subcategory_id]
+      @expense.update(subcategory_id: subcategory_id)
+    end
+
+    # Saves the expense and sends notifications.
+    def save_and_notify_expense
+      if @expense.save
+        send_notifications(Current.user, @expense)
+        redirect_to expenses_path, success: 'Expense created successfully.'
+      else
+        flash.now[:danger] = 'Expense could not be created.'
+        render :new
+      end
     end
   end
 end
