@@ -13,14 +13,17 @@ class User < ApplicationRecord
   has_many :wallets, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
-  validates :first_name, :email, presence: { message: "can't be blank" }
-  validates :email, uniqueness: { case_sensitive: false, message: 'has already been taken' },
-                    format: { with: EMAIL_REGEX, message: 'is not a valid email format' }
-  validates :password, presence: { message: "can't be blank" },
-                       length: { minimum: 8, message: 'is too short (minimum is 8 characters)' },
+  validates :first_name, presence: { message: "User must have a first name" },
+                         length: { maximum: 20, message: "First name is too long." }
+  validates :last_name, length: { maximum: 20, message: "last name is too long." }
+  validates :email, presence: { message: "User must have an email" },
+                    uniqueness: { case_sensitive: false, message: 'Has already been taken' },
+                    format: { with: EMAIL_REGEX, message: 'Is not a valid email format' }
+  validates :password, presence: { message: "Can't be blank" },
+                       length: { minimum: 8, message: 'Is too short (minimum is 8 characters)' },
                        format: {
                          with: PASSWORD_REGEX,
-                         message: 'must include at least one lowercase letter, one uppercase letter, one digit' \
+                         message: 'Must include at least one lowercase letter, one uppercase letter, one digit' \
                          ', and one special character'
                        }
   validates :password_confirmation, presence: { message: "can't be blank" }, if: -> { password.present? }

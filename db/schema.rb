@@ -1,4 +1,3 @@
-# rubocop:disable all
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -61,8 +60,10 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
+    t.bigint "organization_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_categories_on_organization_id"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -140,6 +141,7 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
   add_foreign_key "budgets", "categories"
   add_foreign_key "budgets", "subcategories"
   add_foreign_key "budgets", "users"
+  add_foreign_key "categories", "organizations"
   add_foreign_key "expenses", "categories"
   add_foreign_key "expenses", "subcategories"
   add_foreign_key "expenses", "users"

@@ -7,12 +7,13 @@ class Wallet < ApplicationRecord
   validates :amount, presence: { message: "Amount can't be blank" },
                      numericality: { greater_than_or_equal_to: 0, message: 'Amount must be greater than or equal to 0' }
   validates :month, presence: { message: "Month can't be blank" },
-                    uniqueness: { message: 'Wallet for this month already exists' }
+                    uniqueness: { scope: :user_id, message: 'Wallet for this month already exists' }
 
   # Scope to get wallets for the current year.
   scope :current_year, lambda {
     where(year: Date.current.year)
   }
+  # Scope to get wallets for the given month.
   scope :with_month, lambda { |month|
     where(month:)
   }

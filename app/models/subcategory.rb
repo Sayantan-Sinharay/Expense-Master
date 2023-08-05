@@ -1,8 +1,8 @@
 # Represents the subcategory model in the application.
 class Subcategory < ApplicationRecord
   belongs_to :category
-  has_many :budgets
-  has_many :expenses
+  has_many :budgets, dependent: :nullify
+  has_many :expenses, dependent: :nullify
 
   validates :name, presence: { message: "Subcategory name can't be blank" },
                    uniqueness: { scope: :category_id, case_sensitive: true, message: 'Subcategory name must be unique within the same category' },
