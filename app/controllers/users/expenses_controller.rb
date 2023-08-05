@@ -3,6 +3,7 @@
 module Users
   # Controller for managing expenses for users.
   class ExpensesController < ApplicationController
+    before_action :set_expense, only: %i[create]
     include Users::ExpensesHelper
 
     def index
@@ -14,45 +15,50 @@ module Users
     end
 
     def create
-      @expense = Current.user.expenses.new(expense_params)
-      
       if @expense.valid?
-        process_valid_expense
+        handle_valid_expense
       else
-        flash.now[:danger] = 'Expense could not be created.'
-        render :new
+        handle_invalid_expense
       end
     end
 
     private
 
-    # Permits the expense parameters.
-    def expense_params
-      params.require(:expense).permit(:category_id, :amount, :attachment, :notes, :date)
+    def set_expense
+      @expense = Current.user.expenses.new(expense_params)
     end
 
-    # Processes a valid expense.
-    def process_valid_expense
-      attachment = params[:expense][:attachment]
-      @expense.attachment.attach(attachment)
-      update_month_and_year(@expense)
-      set_subcategory
+    def expense_params
+      params.require(:expense).permit(:category_id, :amount, :attachment, :notes, :date, :subcategory_id)
+    end
+
+    def handle_valid_expense
+      process_valid_expense
       save_and_notify_expense
     end
 
-    # Sets the subcategory based on the parameters.
-    def set_subcategory
-      subcategory_id = params[:subcategory_id] == '0' ? nil : params[:subcategory_id]
-      @expense.update(subcategory_id: subcategory_id)
+    def handle_invalid_expense
+      flash.now[:danger] = 'Expense could not be created.'
+      render :new
     end
 
-    # Saves the expense and sends notifications.
+    def process_valid_expense
+      attachment = params[:expense][:attachment]
+      @expense.attachment.attach(attachment)
+      set_subcategory
+    end
+
+    def set_subcategory
+      subcategory_id = params[:expense][:subcategory_id] == '0' ? nil : params[:expense][:subcategory_id]
+      @expense.update(subcategory_id:)
+    end
+
     def save_and_notify_expense
       if @expense.save
         send_notifications(Current.user, @expense)
-        redirect_to expenses_path, success: 'Expense created successfully.'
+        flash[:success] = 'Expense created successfully.'
+        redirect_to expenses_path
       else
-        flash.now[:danger] = 'Expense could not be created.'
         render :new
       end
     end

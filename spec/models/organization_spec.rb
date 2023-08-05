@@ -1,4 +1,5 @@
-# spec/models/organization_spec.rb
+# rubocop:disable all
+
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do

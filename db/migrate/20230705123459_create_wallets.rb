@@ -7,7 +7,7 @@ class CreateWallets < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.decimal :amount, precision: 10, scale: 2, null: false
       t.integer :month, null: false
-      t.integer :year, null: false
+      t.integer :year, null: false, default: -> { 'EXTRACT(year FROM CURRENT_TIMESTAMP)' }
 
       t.timestamps
     end
