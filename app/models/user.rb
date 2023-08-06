@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: { message: "User must have a first name" },
                          length: { maximum: 20, message: "First name is too long." }
-  validates :last_name, length: { maximum: 20, message: "last name is too long." }
+  validates :last_name, length: { maximum: 20, message: "Last name is too long." }
   validates :email, presence: { message: "User must have an email" },
                     uniqueness: { case_sensitive: false, message: 'Has already been taken' },
                     format: { with: EMAIL_REGEX, message: 'Is not a valid email format' }
@@ -26,7 +26,7 @@ class User < ApplicationRecord
                          message: 'Must include at least one lowercase letter, one uppercase letter, one digit' \
                          ', and one special character'
                        }
-  validates :password_confirmation, presence: { message: "can't be blank" }, if: -> { password.present? }
+  validates :password_confirmation, presence: { message: "Can't be blank" }, if: -> { password.present? }
 
   scope :get_non_admin_users, lambda { |organization_id|
     where(organization_id: organization_id, is_admin?: false)
