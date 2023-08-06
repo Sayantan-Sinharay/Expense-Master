@@ -1,230 +1,118 @@
-# rubocop:disable all
-# frozen_string_literal: true
+# db/seeds.rb
 
-PASSWORD = '123'
+require 'faker'
+
+# Clear existing data
+ActiveStorage::Attachment.destroy_all
+Budget.destroy_all
+Category.destroy_all
+Expense.destroy_all
+Notification.destroy_all
+Organization.destroy_all
+Subcategory.destroy_all
+User.destroy_all
+Wallet.destroy_all
+
+PASSWORD = 'Password#123'
 
 # Create organizations
-organizations = [
-  { name: 'Organization 1' }
-]
-organizations.each do |organization|
-  Organization.create(organization)
+5.times do
+  organization = Organization.create!(
+    name: Faker::Company.name
+  )
+  puts "Created organization #{organization.name}"
+
+  # Create admin users
+  2.times do
+    admin_user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.unique.email,
+      password: PASSWORD,
+      password_confirmation: PASSWORD,
+      organization: organization,
+      is_admin?: true
+    )
+    puts "Created admin user #{admin_user.email}"
+  end
+
+  # Create regular users
+  3.times do
+    user = User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: Faker::Internet.unique.email,
+      password: PASSWORD,
+      password_confirmation: PASSWORD,
+      organization: organization
+    )
+    puts "Created user #{user.email}"
+  end
+
+  # Create categories
+  3.times do
+    category = organization.categories.create!(
+      name: Faker::Commerce.department
+    )
+    puts "Created category #{category.name}"
+
+    # Create sub-categories
+    4.times do
+      subcategory = category.subcategories.create!(
+        name: Faker::Commerce.product_name
+      )
+      puts "Created subcategory #{subcategory.name}"
+    end
+  end
+
+  # Create budgets
+  User.where(organization: organization).each do |user|
+    Category.all.sample(2).each do |category|
+      subcategory = category.subcategories.sample
+
+      Budget.create!(
+        user: user,
+        category: category,
+        subcategory: subcategory,
+        amount: Faker::Number.between(from: 100, to: 1000),
+        notes: Faker::Lorem.sentence,
+        month: Faker::Number.between(from: 1, to: 12),
+        year: Date.current.year
+      )
+    end
+  end
+
+  # Create expenses
+  User.where(organization: organization).each do |user|
+    Category.all.sample(2).each do |category|
+      subcategory = category.subcategories.sample
+
+      Expense.create!(
+        user: user,
+        category: category,
+        subcategory: subcategory,
+        date: Faker::Date.between(from: 6.months.ago, to: Date.current),
+        amount: Faker::Number.between(from: 10, to: 100),
+        notes: Faker::Lorem.sentence,
+        status: Expense.statuses.keys.sample,
+        rejection_reason: Faker::Lorem.sentence,
+        month: Faker::Number.between(from: 1, to: 12),
+        year: Date.current.year
+      )
+    end
+  end
+
+  # Create wallets
+  User.where(organization: organization).each do |user|
+    Wallet.create!(
+      user: user,
+      amount: Faker::Number.between(from: 100, to: 1000),
+      month: Faker::Number.between(from: 1, to: 12),
+      year: Date.current.year
+    )
+  end
 end
 
-# Create admin users
-admin_users = [
-  {
-    first_name: 'Admin 1',
-    last_name: 'test',
-    email: 'admin1@test.com',
-    password: PASSWORD,
-    password_confirmation: PASSWORD,
-    organization_id: 1,
-    is_admin?: true
-  },
-  {
-    first_name: 'Admin 2',
-    last_name: 'test',
-    email: 'admin2@test.com',
-    password: PASSWORD,
-    password_confirmation: PASSWORD,
-    organization_id: 1,
-    is_admin?: true
-  }
-]
-admin_users.each do |admin_user|
-  User.create(admin_user)
-end
 
-# Create regular users
-users = [
-  {
-    first_name: 'User 1',
-    last_name: 'test',
-    email: 'user1@test.com',
-    password: PASSWORD,
-    password_confirmation: PASSWORD,
-    organization_id: 1
-  },
-  {
-    first_name: 'User 2',
-    last_name: 'test',
-    email: 'user2@test.com',
-    password: PASSWORD,
-    password_confirmation: PASSWORD,
-    organization_id: 1
-  }
-]
-users.each do |user|
-  User.create(user)
-end
-
-# Create categories
-categories = [
-  { name: 'Travel Expense' },
-  { name: 'Event Expense' },
-  { name: 'Goods Purchase' }
-]
-categories.each do |category|
-  Category.create(category)
-end
-
-# Create sub-categories
-subcategories = [
-  { name: 'Recruitment Drive', category_id: Category.find_by(name: 'Travel Expense')[:id] },
-  { name: 'Client Visits', category_id: Category.find_by(name: 'Travel Expense')[:id] },
-  { name: 'Conference', category_id: Category.find_by(name: 'Travel Expense')[:id] },
-  { name: 'Exhibitions', category_id: Category.find_by(name: 'Travel Expense')[:id] },
-  { name: 'Birthday', category_id: Category.find_by(name: 'Event Expense')[:id] },
-  { name: 'Annual Day', category_id: Category.find_by(name: 'Event Expense')[:id] },
-  { name: 'Festivals', category_id: Category.find_by(name: 'Event Expense')[:id] },
-  { name: 'Food & Beverages', category_id: Category.find_by(name: 'Goods Purchase')[:id] },
-  { name: 'Stationeries', category_id: Category.find_by(name: 'Goods Purchase')[:id] },
-  { name: 'Cleaning', category_id: Category.find_by(name: 'Goods Purchase')[:id] },
-  { name: 'Electronics Accessories', category_id: Category.find_by(name: 'Goods Purchase')[:id] }
-]
-subcategories.each do |subcategory|
-  Subcategory.create(subcategory)
-end
-
-# Create sample budgets
-budgets = [
-  {
-    user_id: User.find_by(email: 'user1@test.com').id,
-    category_id: Category.find_by(name: 'Travel Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Recruitment Drive').id,
-    amount: 500.0,
-    notes: 'Recruitment drive expenses',
-    month: 1,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user1@test.com').id,
-    category_id: Category.find_by(name: 'Travel Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Client Visits').id,
-    amount: 800.0,
-    notes: 'Client visits expenses',
-    month: 2,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Event Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Birthday').id,
-    amount: 200.0,
-    notes: 'Birthday celebration expenses',
-    month: 2,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Event Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Annual Day').id,
-    amount: 300.0,
-    notes: 'Annual day expenses',
-    month: 1,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Goods Purchase').id,
-    subcategory_id: Subcategory.find_by(name: 'Food & Beverages').id,
-    amount: 150.0,
-    notes: 'Food and beverages purchase',
-    month: 5,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Goods Purchase').id,
-    subcategory_id: Subcategory.find_by(name: 'Stationeries').id,
-    amount: 50.0,
-    notes: 'Stationery purchase',
-    month: 3,
-    year: Date.current.year
-  }
-]
-budgets.each do |budget|
-  Budget.create(budget)
-end
-
-# Create sample expenses
-expenses = [
-  {
-    user_id: User.find_by(email: 'user1@test.com').id,
-    category_id: Category.find_by(name: 'Travel Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Recruitment Drive').id,
-    date: Date.today,
-    amount: 100.0,
-    notes: 'Expense 1',
-    status: 0,
-    month: Date.current.month,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user1@test.com').id,
-    category_id: Category.find_by(name: 'Travel Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Client Visits').id,
-    date: Date.today,
-    amount: 200.0,
-    notes: 'Expense 2',
-    status: 1,
-    month: Date.current.month,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Event Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Birthday').id,
-    date: Date.today,
-    amount: 150.0,
-    notes: 'Expense 3',
-    status: 2,
-    month: Date.current.month,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Event Expense').id,
-    subcategory_id: Subcategory.find_by(name: 'Annual Day').id,
-    date: Date.today,
-    amount: 300.0,
-    notes: 'Expense 4',
-    status: 0,
-    month: Date.current.month,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    category_id: Category.find_by(name: 'Goods Purchase').id,
-    subcategory_id: Subcategory.find_by(name: 'Food & Beverages').id,
-    date: Date.today,
-    amount: 50.0,
-    notes: 'Expense 5',
-    status: 1,
-    month: Date.current.month,
-    year: Date.current.year
-  }
-]
-expenses.each do |expense|
-  Expense.create(expense)
-end
-
-# Create sample wallets
-wallets = [
-  {
-    user_id: User.find_by(email: 'user1@test.com').id,
-    amount: 500.0,
-    month: Date.current.month,
-    year: Date.current.year
-  },
-  {
-    user_id: User.find_by(email: 'user2@test.com').id,
-    amount: 800.0,
-    month: Date.current.month,
-    year: Date.current.year
-  }
-]
-wallets.each do |wallet|
-  Wallet.create(wallet)
-end
+puts "A sample admin user: " + Organization.first.users.where(is_admin?: true).first.email
+puts "A sample staff member: " + Organization.first.users.where(is_admin?: false).first.email

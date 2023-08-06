@@ -24,12 +24,12 @@ $(document).ready(function () {
                 url: "/admin/categories/" + categoryId + "/subcategories",
                 method: "GET",
                 success: function (response) {
-                    response.forEach(function (subcategory) {
-                        $("<option>", {
-                            value: null,
-                            text: "Select Sub-category",
-                        }).appendTo("#subcategory_select");
+                    $("<option>", {
+                        value: null,
+                        text: "Select Sub-category",
+                    }).appendTo("#subcategory_select");
 
+                    response.forEach(function (subcategory) {
                         $("<option>", {
                             value: subcategory.id,
                             text: subcategory.name,

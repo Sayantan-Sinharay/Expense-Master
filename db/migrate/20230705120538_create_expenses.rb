@@ -10,7 +10,7 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.references :subcategory, foreign_key: true
       t.date :date
       t.integer :month, null: false
-      t.integer :year, null: false
+      t.integer :year, null: false, default: -> { "EXTRACT(year FROM CURRENT_TIMESTAMP)" }
       t.decimal :amount, precision: 10, scale: 2
       t.text :notes
       t.string :attachment

@@ -22,8 +22,13 @@ gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
+group :test do
+  gem 'rspec-rails'
+end
 group :development do
   gem 'better_errors', '~> 2.10', '>= 2.10.1'
   gem 'guard', '~> 2.18'
