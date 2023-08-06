@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $("#list-message").removeClass("flex");
+    $("#list-message").hide();
+
     $(".dropdown").on("click", function (e) {
         const dropdown = $(this);
         const isActive = dropdown.hasClass("is-active");
@@ -44,6 +47,8 @@ $(document).ready(function () {
             .parent()
             .attr("data-value");
 
+        let totalValidExpenses = 0;
+
         $('div[id^="expense-item-"]').each(function () {
             const month = $(this).data("month");
             const quarter = $(this).data("quarter");
@@ -57,10 +62,19 @@ $(document).ready(function () {
             ) {
                 $(this).addClass("flex");
                 $(this).show();
+                totalValidExpenses++;
             } else {
                 $(this).removeClass("flex");
                 $(this).hide();
             }
         });
+
+        if (totalValidExpenses) {
+            $("#list-message").removeClass("flex");
+            $("#list-message").hide();
+        } else {
+            $("#list-message").addClass("flex");
+            $("#list-message").show();
+        }
     });
 });

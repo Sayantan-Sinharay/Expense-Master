@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $("#list-message").removeClass("flex");
+    $("#list-message").hide();
+
     $(".dropdown").on("click", function (e) {
         const dropdown = $(this);
         const isActive = dropdown.hasClass("is-active");
@@ -38,6 +41,8 @@ $(document).ready(function () {
             $("#selected-month").parent().attr("data-value")
         );
 
+        let totalValidBudgets = 0;
+
         $("div#budget-item").each(function () {
             const categoryId = $(this).data("category-id");
             const month = $(this).data("month");
@@ -48,10 +53,19 @@ $(document).ready(function () {
             ) {
                 $(this).addClass("flex");
                 $(this).show();
+                totalValidBudgets++;
             } else {
                 $(this).removeClass("flex");
                 $(this).hide();
             }
         });
+
+        if (totalValidBudgets) {
+            $("#list-message").removeClass("flex");
+            $("#list-message").hide();
+        } else {
+            $("#list-message").addClass("flex");
+            $("#list-message").show();
+        }
     });
 });

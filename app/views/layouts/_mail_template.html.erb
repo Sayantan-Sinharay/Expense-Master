@@ -5,7 +5,7 @@
     </section>
     <section class="flex flex-col p-10">
       <h2 class="text-4xl font-bold text-primary"><%= @title %></h2>
-      <span class="font-bold text-xl my-6">Hello <%= @user.email %>,</span>
+      <span class="font-bold text-xl my-6">Hello <%= @to.email %>,</span>
       <div class="flex flex-col gap-5">
         <div class="mail-container flex flex-col gap-5">
           <%= yield %>

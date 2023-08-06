@@ -14,19 +14,28 @@
     </ul>
   </div>
   <div class="flex flex-col p-2 h-full overflow-y-auto">
-    <div class="tab-content" id="pending-tab">
+    <div class="tab-content h-full" id="pending-tab">
       <% @expenses.where(status: "pending").each do |expense| %>
-        <%= render "users/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", expense: expense %>
+      <% end %>
+      <% if @expenses.where(status: "pending").empty? %>
+        <%= render "shared/message", message: "No pending Expenses." %>
       <% end %>
     </div>
-    <div class="tab-content hidden" id="approved-tab">
+    <div class="tab-content hidden h-full" id="approved-tab">
       <% @expenses.where(status: "approved").each do |expense| %>
-        <%= render "users/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", expense: expense %>
+      <% end %>
+      <% if @expenses.where(status: "approved").empty? %>
+        <%= render "shared/message", message: "No approved Expenses." %>
       <% end %>
     </div>
-    <div class="tab-content hidden" id="rejected-tab">
+    <div class="tab-content hidden h-full" id="rejected-tab">
       <% @expenses.where(status: "rejected").each do |expense| %>
-        <%= render "users/expenses/expense", { expense: expense } %>
+        <%= render "users/expenses/expense", expense: expense %>
+      <% end %>
+      <% if @expenses.where(status: "rejected").empty? %>
+        <%= render "shared/message", message: "No rejected Expenses." %>
       <% end %>
     </div>
   </div>
