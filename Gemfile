@@ -10,6 +10,7 @@ gem 'bulma-rails', '~> 0.9.4'
 gem 'chartkick', '~> 5.0', '>= 5.0.2'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '~> 1.1'
+gem 'matrix', '~> 0.4.2'
 gem 'prawn', '~> 2.4'
 gem 'prawn-table', '~> 0.2.2'
 gem 'puma', '~> 5.0'
@@ -49,3 +50,11 @@ end
 
 gem 'tailwindcss-rails', '~> 2.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "redis", "~> 5.0"
+
+gem "sentry-ruby", "~> 5.10"
+
+gem "sentry-rails", "~> 5.10"
