@@ -9,5 +9,5 @@ end
 
 # Task for generating and sending monthly reports in development environment
 every 1.month, at: 'start of the month', roles: [:app] do
-  rake "monthly_report:generate_and_send_monthly_report", environment: 'development'
+  rake 'monthly_report:generate_and_send_monthly_report', environment: 'development'
 end

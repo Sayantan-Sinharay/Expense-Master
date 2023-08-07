@@ -33,7 +33,7 @@ class UserMailer < ApplicationMailer
     @admin = params[:admin]
     @expense = params[:expense]
     @user = @expense.user
-    @title = "Your Expense is #{ @expense.status.humanize }!"
+    @title = "Your Expense is #{@expense.status.humanize}!"
     @to = @user
 
     mail(to: @user.email, subject: "Expense #{@expense.status.humanize} - Expense Master")
@@ -41,10 +41,10 @@ class UserMailer < ApplicationMailer
 
   def monthly_expense_report
     @user = params[:user]
-    @title = 'Your Monthly Expense Report'
+    @title = 'Your Monthly Expense Report!'
     attachments[params[:pdf_filename].to_s] = File.read(params[:pdf_filename])
     @to = @user
-    
+
     mail(to: @user.email, subject: 'Monthly Expense Report')
   end
 end
