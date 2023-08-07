@@ -6,6 +6,7 @@ class UserMailer < ApplicationMailer
     @user = params[:user]
     @token = params[:user].signed_id(purpose: 'invitation', expires_in: 24.hours)
     @title = 'Welcome to Expense Master Application!'
+    @to = @user
 
     mail(to: @user.email, subject: 'Invitation to Expense Master Application')
   end
@@ -13,6 +14,7 @@ class UserMailer < ApplicationMailer
   def confirmation_email
     @user = params[:user]
     @title = 'Welcome to Expense Master Application!'
+    @to = @user
 
     mail(to: @user.email, subject: 'Signup Confirmation - Expense Master')
   end
@@ -22,6 +24,7 @@ class UserMailer < ApplicationMailer
     @expense = params[:expense]
     @user = @expense.user
     @title = 'Expense Approval Required!'
+    @to = @admin
 
     mail(to: @admin.email, subject: 'Expense Approval Required - Expense Master')
   end
@@ -31,14 +34,17 @@ class UserMailer < ApplicationMailer
     @expense = params[:expense]
     @user = @expense.user
     @title = "Your Expense is #{@expense.status.humanize}!"
+    @to = @user
 
     mail(to: @user.email, subject: "Expense #{@expense.status.humanize} - Expense Master")
   end
 
   def monthly_expense_report
     @user = params[:user]
-    @title = 'Your Monthly Expense Report'
+    @title = 'Your Monthly Expense Report!'
     attachments[params[:pdf_filename].to_s] = File.read(params[:pdf_filename])
+    @to = @user
+
     mail(to: @user.email, subject: 'Monthly Expense Report')
   end
 end

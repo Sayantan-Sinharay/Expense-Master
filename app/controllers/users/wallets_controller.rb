@@ -14,6 +14,7 @@ module Users
 
     def create
       @wallet = Current.user.wallets.build(wallet_params)
+
       if @wallet.save
         redirect_to wallets_path, success: 'Wallet created successfully.'
       else

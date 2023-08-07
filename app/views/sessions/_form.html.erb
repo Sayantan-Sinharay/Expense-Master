@@ -9,8 +9,11 @@
     </div>
     <div class="field">
       <%= form.label :password, class: "label" %>
-      <div class="control">
-        <%= form.password_field :password, class: "input" %>
+      <div class="control relative group">
+        <%= form.password_field :password, class: "input", id: "password-field" %>
+        <span class="icon is-right cursor-pointer has-text-grey absolute top-1/2 -translate-y-1/2 right-0 -translate-x-1/2 group-focus-within:text-black" id="toggle-password">
+          <i class="fa-solid fa-eye cursor-pointer"></i>
+        </span>
       </div>
     </div>
     <div class="field is-grouped font-medium">
@@ -23,3 +26,4 @@
     </div>
   </div>
 <% end %>
+<%= javascript_pack_tag "sessions/form" %>

@@ -19,7 +19,7 @@ class Expense < ApplicationRecord
   before_validation :extract_month_and_year_from_date, if: :date_present_and_valid?
 
   scope :get_approved_expenses, lambda { |user|
-    where(user_id: user.id, status: 'approved')
+    joins(:user).where(expenses: { user_id: user.id, status: 'approved' })
   }
 
   private

@@ -1,0 +1,39 @@
+# .rubocop.yml
+
+# AllCops:
+#   Exclude:
+#     - 'db/**/*'  # Exclude database-related files
+#     - 'config/**/*'  # Exclude configuration files
+#     - 'vendor/**/*'  # Exclude vendor files
+
+# Style/Documentation:
+#   Enabled: false  # Disable documentation-related cops
+
+# Style/FrozenStringLiteralComment:
+#   Enabled: false  # Disable FrozenStringLiteralComment cop
+
+# Naming/FileName:
+#   Enabled: false  # Disable FileName cop
+
+# Layout/LineLength:
+#   Max: 120  # Set the maximum line length to 120 characters
+
+# Add more cop settings as needed...
+
+# You can also set global options for all cops
+# AllCops:
+#   TargetRubyVersion: 2.7  # Set the target Ruby version
+
+# If you want to use a specific set of cops (for example, Rails), you can enable them like this:
+# Rails/Blank: # Enable the Rails/Blank cop
+#   Enabled: true
+
+# If you want to use specific cops, you can enable them like this:
+# Lint/UnneededDisable:
+#   Enabled: true
+
+# Use rubocop-rails for Rails-specific cops:
+# require: rubocop-rails
+
+# Use rubocop-performance for performance-related cops:
+# require: rubocop-performance

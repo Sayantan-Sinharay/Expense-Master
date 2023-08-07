@@ -14,5 +14,10 @@
       </span>
     </span>
   </span>
-  <%= render @wallets %>
+ <div class="flex flex-col p-2 h-full overflow-y-auto" id="wallet_list">
+    <%= render @wallets %>
+    <% if @wallets.nil? %>
+      <%= render "shared/message", object: "Wallet" %>
+    <% end %>
+  </div>
 </section>
