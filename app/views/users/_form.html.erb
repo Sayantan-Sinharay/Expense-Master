@@ -1,37 +1,33 @@
 <%= form_with(model: @user, url: user_registration_path(token: params[:token], purpose: 'invitation'), class: "box is-primary h-fit w-1/2 my-auto bg-white p-10 flex flex-col", method: :patch) do |form| %>
   <h1 class="text-primary text-2xl mb-5 font-bold">Register</h1>
   <div class="flex flex-col gap-5 my-auto">
-    <div class="flex gap-5">
+    <div class="flex items-start gap-5">
       <div class="field">
-        <%= form.label :first_name, class: "label" %>
+        <%= form.label :first_name, class: "label required" %>
         <div class="control">
           <%= form.text_field :first_name, class: "input" %>
+          <%= render "shared/form_error_message", object: @user, field: :first_name %>
         </div>
       </div>
       <div class="field">
         <%= form.label :last_name, class: "label" %>
         <div class="control">
           <%= form.text_field :last_name, class: "input" %>
+          <%= render "shared/form_error_message", object: @user, field: :last_name %>
         </div>
       </div>
     </div>
     <div class="field">
-      <%= form.label :email, class: "label" %>
+      <%= form.label :email, class: "label required" %>
       <div class="control">
         <%= form.text_field :email, class: "input", disabled: true%>
       </div>
     </div>
-    <div class="field">
-      <%= form.label :password, class: "label" %>
-      <div class="control">
-        <%= form.password_field :password, class: "input" %>
-      </div>
+    <div class="password-container">
+      <%= render "shared/password_field", form: form, object: @user, field: :password %>
     </div>
-    <div class="field">
-      <%= form.label :password_confirmation, class: "label" %>
-      <div class="control">
-        <%= form.password_field :password_confirmation, class: "input" %>
-      </div>
+    <div class="password-container">
+      <%= render "shared/password_field", form: form, object: @user, field: :password_confirmation %>
     </div>
     <div class="field is-grouped font-medium">
       <div class="control">

@@ -1,29 +1,24 @@
-<%= form_with(model: User.new, url: login_path, class: "box is-primary my-auto h-full w-1/2 bg-white p-10 flex flex-col") do |form| %>
+<%= form_with(model: @user, url: login_path, class: "box is-primary my-auto h-full w-1/2 bg-white p-10 flex flex-col", method: :post) do |form| %>
   <h1 class="text-primary text-2xl mb-5 font-bold">Login</h1>
   <div class="my-auto flex flex-col gap-5">
     <div class="field">
-      <%= form.label :email, class: "label" %>
+      <%= form.label :email, class: "label required" %>
       <div class="control">
         <%= form.text_field :email, class: "input" %>
+        <%= render "shared/form_error_message", object: @user, field: :email %>
       </div>
     </div>
-    <div class="field">
-      <%= form.label :password, class: "label" %>
-      <div class="control relative group">
-        <%= form.password_field :password, class: "input", id: "password-field" %>
-        <span class="icon is-right cursor-pointer has-text-grey absolute top-1/2 -translate-y-1/2 right-0 -translate-x-1/2 group-focus-within:text-black" id="toggle-password">
-          <i class="fa-solid fa-eye cursor-pointer"></i>
-        </span>
-      </div>
+    <div class="password-container">
+      <%= render "shared/password_field", form: form, object: @user, field: :password %>
     </div>
-    <div class="field is-grouped font-medium">
+    <div class="field is-grouped items-center font-medium">
       <div class="control">
         <%= form.submit 'Login', class: "button is-link" %>
       </div>
       <div class="control">
         <%= link_to "Cancel", root_path, class: "button is-link is-light" %>
       </div>
+      <div class="text-primary ml-auto font-normal hover:underline">Forget Password?</div>
     </div>
   </div>
 <% end %>
-<%= javascript_pack_tag "sessions/form" %>

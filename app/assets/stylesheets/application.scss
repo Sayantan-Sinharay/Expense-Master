@@ -68,3 +68,9 @@ label.required::after {
     color: $danger;
   }
 
+.field_with_errors {
+  label{
+    margin-bottom: 0.5em;
+  }
+}
+
