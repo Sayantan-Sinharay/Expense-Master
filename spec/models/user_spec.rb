@@ -1,5 +1,5 @@
 # rubocop:disable all
-#
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -72,7 +72,7 @@ RSpec.describe User, type: :model do
     expect(User.get_admin_users(organization.id)).not_to include(non_admin_user)
   end
 
-  it 'creates a user with a generated password when invited by an admin' do
+  it 'creates a user with generated password when invited by an admin' do
     admin_user = create(:user, organization:)
     invited_user = User.invite_user(admin_user, 'test@example.com')
     expect(invited_user).to be_valid
