@@ -44,7 +44,7 @@ class UserMailer < ApplicationMailer
     @title = 'Your Monthly Expense Report!'
     attachments[params[:pdf_filename].to_s] = File.read(params[:pdf_filename])
     @to = @user
-    
+
     mail(to: @user.email, subject: 'Monthly Expense Report')
   end
 end
