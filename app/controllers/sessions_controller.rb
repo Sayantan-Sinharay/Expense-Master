@@ -47,9 +47,7 @@ class SessionsController < ApplicationController
     redirect_to root_path, success: 'Successfully logged in'
   end
 
-  def handle_failed_login(message)
-    @user = User.new
-    @user.errors.add(:base, message)
+  def handle_failed_login
     flash.now[:danger] = @user.errors.full_messages.join(', ')
     render :new
   end
@@ -68,6 +66,7 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     reset_session
     cookies.delete :user_id
+    # set_current_user(nil)
   end
 
   def invalid_access; end

@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $(".toggle-password")
         .off()
@@ -13,4 +12,3 @@ $(document).ready(function () {
             $(this).find("i").toggleClass("fa-eye fa-eye-slash");
         });
 });
-

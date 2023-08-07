@@ -3,8 +3,7 @@
 module Users
   # Controller for managing budgets for users.
   class BudgetsController < ApplicationController
-    before_action :authenticate_user
-    before_action :set_budget_and_wallet, only: :create
+    before_action :set_budget, only: %i[create]
 
     def index
       @budgets = Current.user.budgets.order(created_at: :desc)
@@ -16,15 +15,9 @@ module Users
 
     def create
       if @budget.valid?
-        if valid_wallet?
-          handle_valid_budget
-        else
-          handle_invalid_wallet
-        end
-
+        initialize_budget(wallet)
       else
-        flash.now[:danger] = 'Budget could not be created.'
-        render :new
+        handle_invalid_wallet(@wallet)
       end
     end
 
@@ -32,6 +25,10 @@ module Users
 
     def budget_params
       params.require(:budget).permit(:category_id, :amount, :notes, :month)
+    end
+
+    def set_wallet
+      @wallet = Wallet.at_month(@budget.month).first
     end
 
     def set_budget_and_wallet
@@ -42,22 +39,21 @@ module Users
 
     # Sets the subcategory based on the parameters.
     def set_subcategory
-      subcategory_id = params[:budget][:subcategory_id].to_i.zero? ? nil : params[:budget][:subcategory_id]
-      @budget.subcategory_id = subcategory_id
+      subcategory_id = params[:subcategory_id] == '0' ? nil : params[:subcategory_id]
+      @budget.update(subcategory_id:)
     end
 
-    def handle_valid_budget
-      @wallet.update(amount: @wallet.amount - @budget.amount)
-      if @budget.save
-        redirect_to budgets_path, success: 'Budget created successfully.'
+    def handle_valid_budget(wallet)
+      if wallet.present? && wallet.amount >= @budget.amount && @budget.save
+        update_wallet_and_redirect(wallet, 'Budget created successfully.')
       else
-        render :new
+        handle_invalid_wallet(wallet)
       end
     end
 
     # Checks if wallet is valid for budget creation.
-    def valid_wallet?
-      @wallet.present? && @wallet.amount >= @budget.amount
+    def valid_wallet?(wallet)
+      wallet.present? && wallet[:amount] >= @budget.amount && @budget.save
     end
 
     # Handles invalid wallet for budget creation.
