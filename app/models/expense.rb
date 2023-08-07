@@ -39,6 +39,7 @@ class Expense < ApplicationRecord
 
   def valid_attachment_content_type
     return unless attachment.attached? && !attachment.content_type.in?(%w[image/jpeg image/png application/pdf])
+
     errors.add(:attachment, 'Attachment content type is invalid')
   end
 end

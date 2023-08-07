@@ -14,7 +14,6 @@ module Users
     end
 
     def create
-
       if @budget.valid?
         initialize_budget(wallet)
       else
