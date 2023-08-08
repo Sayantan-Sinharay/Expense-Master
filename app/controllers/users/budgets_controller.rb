@@ -21,7 +21,6 @@ module Users
         else
           handle_invalid_wallet
         end
-
       else
         flash.now[:danger] = 'Budget could not be created.'
         render :new
