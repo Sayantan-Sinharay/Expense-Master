@@ -36,32 +36,27 @@ module Users
     def set_budget_and_wallet
       @budget = Current.user.budgets.new(budget_params)
       set_subcategory
-      @wallet = Wallet.at_month(@budget.month).first
-    end
-
-    def set_budget_and_wallet
-      @budget = Current.user.budgets.new(budget_params)
-      set_subcategory
       @wallet = Wallet.at_month(Current.user, @budget.month).first
     end
 
     # Sets the subcategory based on the parameters.
     def set_subcategory
-      subcategory_id = params[:subcategory_id] == '0' ? nil : params[:subcategory_id]
-      @budget.update(subcategory_id:)
+      subcategory_id = params[:budget][:subcategory_id].to_i.zero? ? nil : params[:budget][:subcategory_id]
+      @budget.subcategory_id = subcategory_id
     end
 
-    def handle_valid_budget(wallet)
-      if wallet.present? && wallet.amount >= @budget.amount && @budget.save
-        update_wallet_and_redirect(wallet, 'Budget created successfully.')
+    def handle_valid_budget
+      @wallet.update(amount: @wallet.amount - @budget.amount)
+      if @budget.save
+        redirect_to budgets_path, success: 'Budget created successfully.'
       else
-        handle_invalid_wallet(wallet)
+        render :new
       end
     end
 
     # Checks if wallet is valid for budget creation.
-    def valid_wallet?(wallet)
-      wallet.present? && wallet[:amount] >= @budget.amount && @budget.save
+    def valid_wallet?
+      @wallet.present? && @wallet.amount >= @budget.amount
     end
 
     # Handles invalid wallet for budget creation.

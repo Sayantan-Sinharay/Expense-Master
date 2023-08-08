@@ -51,6 +51,7 @@ module Admin
 
     def handel_invalid_reason
       render :reject
+
     end
 
     def validate_reason?
