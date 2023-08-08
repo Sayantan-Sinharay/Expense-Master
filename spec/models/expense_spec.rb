@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Expense, type: :model do
   let(:user) { create(:user) }
   let(:category) { create(:category) }
+  let(:subcategory) { create(:subcategory, category:) }
 
   it 'is valid with valid attributes' do
     expense = build(:expense, user:, category:)
@@ -69,7 +70,6 @@ RSpec.describe Expense, type: :model do
   end
 
   it 'can have a subcategory' do
-    subcategory = create(:subcategory, category:)
     expense = build(:expense, user:, category:, subcategory:)
     expect(expense).to be_valid
   end

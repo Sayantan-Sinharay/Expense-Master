@@ -15,7 +15,6 @@ module Users
     end
 
     def create
-
       if @budget.valid?
         if valid_wallet?
           handle_valid_budget
@@ -38,14 +37,13 @@ module Users
     def set_budget_and_wallet
       @budget = Current.user.budgets.new(budget_params)
       set_subcategory
-      @wallet = Wallet.at_month(@budget.month).first
+      @wallet = Wallet.at_month(Current.user, @budget.month).first
     end
 
     # Sets the subcategory based on the parameters.
     def set_subcategory
       subcategory_id = params[:budget][:subcategory_id].to_i.zero? ? nil : params[:budget][:subcategory_id]
       @budget.subcategory_id = subcategory_id
-
     end
 
     def handle_valid_budget
@@ -61,9 +59,9 @@ module Users
     def valid_wallet?
       @wallet.present? && @wallet.amount >= @budget.amount
     end
+
     # Handles invalid wallet for budget creation.
     def handle_invalid_wallet
-
       flash.now[:danger] =
         @wallet.present? ? 'Please decrease the amount and try again.' : 'Please add some money to the wallet.'
       render :new

@@ -27,9 +27,11 @@ RSpec.describe Category, type: :model do
     expect(category.errors[:name]).to include('Category name must be between 5 and 50 characters')
   end
 
-  it 'is not valid with a duplicate name' do
-    existing_category = create(:category)
-    new_category = build(:category, name: existing_category.name)
+  it 'is not valid with a duplicate name within the same organization' do
+    organization = create(:organization)
+    existing_category = create(:category, organization:)
+    new_category = build(:category, organization:, name: existing_category.name)
+
     expect(new_category).not_to be_valid
     expect(new_category.errors[:name]).to include('Category name must be unique')
   end
@@ -53,5 +55,11 @@ RSpec.describe Category, type: :model do
     expense1 = create(:expense, category:)
     expense2 = create(:expense, category:)
     expect(category.expenses).to eq([expense1, expense2])
+  end
+
+  it 'belongs to an organization' do
+    organization = create(:organization)
+    category = create(:category, organization:)
+    expect(category.organization).to eq(organization)
   end
 end
