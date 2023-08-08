@@ -3,7 +3,8 @@
 module Users
   # Controller for managing budgets for users.
   class BudgetsController < ApplicationController
-    before_action :set_budget, only: %i[create]
+    before_action :authenticate_user
+    before_action :set_budget_and_wallet, only: :create
 
     def index
       @budgets = Current.user.budgets.order(created_at: :desc)
@@ -15,9 +16,14 @@ module Users
 
     def create
       if @budget.valid?
-        initialize_budget(wallet)
+        if valid_wallet?
+          handle_valid_budget
+        else
+          handle_invalid_wallet
+        end
       else
-        handle_invalid_wallet(@wallet)
+        flash.now[:danger] = 'Budget could not be created.'
+        render :new
       end
     end
 
@@ -27,7 +33,9 @@ module Users
       params.require(:budget).permit(:category_id, :amount, :notes, :month)
     end
 
-    def set_wallet
+    def set_budget_and_wallet
+      @budget = Current.user.budgets.new(budget_params)
+      set_subcategory
       @wallet = Wallet.at_month(@budget.month).first
     end
 
