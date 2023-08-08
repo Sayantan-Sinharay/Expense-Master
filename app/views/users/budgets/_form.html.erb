@@ -22,7 +22,7 @@
   <div class="field">
     <%= form.label :month, class: "label required" %>
     <div class="control">
-      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
+      <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { include_blank: "Select Month" }, { class: "input", id: "month_select" } %>
     </div>
     <%= render "shared/form_error_message", object: @budget, field: :month %>
   </div>

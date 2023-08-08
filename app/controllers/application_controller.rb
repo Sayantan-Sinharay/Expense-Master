@@ -12,8 +12,41 @@ class ApplicationController < ActionController::Base
 
   # Set the current user based on the user_id stored in the session.
   def set_current_user
-    return unless session[:user_id]
+    if session[:user_id]
+      Current.user = User.find_by(id: session[:user_id])
+    else
+      Current.user = nil
+    end
+  end
 
-    Current.user = User.find_by(id: session[:user_id])
+  def is_logged_in?
+    Current.user.present?
+  end
+
+  def handle_not_logged_in
+    unless is_logged_in?
+      flash[:danger] = "Please login to access the application."
+      redirect_to root_path
+    end
+  end
+
+  def authenticate_admin
+    if Current.user
+      if !Current.user.is_admin?
+        render "shared/404_page", status: :not_found
+      end
+    else 
+      handle_not_logged_in
+    end
+  end
+
+  def authenticate_user
+    if Current.user
+      if Current.user.is_admin?
+        render "shared/404_page", status: :not_found
+      end
+    else 
+      handle_not_logged_in
+    end
   end
 end

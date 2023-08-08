@@ -1,4 +1,4 @@
-# db/seeds.rb
+# rubocop:disable all
 
 require 'faker'
 
@@ -30,7 +30,7 @@ PASSWORD = 'Password#123'
       email: Faker::Internet.unique.email,
       password: PASSWORD,
       password_confirmation: PASSWORD,
-      organization: organization,
+      organization:,
       is_admin?: true
     )
     puts "Created admin user #{admin_user.email}"
@@ -44,7 +44,7 @@ PASSWORD = 'Password#123'
       email: Faker::Internet.unique.email,
       password: PASSWORD,
       password_confirmation: PASSWORD,
-      organization: organization
+      organization:
     )
     puts "Created user #{user.email}"
   end
@@ -66,53 +66,46 @@ PASSWORD = 'Password#123'
   end
 
   # Create budgets
-  User.where(organization: organization).each do |user|
+  User.where(organization:).each do |user|
     Category.all.sample(2).each do |category|
       subcategory = category.subcategories.sample
 
       Budget.create!(
-        user: user,
-        category: category,
-        subcategory: subcategory,
+        user:,
+        category:,
+        subcategory:,
         amount: Faker::Number.between(from: 100, to: 1000),
         notes: Faker::Lorem.sentence,
         month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )
-    end
-  end
-
-  # Create expenses
-  User.where(organization: organization).each do |user|
-    Category.all.sample(2).each do |category|
       subcategory = category.subcategories.sample
-
+      status = Expense.statuses.keys.sample
+      # Create expenses
       Expense.create!(
-        user: user,
-        category: category,
-        subcategory: subcategory,
+        user:,
+        category:,
+        subcategory:,
         date: Faker::Date.between(from: 6.months.ago, to: Date.current),
         amount: Faker::Number.between(from: 10, to: 100),
         notes: Faker::Lorem.sentence,
-        status: Expense.statuses.keys.sample,
-        rejection_reason: Faker::Lorem.sentence,
+        status: ,
+        rejection_reason: status == 2 ? Faker::Lorem.sentence : nil,
         month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )
     end
-  end
-
-  # Create wallets
-  User.where(organization: organization).each do |user|
+    # Create wallets
     Wallet.create!(
-      user: user,
+      user:,
       amount: Faker::Number.between(from: 100, to: 1000),
       month: Faker::Number.between(from: 1, to: 12),
       year: Date.current.year
     )
   end
+
+
 end
 
-
-puts "A sample admin user: " + Organization.first.users.where(is_admin?: true).first.email
-puts "A sample staff member: " + Organization.first.users.where(is_admin?: false).first.email
+puts "A sample admin user: #{Organization.first.users.where(is_admin?: true).first.email}"
+puts "A sample staff member: #{Organization.first.users.where(is_admin?: false).first.email}"

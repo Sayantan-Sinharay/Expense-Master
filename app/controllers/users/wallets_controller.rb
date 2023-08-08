@@ -3,6 +3,7 @@
 module Users
   # Controller for managing wallets for users.
   class WalletsController < ApplicationController
+    before_action :authenticate_user
     def index
       @wallets = Current.user.wallets.order(month: :asc)
       @total_amount = Wallet.total_amount_for_current_year(Current.user)

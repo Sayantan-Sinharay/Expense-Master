@@ -32,12 +32,14 @@
         <%=  Date::MONTHNAMES[budget.month] %>
       </span>
     </div>
-    <div class="flex font-bold flex-col gap-2">
-      <span>Note:</span>
-      <p class="font-light">
-        <%= budget.notes %>
-      </p>
-    </div>
+    <% if !budget.notes.blank? %>
+      <div class="flex font-bold flex-col gap-2">
+        <span>Note:</span>
+        <p class="font-light">
+          <%= budget.notes %>
+        </p>
+      </div>
+    <% end %>
   </div>
   <span class="ml-auto has-text-grey text-sm font-thin">
     <%= time_ago_in_words(budget.created_at) %>

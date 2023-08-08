@@ -3,6 +3,7 @@
 module Admin
   # Controller for managing users in the admin panel.
   class UsersController < ApplicationController
+    before_action :authenticate_admin
     before_action :set_user, only: [:destroy]
 
     def index

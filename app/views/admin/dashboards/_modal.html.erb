@@ -3,21 +3,17 @@
   <div class="modal-card">
     <%= form_with(model: expense, url: reject_admin_dashboard_path(expense), method: :put, local: false ,class: "reject-form is-danger") do |form| %>
       <header class="modal-card-head">
-        <p class="modal-card-title">Reject Expense</p>
+        <p class="modal-card-title text-2xl font-bold">Reject Expense</p>
         <button class="delete" aria-label="close"></button>
       </header>
-      <section class="modal-card-body">
+      <section class="modal-card-body flex flex-col gap-5">
         <div class="field">
-          <label class="label" for="reasonInput">Reason:</label>
+          <%= form.label :rejection_reason, class: "label required"%>
           <div class="control">
-            <%= form.text_area :rejection_reason, class: "textarea", required: true %>
+            <%= form.text_area :rejection_reason, class: "textarea is-danger"%>
           </div>
         </div>
-        <div class="field">
-          <div class="alert alert-danger reject-error <%= 'is-hidden' if expense.errors[:rejection_reason].empty? %>">
-            Please provide a reason for rejection.
-          </div>
-        </div>
+        <%= render "shared/form_error_message", object: expense, field: :rejection_reason %>
         <div class="field">
           <div class="control">
             <%= form.submit "Reject", class: "button is-danger" %>

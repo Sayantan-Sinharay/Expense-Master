@@ -27,7 +27,7 @@
     <span>Date:</span>
     <%= expense.date %>
   </span>
-  <% if expense.notes.length > 0 %>
+  <% if !expense.notes.blank? %>
     <div class="flex font-bold flex-col gap-2">
       <span>Note:</span>
       <p class="pr-40 py-2 pl-2 font-light">

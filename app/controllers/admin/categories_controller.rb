@@ -3,14 +3,15 @@
 module Admin
   # Controller for managing categories in the admin panel.
   class CategoriesController < ApplicationController
+    before_action :authenticate_admin
     before_action :set_category, only: %i[edit update destroy]
 
     def index
-      @categories = Category.all
+      @categories = Category.order(created_at: :desc).all
     end
 
     def create
-      @category = Category.new(category_params)
+      @category = Current.user.organization.categories.new(category_params)
       save_category_and_respond
     end
 
