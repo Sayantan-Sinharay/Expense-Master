@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :wallets, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
+
   validates :first_name, presence: { message: 'User must have a first name' },
                          length: { maximum: 20, message: 'First name is too long.' }
   validates :last_name, length: { maximum: 20, message: 'Last name is too long.' }
