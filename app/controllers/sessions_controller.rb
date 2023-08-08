@@ -13,8 +13,7 @@ class SessionsController < ApplicationController
       if @user&.authenticate(params[:user][:password])
         handle_successful_login(@user)
       else
-        @user.errors.add(:base, "Invalid email/password combination")
-        handle_failed_login
+        handle_failed_login('Invalid email/password combination')
       end
     else
       render :new
@@ -28,22 +27,19 @@ class SessionsController < ApplicationController
   private
 
   def validate_params
-    if params[:user][:email].blank? && params[:user][:password].blank?
-      @user = User.new
-      @user.errors.add(:email, "Email can't be blank")
-      @user.errors.add(:password, "Password can't be blank")
-      false
-    elsif params[:user][:email].blank?
-      @user = User.new
-      @user.errors.add(:email, "Email can't be blank")
-      false
-    elsif params[:user][:password].blank?
-      @user = User.new
-      @user.errors.add(:password, "Password can't be blank")
-      false
-    else
-      true
-    end
+    valid_params = validate_email && validate_password
+    @user = User.new
+    @user.errors.add(:email, "Email can't be blank") unless validate_email
+    @user.errors.add(:password, "Password can't be blank") unless validate_password
+    valid_params
+  end
+
+  def validate_email
+    params[:user][:email].present?
+  end
+
+  def validate_password
+    params[:user][:password].present?
   end
 
   def handle_successful_login(user)
@@ -51,7 +47,9 @@ class SessionsController < ApplicationController
     redirect_to root_path, success: 'Successfully logged in'
   end
 
-  def handle_failed_login
+  def handle_failed_login(message)
+    @user = User.new
+    @user.errors.add(:base, message)
     flash.now[:danger] = @user.errors.full_messages.join(', ')
     render :new
   end
@@ -64,12 +62,15 @@ class SessionsController < ApplicationController
   def log_in(user)
     session[:user_id] = user.id
     cookies.signed[:user_id] = user.id
-    set_current_user
   end
 
   def log_out
+    session.delete(:user_id)
     reset_session
     cookies.delete :user_id
-    # set_current_user(nil)
+  end
+
+
+  def invalid_access
   end
 end

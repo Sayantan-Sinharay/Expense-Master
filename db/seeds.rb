@@ -80,7 +80,7 @@ PASSWORD = 'Password#123'
         year: Date.current.year
       )
       subcategory = category.subcategories.sample
-      
+      status = Expense.statuses.keys.sample
       # Create expenses
       Expense.create!(
         user:,
@@ -89,8 +89,8 @@ PASSWORD = 'Password#123'
         date: Faker::Date.between(from: 6.months.ago, to: Date.current),
         amount: Faker::Number.between(from: 10, to: 100),
         notes: Faker::Lorem.sentence,
-        status: Expense.statuses.keys.sample,
-        rejection_reason: Faker::Lorem.sentence,
+        status: ,
+        rejection_reason: status == 2 ? Faker::Lorem.sentence : nil,
         month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )

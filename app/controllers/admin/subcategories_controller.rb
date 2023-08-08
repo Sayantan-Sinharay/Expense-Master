@@ -3,6 +3,7 @@
 module Admin
   # Controller for managing subcategories in the admin panel.
   class SubcategoriesController < ApplicationController
+    before_action :authenticate_admin
     before_action :set_category
     before_action :set_subcategory, only: %i[edit update destroy]
 

@@ -3,7 +3,8 @@
 module Users
   # Controller for managing expenses for users.
   class ExpensesController < ApplicationController
-    before_action :set_expense, only: %i[create]
+    before_action :authenticate_user
+    before_action :set_expense, :set_subcategory, only: %i[create]
     include Users::ExpensesHelper
 
     def index
@@ -29,7 +30,7 @@ module Users
     end
 
     def expense_params
-      params.require(:expense).permit(:category_id, :amount, :attachment, :notes, :date, :subcategory_id)
+      params.require(:expense).permit(:category_id, :amount, :attachment, :notes, :date)
     end
 
     def handle_valid_expense
@@ -45,12 +46,11 @@ module Users
     def process_valid_expense
       attachment = params[:expense][:attachment]
       @expense.attachment.attach(attachment)
-      set_subcategory
     end
 
     def set_subcategory
-      subcategory_id = params[:expense][:subcategory_id] == '0' ? nil : params[:expense][:subcategory_id]
-      @expense.update(subcategory_id:)
+      subcategory_id = params[:expense][:subcategory_id].to_i.zero? ? nil : params[:expense][:subcategory_id]
+      @expense.subcategory_id = subcategory_id
     end
 
     def save_and_notify_expense

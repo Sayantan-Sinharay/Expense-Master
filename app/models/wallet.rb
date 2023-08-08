@@ -17,7 +17,7 @@ class Wallet < ApplicationRecord
   scope :at_month, lambda { |month|
     joins(:user)
       .where(users: { id: Current.user.id })
-      .where(month: month)
+      .where(month:)
   }
 
   # Returns the total amount in wallets for the current year and given user.
