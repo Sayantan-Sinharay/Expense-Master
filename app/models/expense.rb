@@ -11,7 +11,7 @@ class Expense < ApplicationRecord
   validates :date, presence: { message: "Date can't be blank" }
   validates :amount, presence: { message: "Amount can't be blank" },
                      numericality: { greater_than_or_equal_to: 0, message: 'Amount must be greater than or equal to 0' }
-  validates :notes, length: { maximum: 255, message: "Please give a brief note" }
+  validates :notes, length: { maximum: 255, message: 'Please give a brief note (maximum is 255 characters)' }
   validate :valid_attachment_content_type, if: :attachment_attached?
 
   enum status: { pending: 0, approved: 1, rejected: 2 }

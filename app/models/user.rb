@@ -13,7 +13,6 @@ class User < ApplicationRecord
   has_many :wallets, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
-
   validates :first_name, presence: { message: 'User must have a first name' },
                          length: { maximum: 20, message: 'First name is too long.' }
   validates :last_name, length: { maximum: 20, message: 'Last name is too long.' }
@@ -60,14 +59,30 @@ class User < ApplicationRecord
                     organization_id: admin_user.organization_id,
                     password:,
                     password_confirmation: password)
-    invite_user(admin_user, email) unless user.valid?
     user if user.valid?
   end
 
   # Will generate a password that will match the REGEX
   def self.generate_password
-    password = SecureRandom.urlsafe_base64(12)
-    password = SecureRandom.urlsafe_base64(12) until password.match?(PASSWORD_REGEX)
-    password
+    symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '{', '}', '[', ']', '|', ' :',
+               ';', '"', "'", '<', '>', ',', '.', '?', '/']
+    lowercase_letters = ('a'..'z').to_a
+    uppercase_letters = ('A'..'Z').to_a
+    numbers = ('0'..'9').to_a
+
+    # Ensure at least one symbol, one lowercase letter, one uppercase letter, and one number
+    password = [
+      symbols.sample,
+      lowercase_letters.sample,
+      uppercase_letters.sample,
+      numbers.sample
+    ].join
+
+    # Fill the remaining characters with random selections
+    remaining_characters = (symbols + lowercase_letters + uppercase_letters + numbers).shuffle
+    password += remaining_characters.sample(8 - password.length).join
+
+    # Shuffle the password characters for randomness
+    password.chars.shuffle.join
   end
 end

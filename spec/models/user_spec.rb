@@ -1,5 +1,5 @@
 # rubocop:disable all
-
+#
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -18,6 +18,12 @@ RSpec.describe User, type: :model do
   it 'is not valid without a valid email' do
     user = build(:user, email: 'invalid_email', organization:)
     expect(user).not_to be_valid
+  end
+
+  it 'is not valid with a last name exceeding 20 characters' do
+    user = build(:user, last_name: 'a' * 21, organization:)
+    expect(user).not_to be_valid
+    expect(user.errors[:last_name]).to include('Last name is too long.')
   end
 
   it 'creates budgets associated with the user' do
@@ -66,9 +72,22 @@ RSpec.describe User, type: :model do
     expect(User.get_admin_users(organization.id)).not_to include(non_admin_user)
   end
 
-  it 'creates a user with generated password when invited by an admin' do
+  it 'creates a user with a generated password when invited by an admin' do
     admin_user = create(:user, organization:)
     invited_user = User.invite_user(admin_user, 'test@example.com')
     expect(invited_user).to be_valid
+    expect(invited_user.organization_id).to eq(admin_user.organization_id)
+    expect(invited_user.password).to match(User::PASSWORD_REGEX)
+  end
+
+  describe '.generate_password' do
+    it 'generates passwords that match the regex pattern' do
+      regex_pattern = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
+
+      100.times do
+        generated_password = User.generate_password
+        expect(generated_password).to match(regex_pattern)
+      end
+    end
   end
 end
