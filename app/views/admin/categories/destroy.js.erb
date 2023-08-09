@@ -2,5 +2,5 @@ $(document).ready(function () {
   $("#category_<%= @category.id %>").fadeOut("fast", function() {
     $(this).remove();
   });;
-  $('#flash-container').html('<%= j render "shared/flashes" %>');
+  $('#flash').html('<%= j render "shared/flashes" %>');
 });

@@ -51,15 +51,14 @@ class User < ApplicationRecord
   }
 
   # Creates and returns a new user instance with a generated name and password.
-  def self.invite_user(admin_user, email)
+  def self.create_user(user)
     password = generate_password
-    user = User.new(first_name: "user#{User.last.id}",
-                    last_name: admin_user.organization.name,
-                    email:,
-                    organization_id: admin_user.organization_id,
-                    password:,
-                    password_confirmation: password)
-    user if user.valid?
+    user.update(first_name: "user#{User.last.id}",
+                last_name: user.organization.name,
+                password: password,
+                password_confirmation: password,
+                invitation_sent_at: Time.now)
+    user
   end
 
   # Will generate a password that will match the REGEX

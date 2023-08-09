@@ -17,7 +17,9 @@
   </head>
   <body class="h-full flex flex-col overflow-hidden">
     <%= render "shared/navbar" %>
-    <%= render "shared/flashes" %>
+    <div id="flashes-container">
+      <%= render "shared/flashes" %>
+    </div>
     <main class="container pt-20 px-5 flex h-full w-full overflow-hidden">
       <% if Current.user  %>
         <%= render "layouts/user" do %>

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#users_list").append('<%= j render @user %>');
+  $("#users_list").prepend('<%= j render @user %>');
   $("#invite_user-form").remove();
   $("#form_toggle-button").show();
 });

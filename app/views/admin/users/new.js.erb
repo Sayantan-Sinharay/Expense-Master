@@ -1,4 +1,4 @@
 $(document).ready(function() {
-  $("#add_user_form-container").append("<%= escape_javascript(render partial: 'form') %>");
+  $("#add_user_form-container").empty().append("<%= escape_javascript(render partial: 'form') %>")
   $("#form_toggle-button").hide();
 });
