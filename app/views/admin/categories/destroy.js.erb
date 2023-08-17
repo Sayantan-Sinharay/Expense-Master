@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  $("#category_<%= @category.id %>").fadeOut("fast", function() {
+  const categoryElement = $("#category_<%= @category.id %>");
+  categoryElement.fadeOut("fast", function() {
     $(this).remove();
-  });;
-  $('#flash').html('<%= j render "shared/flashes" %>');
+  });
 });

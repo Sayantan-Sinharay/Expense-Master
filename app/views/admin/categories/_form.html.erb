@@ -1,12 +1,11 @@
-<%= form_with(model: Category.new, url: admin_categories_path, local: false, id: "create_category-form", class: "flex items-end gap-10") do |form| %>
-  <div class="field w-1/2 m-0">
+<%= form_with(model: @category, url: admin_categories_path, local: false, id: "create_category-form", class: "flex items-end gap-10") do |form| %>
+  <div class="field flex-grow">
     <%= form.label :name, "Enter new Category:" , class: "label" %>
-    <div class="control">
-      <%= form.text_field :name, class: "input", id: "category-input" %>
-    </div>
-  </div>
-  <div class="field">
-    <div class="control">
+    <div class="control w-3/4 flex gap-10">
+      <div class="flex-grow flex-col">
+        <%= form.text_field :name, class: "input", id: "category-input" %>
+        <%= render "shared/form_error_message", object: @category, field: :name %>
+      </div>
       <%= form.submit("Add Category", id: "add_category-button", class: "button is-primary font-bold border-2 is-outlined w-fit") %>
     </div>
   </div>

@@ -2,6 +2,7 @@
   <div class="field flex my-auto">
     <div class="control">
       <%= form.text_field :name, class: "input", id: "category-input" %>
+      <%= render "shared/form_error_message", object: @category, field: :name %>
     </div>
   </div>
   <div class="field is-grouped ml-auto flex flex-row gap-5">

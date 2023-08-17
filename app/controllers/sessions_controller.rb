@@ -69,6 +69,6 @@ class SessionsController < ApplicationController
     reset_session
     cookies.delete :user_id
   end
-  
+
   def invalid_access; end
 end

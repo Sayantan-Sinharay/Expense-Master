@@ -55,7 +55,7 @@ class User < ApplicationRecord
     password = generate_password
     user.update(first_name: "user#{User.last.id}",
                 last_name: user.organization.name,
-                password: password,
+                password:,
                 password_confirmation: password,
                 invitation_sent_at: Time.now)
     user
@@ -69,19 +69,21 @@ class User < ApplicationRecord
     uppercase_letters = ('A'..'Z').to_a
     numbers = ('0'..'9').to_a
 
-    # Ensure at least one symbol, one lowercase letter, one uppercase letter, and one number
-    password = [
-      symbols.sample,
-      lowercase_letters.sample,
-      uppercase_letters.sample,
-      numbers.sample
-    ].join
+    password = initial_characters(symbols, lowercase_letters, uppercase_letters, numbers)
+    password += remaining_characters(password)
+    shuffle_characters(password)
+  end
 
-    # Fill the remaining characters with random selections
-    remaining_characters = (symbols + lowercase_letters + uppercase_letters + numbers).shuffle
-    password += remaining_characters.sample(8 - password.length).join
+  def self.initial_characters(symbols, lowercase_letters, uppercase_letters, numbers)
+    symbols.sample + lowercase_letters.sample + uppercase_letters.sample + numbers.sample
+  end
 
-    # Shuffle the password characters for randomness
+  def self.remaining_characters(password)
+    remaining_chars = (symbols + lowercase_letters + uppercase_letters + numbers).shuffle
+    remaining_chars.sample(8 - password.length).join
+  end
+
+  def self.shuffle_characters(password)
     password.chars.shuffle.join
   end
 end

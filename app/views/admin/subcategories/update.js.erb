@@ -1,3 +1,4 @@
 $(document).ready(function () {
-  $("#subcategory-form").replaceWith('<%= j render @subcategory  %>');
+  const subcategory = category.find("#subcategory_<%= @subcategory.id %>");
+  subcategory.replaceWith('<%= j render @subcategory  %>');
 });

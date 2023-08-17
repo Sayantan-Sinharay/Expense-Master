@@ -1,4 +1,16 @@
-$(document).ready(function() {
-  $("#category_<%= @category.id %> #subcategory_<%= @subcategory.id %>").replaceWith('<%= j render "form" %>');
-  $("#category_<%= @category.id %> #subcategory-input").focus();
+$(document).ready(function () {
+  const form = $("#subcategory-form");
+  const category = $("#category_<%= @category.id %>");
+  const subcategory = category.find("#subcategory_<%= @subcategory.id %>");
+
+  if (form.length) {
+    form.parent().children().first().addClass("flex").show();
+    form.remove();
+  }
+
+  subcategory.children().first().removeClass("flex").hide();
+  subcategory.append("<%= j render 'form' %>");
+  const input = subcategory.find("#subcategory-input").get(0); // Get the native DOM element
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
 });

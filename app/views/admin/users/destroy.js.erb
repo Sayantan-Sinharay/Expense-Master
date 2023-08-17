@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  $("#user_<%= @user.id %>").fadeOut("fast", function() {
+  const user = $("#user_<%= @user.id %>");
+
+  user.fadeOut("fast", function() {
     $(this).remove();
-  });;
+  });
 });

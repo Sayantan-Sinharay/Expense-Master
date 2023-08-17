@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $(".accordion-toggle").click(function () {
-        var accordionItem = $(this).closest(".accordion-item");
-        var accordionContent = accordionItem.find(".accordion-content");
+        const accordionItem = $(this).closest(".accordion-item");
+        const accordionContent = accordionItem.find(".accordion-content");
 
         // Close other accordions
         $(".accordion-content").not(accordionContent).slideUp();
@@ -11,6 +11,14 @@ $(document).ready(function () {
             .find("i")
             .removeClass("fa-chevron-up")
             .addClass("fa-chevron-down");
+
+        accordionContent
+            .find("#subcategory-form")
+            .parent()
+            .find("#subcategory-content")
+            .addClass("flex")
+            .show();
+        accordionContent.find("#subcategory-form").remove();
 
         // Toggle current accordion
         accordionContent.slideToggle();

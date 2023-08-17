@@ -26,7 +26,7 @@
         <% end %>
       </div>
     </div>
-    <button class="ml-auto accordion-toggle">
+    <button class="ml-auto accordion-toggle <%= category.subcategories.length == 0 ? "invisible" : "" %>">
       <i class="fas fa-chevron-down"></i>
     </button>
   </div>
@@ -38,4 +38,3 @@
     </div>
   </div>
 </div>
-

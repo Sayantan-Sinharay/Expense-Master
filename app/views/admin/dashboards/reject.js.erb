@@ -1,21 +1,21 @@
 $(document).ready(function() {
 
   const expenseElement = $("#expense-item-<%= @expense.id %>");
-  const dropdownElement = expenseElement.find('.dropdown');
-  const statusElement = expenseElement.find('.tag');
-  const pendingTabContent = $('#pending-tab');
-  const rejectedTabContent = $('#rejected-tab');
+  const dropdownElement = expenseElement.find(".dropdown");
+  const statusElement = expenseElement.find(".tag");
+  const pendingTabContent = $("#pending-tab");
+  const rejectedTabContent = $("#rejected-tab");
   
   dropdownElement.remove();
-  statusElement.text('Rejected');
+  statusElement.text("Rejected");
   statusElement.parent().addClass("flex");
-  statusElement.removeClass('is-warning');
-  statusElement.addClass('is-danger');
+  statusElement.removeClass("is-warning");
+  statusElement.addClass("is-danger");
   
   // Move the expense item to the "Approved" tab
   expenseElement.detach().appendTo(rejectedTabContent);
   
-  const modalElement = $('#rejection-modal');
-  modalElement.addClass('is-active');
+  const modalElement = $("#rejection-modal");
+  modalElement.addClass("is-active");
 });
 

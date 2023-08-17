@@ -1,6 +1,15 @@
 $(document).ready(function () {
-  $('#category_<%= @category.id %> .accordion-content').show(function () {
-    $("#category_<%= @category.id %> #subcategory_list").append('<%= j render "form" %>');
-    $("#category_<%= @category.id %> #subcategory-input").focus();
-  });
+  const category = $("#category_<%= @category.id %>")
+  const form = $("#subcategory-form")
+  if (form.length) {
+    form.closest(".accordion-content").hide(function() {
+      form.parent().find("#subcategory-content").addClass("flex").show();
+      form.remove();
+    });
+  }
+    category.find(".accordion-content").show(function () {
+      $(this).find("#subcategory_list").append("<%= j render "form" %>");
+      const input = $(this).find("#subcategory-input").get(0);
+      input.focus();
+    });
 });

@@ -51,18 +51,17 @@ module Admin
 
     def handel_invalid_reason
       render :reject
-
     end
 
     def validate_reason?
       if params[:expense][:rejection_reason].blank?
-        @expense.errors.add(:rejection_reason, "Rejection reason cannot be blank") 
+        @expense.errors.add(:rejection_reason, 'Rejection reason cannot be blank')
       elsif params[:expense][:rejection_reason].length > 255
-        @expense.errors.add(:rejection_reason, "Rejection reason should be brief")
+        @expense.errors.add(:rejection_reason, 'Rejection reason should be brief')
       else
         return true
       end
-      return false
+      false
     end
 
     def handel_valid_reason
@@ -74,6 +73,5 @@ module Admin
     def handel_invalid_reason
       render :reject
     end
-
   end
 end

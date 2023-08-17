@@ -6,13 +6,22 @@ module Admin
     before_action :authenticate_admin
     before_action :set_category, only: %i[edit update destroy]
 
+    include NotificationsHelper
+
     def index
+      @category = Category.new
       @categories = Category.order(created_at: :desc).all
     end
 
     def create
       @category = Current.user.organization.categories.new(category_params)
-      save_category_and_respond
+      respond_to do |format|
+        if @category.save
+          handle_valid_category(format)
+        else
+          handle_invalid_category(format)
+        end
+      end
     end
 
     def edit
@@ -20,19 +29,19 @@ module Admin
     end
 
     def update
-      if @category.update(category_params)
-        flash[:success] = 'Category updated successfully.'
-      else
-        flash[:danger] = 'Failed to update category.'
-      end
       respond_to do |format|
-        format.html { redirect_to admin_categories_path }
-        format.js
+        if @category.update(category_params)
+          handle_valid_update(format)
+        else
+          handle_invalid_update(format)
+        end
       end
     end
 
     def destroy
-      flash[:danger] = 'Category was successfully destroyed.' if @category.destroy
+      @category.destroy
+      flash = { danger: 'Category destroyed successfully.' }
+      send_flash(Current.user, flash)
       respond_to(&:js)
     end
 
@@ -48,18 +57,31 @@ module Admin
       params.require(:category).permit(:name)
     end
 
-    # Saves the category and responds to the corresponding format.
-    def save_category_and_respond
-      respond_to do |format|
-        if @category.save
-          format.html { redirect_to admin_categories_path }
-          format.js { flash[:success] = 'Category was successfully created.' }
-        else
-          flash[:danger] = 'Category could not be created.'
-          format.html { redirect_to admin_categories_path }
-          format.js {}
-        end
-      end
+    def handle_valid_category(format)
+      flash = { success: 'Category successfully created.' }
+      send_flash(Current.user, flash)
+      format.html { redirect_to admin_categories_path }
+      format.js
+    end
+
+    def handle_invalid_category(format)
+      flash.now[:danger] = 'Failed to create category.'
+      format.html { render :index }
+      format.js { render :error_create }
+    end
+
+    def handle_valid_update(format)
+      flash = { success: 'Category updated successfully.' }
+      send_flash(Current.user, flash)
+      format.html { redirect_to admin_categories_path }
+      format.js
+    end
+
+    def handle_invalid_update(format)
+      flash = { danger: 'Failed to update category.' }
+      send_flash(Current.user, flash)
+      format.html { render :index }
+      format.js { render :error_update }
     end
   end
 end
