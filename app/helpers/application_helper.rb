@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def update_invalid_route(value)
-    @is_invalid_route = value
+    @invalid_route = value
   end
 
   def invalid_route?

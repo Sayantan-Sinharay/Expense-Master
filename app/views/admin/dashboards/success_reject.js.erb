@@ -1,13 +1,19 @@
-$(document).ready(function() {
+$(document).ready(function() { 
+
+  const modalElement = $("#rejection-modal");
+  modalElement.remove();
+
   const expenseElement = $("#expense-item-<%= @expense.id %>");
   const dropdownElement = expenseElement.find(".dropdown");
   const statusElement = expenseElement.find("#expense-status");
   const pendingTabContent = $("#pending-tab");
-  const approvedTabContent = $("#approved-tab");
+  const rejectedTabContent = $("#rejected-tab");
   
   dropdownElement.remove();
+
   statusElement.append("<%= j render 'users/expenses/status', expense: @expense %>");
   
   // Move the expense item to the "Approved" tab
-  expenseElement.detach().appendTo(approvedTabContent);
+  expenseElement.detach().appendTo(rejectedTabContent);
+  
 });

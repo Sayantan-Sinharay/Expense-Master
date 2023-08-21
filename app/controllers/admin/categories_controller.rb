@@ -10,7 +10,7 @@ module Admin
 
     def index
       @category = Category.new
-      @categories = Category.order(created_at: :desc).all
+      @categories = Current.user.organization.categories.order(created_at: :desc).all
     end
 
     def create

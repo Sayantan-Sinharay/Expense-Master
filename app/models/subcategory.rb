@@ -10,5 +10,5 @@ class Subcategory < ApplicationRecord
                    uniqueness: { scope: :category_id,
                                  case_sensitive: true,
                                  message: 'Subcategory name must be unique within the same category' },
-                   length: { minimum: 5, maximum: 50, message: 'Subcategory name must be between 5 and 50 characters' }
+                   length: { minimum: 2, maximum: 50, message: 'Subcategory name must be between 2 and 50 characters' }
 end

@@ -3,13 +3,14 @@
 module Admin
   # Controller for managing subcategories in the admin panel.
   class SubcategoriesController < ApplicationController
-    before_action :authenticate_admin
+    before_action :authenticate_admin, except: :index
     before_action :set_category
     before_action :set_subcategory, only: %i[edit update destroy]
 
     def index
-      @subcategories = @category.subcategories
+      @subcategories = @category.subcategories.all
       respond_to do |format|
+        format.html { render @subcategories }
         format.json { render json: @subcategories }
       end
     end

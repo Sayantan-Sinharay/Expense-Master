@@ -16,15 +16,10 @@ $(document).ready(function () {
         $("#" + tabId).removeClass("hidden");
     });
 
-    $('[data-status="pending"]').each(function () {
-        $(this).find("#expense-status").removeClass("flex");
-        $(this).find("#expense-status").hide();
-    });
-
     $(".dropdown-item.reject").on("click", function (event) {
         event.preventDefault();
         // Show the modal
-        $("#rejectModal").addClass("is-active");
+        $("#rejection-modal").addClass("is-active");
     });
 
     // Handle click event on the modal close button
@@ -45,7 +40,7 @@ $(document).ready(function () {
             $(".reject-error").removeClass("is-hidden");
         } else {
             // Hide the modal
-            $("#rejectModal").removeClass("is-active");
+            $("#rejection-modal").removeClass("is-active");
 
             // Submit the form (perform the AJAX request)
             $(this).off("submit").submit();

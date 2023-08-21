@@ -11,13 +11,7 @@ class ApplicationController < ActionController::Base
   # Before any action is executed, set the current user based on the session data.
   before_action :set_current_user
 
-  def logged_in?
-    Current.user.present?
-  end
-
   def handle_not_logged_in
-    return if logged_in?
-
     flash[:danger] = 'Please login to access the application.'
     redirect_to root_path
   end
@@ -36,9 +30,9 @@ class ApplicationController < ActionController::Base
     return handle_not_logged_in unless Current.user
 
     if Current.user.is_admin? == is_admin
-      update_invalid_route(true)
-    else
       update_invalid_route(false)
+    else
+      update_invalid_route(true)
       render_error_template(error_template, status)
     end
   end

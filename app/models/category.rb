@@ -10,6 +10,6 @@ class Category < ApplicationRecord
   validates :name, presence: { message: "Category name can't be blank" },
                    uniqueness: { scope: :organization_id,
                                  case_sensitive: true,
-                                 message: 'Category name must be unique' },
-                   length: { minimum: 5, maximum: 50, message: 'Category name must be between 5 and 50 characters' }
+                                 message: "Category name must be unique" },
+                   length: { minimum: 2, maximum: 50, message: "Category name must be between 2 and 50 characters" }
 end

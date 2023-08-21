@@ -3,15 +3,15 @@
     <div class="field flex-grow">
       <%= form.label :category_id, "Select Category", class: "label required" %>
       <div class="control">
-        <%= form.select :category_id, options_for_select(Category.all.collect { |c| [c.name, c.id] }, nil), { include_blank: "Select Category" }, class: "input", id: "category_select" %>
-      <%= render "shared/form_error_message", object: @expense, field: :category %>
+        <%= form.select :category_id, options_for_select(Current.user.organization.categories.all.collect { |c| [c.name, c.id] }, nil), { include_blank: "Select Category" }, class: "input", id: "category_select" %>
+        <%= render "shared/form_error_message", object: @expense, field: :category %>
       </div>
     </div>
     <div class="field flex-grow">
       <%= form.label :subcategory_id, "Select Subcategory", class: "label" %>
       <div class="control">
         <%= form.select :subcategory_id, options_for_select([], nil), { include_blank: "Select Sub-category" }, class: "input", id: "subcategory_select", disabled: true %>
-      <%= render "shared/form_error_message", object: @expense, field: :subcategory %>
+        <%= render "shared/form_error_message", object: @expense, field: :subcategory %>
       </div>
     </div>
   </div>
@@ -29,14 +29,14 @@
       <span class="icon is-small is-left">
         <i class="fa-solid fa-indian-rupee-sign"></i>
       </span>
-    <%= render "shared/form_error_message", object: @expense, field: :amount %>
+      <%= render "shared/form_error_message", object: @expense, field: :amount %>
     </div>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
     <div class="control">
       <%= form.text_area :notes, class: "textarea" %>
-    <%= render "shared/form_error_message", object: @expense, field: :notes %>
+      <%= render "shared/form_error_message", object: @expense, field: :notes %>
     </div>
   </div>
   <div class="flex items-center justify-between">
@@ -65,7 +65,7 @@
               </span>
             </span>
           </div>
-        <%= render "shared/form_error_message", object: @expense, field: :attachment %>
+          <%= render "shared/form_error_message", object: @expense, field: :attachment %>
         </div>
       </div>
     </div>

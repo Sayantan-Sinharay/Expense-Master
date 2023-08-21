@@ -1,0 +1,4 @@
+$(document).ready(function () {
+  $("#rejection-modal").replaceWith("<%= j render "modal", expense: @expense %>");
+  $("#rejection-modal").addClass("is-active");
+});

@@ -5,6 +5,7 @@ class Organization < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
 
+
   validates :name, presence: { message: "Organization name can't be blank" },
                    uniqueness: { message: 'Organization name must be unique' },
                    length: { minimum: 1, message: "Organization name can't be empty" }

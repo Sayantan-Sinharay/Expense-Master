@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
   # Creates and returns a new user instance with a generated name and password.
   def self.create_user(user)
-    password = generate_password
+    password = PasswordGenerator.generate_password
     user.update(first_name: "user#{User.last.id}",
                 last_name: user.organization.name,
                 password:,
@@ -61,29 +61,30 @@ class User < ApplicationRecord
     user
   end
 
-  # Will generate a password that will match the REGEX
-  def self.generate_password
-    symbols = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '{', '}', '[', ']', '|', ' :',
-               ';', '"', "'", '<', '>', ',', '.', '?', '/']
-    lowercase_letters = ('a'..'z').to_a
-    uppercase_letters = ('A'..'Z').to_a
-    numbers = ('0'..'9').to_a
-
-    password = initial_characters(symbols, lowercase_letters, uppercase_letters, numbers)
-    password += remaining_characters(password)
-    shuffle_characters(password)
-  end
-
-  def self.initial_characters(symbols, lowercase_letters, uppercase_letters, numbers)
-    symbols.sample + lowercase_letters.sample + uppercase_letters.sample + numbers.sample
-  end
-
-  def self.remaining_characters(password)
-    remaining_chars = (symbols + lowercase_letters + uppercase_letters + numbers).shuffle
-    remaining_chars.sample(8 - password.length).join
-  end
-
-  def self.shuffle_characters(password)
-    password.chars.shuffle.join
+  class PasswordGenerator
+    SYMBOLS = ('!'..'~').to_a.select { |c| c.match?(/\p{S}/) }
+    LOWERCASE_LETTERS = ('a'..'z').to_a
+    UPPERCASE_LETTERS = ('A'..'Z').to_a
+    NUMBERS = ('0'..'9').to_a
+  
+    def self.generate_password
+      initial_chars = initial_characters
+      remaining_chars = remaining_characters(initial_chars)
+      shuffle_characters(initial_chars + remaining_chars)
+    end
+  
+    def self.initial_characters
+      [SYMBOLS, LOWERCASE_LETTERS, UPPERCASE_LETTERS, NUMBERS].map(&:sample).join
+    end
+  
+    def self.remaining_characters(initial_chars)
+      total_remaining_chars = SYMBOLS + LOWERCASE_LETTERS + UPPERCASE_LETTERS + NUMBERS
+      remaining_chars = (total_remaining_chars - initial_chars.chars).shuffle
+      remaining_chars.sample(8 - initial_chars.length).join
+    end
+  
+    def self.shuffle_characters(password)
+      password.chars.shuffle.join
+    end
   end
 end

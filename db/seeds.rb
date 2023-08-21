@@ -67,7 +67,7 @@ PASSWORD = 'Password#123'
 
   # Create budgets
   User.where(organization:).each do |user|
-    Category.all.sample(2).each do |category|
+    Category.all.sample(5).each do |category|
       subcategory = category.subcategories.sample
 
       Budget.create!(
@@ -90,7 +90,7 @@ PASSWORD = 'Password#123'
         amount: Faker::Number.between(from: 10, to: 100),
         notes: Faker::Lorem.sentence,
         status: ,
-        rejection_reason: status == 2 ? Faker::Lorem.sentence : nil,
+        rejection_reason: status == "rejected" ? Faker::Lorem.sentence : nil,
         month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )
