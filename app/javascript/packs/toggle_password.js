@@ -15,3 +15,4 @@ $(document).ready(function () {
             input.setSelectionRange(input.value.length, input.value.length);
         });
 });
+
