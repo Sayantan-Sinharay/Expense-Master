@@ -4,7 +4,7 @@
       <%= form.label :category_id, "Select Category", class: "label required" %>
       <div class="control">
         <%= form.select :category_id, 
-               options_for_select(Category.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
+               options_for_select(Current.user.organization.categories.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
                { include_blank: "Select Category" },
                class: "input",
                id: "category_select" %>
@@ -23,7 +23,7 @@
     <%= form.label :month, class: "label required" %>
     <div class="control">
       <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { include_blank: "Select Month" }, { class: "input", id: "month_select" } %>
-    <%= render "shared/form_error_message", object: @budget, field: :month %>
+      <%= render "shared/form_error_message", object: @budget, field: :month %>
     </div>
   </div>
   <div class="field">
@@ -33,14 +33,14 @@
       <span class="icon is-small is-left">
         <i class="fa-solid fa-indian-rupee-sign"></i>
       </span>
-    <%= render "shared/form_error_message", object: @budget, field: :amount %>
+      <%= render "shared/form_error_message", object: @budget, field: :amount %>
     </div>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
     <div class="control">
       <%= form.text_area :notes, class: "textarea" %>
-    <%= render "shared/form_error_message", object: @budget, field: :notes %>
+      <%= render "shared/form_error_message", object: @budget, field: :notes %>
     </div>
   </div>
   <div class="field is-grouped font-medium gap-2">

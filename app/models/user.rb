@@ -61,28 +61,29 @@ class User < ApplicationRecord
     user
   end
 
+  # A class that is used to generate a password
   class PasswordGenerator
     SYMBOLS = ('!'..'~').to_a.select { |c| c.match?(/\p{S}/) }
     LOWERCASE_LETTERS = ('a'..'z').to_a
     UPPERCASE_LETTERS = ('A'..'Z').to_a
     NUMBERS = ('0'..'9').to_a
-  
+
     def self.generate_password
       initial_chars = initial_characters
       remaining_chars = remaining_characters(initial_chars)
       shuffle_characters(initial_chars + remaining_chars)
     end
-  
+
     def self.initial_characters
       [SYMBOLS, LOWERCASE_LETTERS, UPPERCASE_LETTERS, NUMBERS].map(&:sample).join
     end
-  
+
     def self.remaining_characters(initial_chars)
       total_remaining_chars = SYMBOLS + LOWERCASE_LETTERS + UPPERCASE_LETTERS + NUMBERS
       remaining_chars = (total_remaining_chars - initial_chars.chars).shuffle
       remaining_chars.sample(8 - initial_chars.length).join
     end
-  
+
     def self.shuffle_characters(password)
       password.chars.shuffle.join
     end

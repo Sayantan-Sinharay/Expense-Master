@@ -7,7 +7,8 @@ class NotificationsController < ApplicationController
     @notifications = Current.user.notifications.order(created_at: :desc)
   end
 
-  def delete; end #implement it later
+  # implement it later
+  def delete; end
 
   private
 

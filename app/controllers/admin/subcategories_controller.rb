@@ -49,7 +49,7 @@ module Admin
     end
 
     def destroy
-      flash = { danger: "Subcategory has been deleted" }
+      flash = { danger: 'Subcategory has been deleted' }
       send_flash(Current.user, flash) if @subcategory.destroy
       respond_to(&:js)
     end
@@ -74,9 +74,9 @@ module Admin
     # Saves the subcategory and handles success.
     def handle_successful_subcategory_creation(format)
       @subcategory.save
-      flash = { success:"Successfully created subcategory." }
+      flash = { success: 'Successfully created subcategory.' }
       send_flash(Current.user, flash)
-      format.html {redirect_to admin_categories_path }
+      format.html { redirect_to admin_categories_path }
       format.js {}
     end
 
@@ -86,12 +86,12 @@ module Admin
       format.js { render :error_create } # look into this later
     end
 
-    def handle_valid_update(format) 
-      flash = { success:"Successfully updated subcategory." }
+    def handle_valid_update(format)
+      flash = { success: 'Successfully updated subcategory.' }
       send_flash(Current.user, flash)
       format.html { redirect_to admin_categories_path }
       format.js {}
-    end 
+    end
 
     def handle_invalid_update(format)
       format.html { redirect_to admin_categories_path }

@@ -16,7 +16,7 @@ module Admin
       respond_to do |format|
         if @expense.approved!
           send_expense_status_update_notification(Current.user, @expense)
-          flash = { success: "Expense approved successfully." }
+          flash = { success: 'Expense approved successfully.' }
           send_flash(Current.user, flash)
           format.html { redirect_to admin_dashboards_path }
           format.js {}
@@ -29,8 +29,8 @@ module Admin
     end
 
     def rejected
-      respond_to do |format| 
-        if @expense.update(status: "rejected", rejection_reason: params[:expense][:rejection_reason])
+      respond_to do |format|
+        if @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
           handel_valid_reason(format)
         else
           handel_invalid_reason(format)
@@ -46,9 +46,8 @@ module Admin
     end
 
     def handel_valid_reason(format)
-     
       send_expense_status_update_notification(Current.user, @expense)
-      flash = {danger: "Expense rejected successfully"}
+      flash = { danger: 'Expense rejected successfully' }
       send_flash(Current.user, flash)
       format.html { redirect admin_dashboards_path }
       format.js {}
@@ -57,6 +56,5 @@ module Admin
     def handel_invalid_reason(format)
       format.js { render :reject }
     end
-
   end
 end
