@@ -1,5 +1,13 @@
 $(document).ready(function () {
-  $("#category_<%= @category.id %> #subcategory_<%= @subcategory.id %>").fadeOut("fast", function() {
+  const category = $("#category_<%= @category.id %>");
+  const subcategory = $("#subcategory_<%= @subcategory.id %>");
+  const subcategoryList = category.find("#subcategory_list");
+  category.find(subcategory).fadeOut("fast", function() {
     $(this).remove();
-  });;
+  });
+
+  if (subcategoryList.children().length == 1) {
+    category.find(".accordion-content").hide();
+    category.find(".accordion-header").find(".accordion-toggle").addClass("invisible");
+  }
 });

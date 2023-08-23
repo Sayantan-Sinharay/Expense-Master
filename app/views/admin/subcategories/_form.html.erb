@@ -1,7 +1,8 @@
-<%= form_with(model: @subcategory, url: @subcategory.id.nil? ? admin_category_subcategories_path(@subcategory.category) : admin_category_subcategory_path(@subcategory.category, @subcategory), class: "flex flex-row flex-grow items-center gap-5", id: "subcategory-form", local: false) do |form| %>
+<%= form_with(model: @subcategory, url: @subcategory.id.nil? ? admin_category_subcategories_path(@subcategory.category) : admin_category_subcategory_path(@subcategory.category, @subcategory), class: "flex flex-row flex-grow items-center gap-5", id: "subcategory-form", local: false, method: @subcategory.id.nil? ? :post : :patch) do |form| %>
   <div class="field flex my-auto">
     <div class="control">
       <%= form.text_field :name, class: "input", id: "subcategory-input" %>
+      <%= render "shared/form_error_message", object: @subcategory, field: :name %>
     </div>
   </div>
   <div class="field is-grouped ml-auto flex flex-row gap-5">

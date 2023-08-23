@@ -2,11 +2,12 @@
 
 # Controller for managing notifications.
 class NotificationsController < ApplicationController
+  after_action :mark_notifications_as_read, only: :index
   def index
     @notifications = Current.user.notifications.order(created_at: :desc)
-    mark_notifications_as_read
   end
 
+  # implement it later
   def delete; end
 
   private

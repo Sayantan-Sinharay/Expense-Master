@@ -7,6 +7,7 @@ function populateSubcategories(categoryId) {
         $.ajax({
             url: "/admin/categories/" + categoryId + "/subcategories",
             method: "GET",
+            dataType: "json",
             success: function (response) {
                 $("<option>", {
                     value: null,

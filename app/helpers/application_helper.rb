@@ -6,4 +6,12 @@ module ApplicationHelper
   def unread_notification_count(user)
     Notification.unread_count(user.id)
   end
+
+  def update_invalid_route(value)
+    @invalid_route = value
+  end
+
+  def invalid_route?
+    @invalid_route ||= false
+  end
 end

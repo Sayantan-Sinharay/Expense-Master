@@ -3,13 +3,16 @@
 module Admin
   # Controller for managing subcategories in the admin panel.
   class SubcategoriesController < ApplicationController
-    before_action :authenticate_admin
+    before_action :authenticate_admin, except: :index
     before_action :set_category
     before_action :set_subcategory, only: %i[edit update destroy]
 
+    include NotificationsHelper
+
     def index
-      @subcategories = @category.subcategories
+      @subcategories = @category.subcategories.all
       respond_to do |format|
+        format.html { render @subcategories }
         format.json { render json: @subcategories }
       end
     end
@@ -20,11 +23,11 @@ module Admin
     end
 
     def create
-      @subcategory = @category.subcategories.build(subcategory_params)
+      @subcategory = @category.subcategories.new(subcategory_params)
 
       respond_to do |format|
-        if save_subcategory(format)
-          format.js
+        if @subcategory.valid?
+          handle_successful_subcategory_creation(format)
         else
           handle_failed_subcategory_creation(format)
         end
@@ -38,17 +41,16 @@ module Admin
     def update
       respond_to do |format|
         if @subcategory.update(subcategory_params)
-          flash[:success] = 'Subcategory updated successfully.'
+          handle_valid_update(format)
         else
-          flash[:danger] = 'Failed to update subcategory.'
+          handle_invalid_update(format)
         end
-        format.html { redirect_to admin_categories_path }
-        format.js
       end
     end
 
     def destroy
-      flash[:danger] = 'Subcategory was successfully destroyed.' if @subcategory.destroy
+      flash = { danger: 'Subcategory has been deleted' }
+      send_flash(Current.user, flash) if @subcategory.destroy
       respond_to(&:js)
     end
 
@@ -70,19 +72,30 @@ module Admin
     end
 
     # Saves the subcategory and handles success.
-    def save_subcategory(format)
-      if @subcategory.save
-        flash[:success] = 'Successfully created subcategory.'
-        format.html { redirect_to admin_category_path(@category) }
-      else
-        false
-      end
+    def handle_successful_subcategory_creation(format)
+      @subcategory.save
+      flash = { success: 'Successfully created subcategory.' }
+      send_flash(Current.user, flash)
+      format.html { redirect_to admin_categories_path }
+      format.js {}
     end
 
     # Handles failed subcategory creation.
     def handle_failed_subcategory_creation(format)
-      flash[:danger] = 'Error creating subcategory.'
+      format.html { redirect_to admin_categories_path }
+      format.js { render :error_create } # look into this later
+    end
+
+    def handle_valid_update(format)
+      flash = { success: 'Successfully updated subcategory.' }
+      send_flash(Current.user, flash)
+      format.html { redirect_to admin_categories_path }
       format.js {}
+    end
+
+    def handle_invalid_update(format)
+      format.html { redirect_to admin_categories_path }
+      format.js { render :error_create } # look into this later
     end
   end
 end

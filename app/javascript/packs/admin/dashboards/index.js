@@ -16,39 +16,34 @@ $(document).ready(function () {
         $("#" + tabId).removeClass("hidden");
     });
 
-    $('[data-status="pending"]').each(function () {
-        $(this).find("#expense-status").removeClass("flex");
-        $(this).find("#expense-status").hide();
-    });
+    // $(".dropdown-item.reject").on("click", function (event) {
+    //     event.preventDefault();
+    //     // Show the modal
+    //     $("#rejection-modal").addClass("is-active");
+    // });
 
-    $(".dropdown-item.reject").on("click", function (event) {
-        event.preventDefault();
-        // Show the modal
-        $("#rejectModal").addClass("is-active");
-    });
-
-    // Handle click event on the modal close button
-    $(".modal .delete").on("click", function () {
-        // Hide the modal
-        $(this).closest(".modal").removeClass("is-active");
-    });
+    // // Handle click event on the modal close button
+    // $(".modal .delete").on("click", function () {
+    //     // Hide the modal
+    //     $(this).closest(".modal").removeClass("is-active");
+    // });
 
     // Handle form submission
-    $("#rejectForm").on("submit", function (event) {
-        event.preventDefault();
+    // $("#rejectForm").on("submit", function (event) {
+    //     event.preventDefault();
 
-        // Get the rejection reason from the form
-        const reason = $("#reasonInput").val();
+    //     // Get the rejection reason from the form
+    //     const reason = $("#reasonInput").val();
 
-        // Check if a reason is provided
-        if (reason.trim() === "") {
-            $(".reject-error").removeClass("is-hidden");
-        } else {
-            // Hide the modal
-            $("#rejectModal").removeClass("is-active");
+    //     // Check if a reason is provided
+    //     if (reason.trim() === "") {
+    //         $(".reject-error").removeClass("is-hidden");
+    //     } else {
+    //         // Hide the modal
+    //         $("#rejection-modal").removeClass("is-active");
 
-            // Submit the form (perform the AJAX request)
-            $(this).off("submit").submit();
-        }
-    });
+    //         // Submit the form (perform the AJAX request)
+    //         $(this).off("submit").submit();
+    //     }
+    // });
 });

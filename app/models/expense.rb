@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Represents the expense model in the application.
+# Represents the Expense model in the application.
 class Expense < ApplicationRecord
   has_one_attached :attachment
   belongs_to :user
@@ -13,6 +13,7 @@ class Expense < ApplicationRecord
                      numericality: { greater_than_or_equal_to: 0, message: 'Amount must be greater than or equal to 0' }
   validates :notes, length: { maximum: 255, message: 'Please give a brief note (maximum is 255 characters)' }
   validate :valid_attachment_content_type, if: :attachment_attached?
+  validate :valid_reason, if: -> { status == 'rejected' }, on: :update
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
@@ -42,4 +43,16 @@ class Expense < ApplicationRecord
 
     errors.add(:attachment, 'Attachment content type is invalid')
   end
+
+  def valid_reason
+    if rejection_reason.blank?
+      errors.add(:rejection_reason, 'Rejection reason cannot be blank')
+    elsif rejection_reason.length > 255
+      errors.add(:rejection_reason, 'Rejection reason should be brief')
+    end
+  end
+
+  scope :expense_at_organization, lambda { |organization|
+    joins(:user).where(users: { organization_id: organization.id })
+  }
 end

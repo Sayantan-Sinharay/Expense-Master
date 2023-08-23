@@ -4,27 +4,27 @@
       <%= form.label :category_id, "Select Category", class: "label required" %>
       <div class="control">
         <%= form.select :category_id, 
-               options_for_select(Category.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
+               options_for_select(Current.user.organization.categories.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
                { include_blank: "Select Category" },
                class: "input",
                id: "category_select" %>
+        <%= render "shared/form_error_message", object: @budget, field: :category %>
       </div>
-      <%= render "shared/form_error_message", object: @budget, field: :category %>
     </div>
     <div class="field flex-grow">
       <%= form.label :subcategory_id, "Select Sub-category", class: "label" %>
       <div class="control">
         <%= form.select :subcategory_id, options_for_select([], nil), { include_blank: "Select Sub-Category" }, class: "input", id: "subcategory_select", disabled: true %>
+        <%= render "shared/form_error_message", object: @budget, field: :subcategory %>
       </div>
-      <%= render "shared/form_error_message", object: @budget, field: :subcategory %>
     </div>
   </div>
   <div class="field">
     <%= form.label :month, class: "label required" %>
     <div class="control">
       <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { include_blank: "Select Month" }, { class: "input", id: "month_select" } %>
+      <%= render "shared/form_error_message", object: @budget, field: :month %>
     </div>
-    <%= render "shared/form_error_message", object: @budget, field: :month %>
   </div>
   <div class="field">
     <%= form.label :amount, class: "label required" %>
@@ -33,15 +33,15 @@
       <span class="icon is-small is-left">
         <i class="fa-solid fa-indian-rupee-sign"></i>
       </span>
+      <%= render "shared/form_error_message", object: @budget, field: :amount %>
     </div>
-    <%= render "shared/form_error_message", object: @budget, field: :amount %>
   </div>
   <div class="field">
     <%= form.label :notes, class: "label" %>
     <div class="control">
       <%= form.text_area :notes, class: "textarea" %>
+      <%= render "shared/form_error_message", object: @budget, field: :notes %>
     </div>
-    <%= render "shared/form_error_message", object: @budget, field: :notes %>
   </div>
   <div class="field is-grouped font-medium gap-2">
     <div class="control">

@@ -1,10 +1,10 @@
-<div class="modal" id="rejectModal">
+<div class="modal" id="reject_modal">
   <div class="modal-background"></div>
   <div class="modal-card">
-    <%= form_with(model: expense, url: reject_admin_dashboard_path(expense), method: :put, local: false ,class: "reject-form is-danger") do |form| %>
+    <%= form_with(model: expense, url: rejected_admin_dashboard_path(expense), method: :put, local: false ,class: "reject-form is-danger") do |form| %>
       <header class="modal-card-head">
         <p class="modal-card-title text-2xl font-bold">Reject Expense</p>
-        <button class="delete" aria-label="close"></button>
+        <span class="delete" aria-label="close"></span>
       </header>
       <section class="modal-card-body flex flex-col gap-5">
         <div class="field">
@@ -12,8 +12,8 @@
           <div class="control">
             <%= form.text_area :rejection_reason, class: "textarea is-danger"%>
           </div>
+          <%= render "shared/form_error_message", object: expense, field: :rejection_reason %>
         </div>
-        <%= render "shared/form_error_message", object: expense, field: :rejection_reason %>
         <div class="field">
           <div class="control">
             <%= form.submit "Reject", class: "button is-danger" %>
@@ -23,3 +23,4 @@
     <% end %>
   </div>
 </div>
+<%= javascript_pack_tag "modal" %>

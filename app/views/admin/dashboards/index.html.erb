@@ -19,7 +19,7 @@
         <%= render "users/expenses/expense", expense: expense %>
       <% end %>
       <% if @expenses.where(status: "pending").empty? %>
-        <%= render "shared/message", message: "No pending Expenses." %>
+        <%= render "shared/message", object: "Pending Expenses" %>
       <% end %>
     </div>
     <div class="tab-content hidden h-full" id="approved-tab">
@@ -27,7 +27,7 @@
         <%= render "users/expenses/expense", expense: expense %>
       <% end %>
       <% if @expenses.where(status: "approved").empty? %>
-        <%= render "shared/message", message: "No approved Expenses." %>
+        <%= render "shared/message", object: "Approved Expenses" %>
       <% end %>
     </div>
     <div class="tab-content hidden h-full" id="rejected-tab">
@@ -35,7 +35,7 @@
         <%= render "users/expenses/expense", expense: expense %>
       <% end %>
       <% if @expenses.where(status: "rejected").empty? %>
-        <%= render "shared/message", message: "No rejected Expenses." %>
+        <%= render "shared/message", object: "Rejected Expenses" %>
       <% end %>
     </div>
   </div>

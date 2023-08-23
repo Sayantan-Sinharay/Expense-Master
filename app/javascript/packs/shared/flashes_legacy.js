@@ -1,7 +1,7 @@
 $(document).ready(function () {
     function hideFlashMessage(ele) {
         $(ele).fadeOut("slow", function () {
-            $(this).parent().remove();
+            $(this).remove();
         });
     }
     $("#flash-message .delete").click(function () {

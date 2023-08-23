@@ -1,5 +1,18 @@
 $(document).ready(function () {
-    $('#category_<%= @category.id %> #category-header').replaceWith('<%= j render "edit_category-form", category: @category %>');
-    $('#category_<%= @category.id %> #category-input').focus(); 
+  const form = $("#edit_category-form");
+  const category = $("#category_<%= @category.id %>");
+  const categoryHeader = category.find("#category-header");
+
+  if (form.length) {
+    form.parent().find("#category-header").addClass("flex").show();
+    form.remove();
+  }
+
+  categoryHeader.removeClass("flex").hide();
+  categoryHeader.parent().prepend("<%= j render 'edit_category-form', category: @category %>");
+  
+  const input = category.find("#category-input").get(0);
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
 });
 

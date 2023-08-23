@@ -1,5 +1,13 @@
 $(document).ready(function () {
-  $("#user_<%= @user.id %>").fadeOut("fast", function() {
+  const usersList = $("#users_list")
+  const user = $("#user_<%= @user.id %>");
+
+  user.fadeOut("fast", function() {
     $(this).remove();
-  });;
+  });
+
+  if (usersList.children().length == 1) {
+    usersList.append("<%= j render "shared/message", object: "Users" %>");
+  }
+
 });

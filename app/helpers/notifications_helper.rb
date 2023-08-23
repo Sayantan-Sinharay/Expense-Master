@@ -33,3 +33,7 @@ end
 def send_expense_status_update_email_notification(admin, expense)
   UserMailer.with(admin:, expense:).expense_status_update_email.deliver_later
 end
+
+def send_flash(_user, flash)
+  ActionCable.server.broadcast(Current.user.id, render_to_string(partial: 'shared/flashes', locals: { flash: }))
+end

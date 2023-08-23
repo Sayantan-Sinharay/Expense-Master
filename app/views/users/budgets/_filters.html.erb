@@ -1,8 +1,8 @@
-<%= form_with(model: @budgets, url: budgets_path, class: "flex", id: "budgets_filter") do |form| %>
-  <div class="field flex flex-col flex-grow">
+<%= form_with(model: @budgets, url: budgets_path, class: "flex", id: "budgets_filter", class: "flex px-2") do |form| %>
+  <div class="field flex flex-col flex-grow h-full">
     <%= form.label :category_id, "Select Category", class: "label" %>
     <div class="control">
-      <div class="dropdown w-3/4">
+      <div class="dropdown w-3/4 h-full">
         <div class="dropdown-trigger w-full">
           <div class="button is-primary flex w-full dropdown-button font-bold" aria-haspopup="true" aria-controls="category-dropdown">
             <span class="flex-grow text-left" id="selected-category">All Category</span>
@@ -11,10 +11,10 @@
             </span>
           </div>
         </div>
-        <div class="dropdown-menu w-full" id="category-dropdown" role="menu">
-          <div class="dropdown-content">
+        <div class="dropdown-menu w-full h-96" id="category-dropdown" role="menu">
+          <div class="dropdown-content h-full overflow-auto">
             <a href="#" class="dropdown-item is-active" data-value=""><%= "All Category" %></a>
-            <% Category.all.each do |category| %>
+            <% Current.user.organization.categories.each do |category| %>
               <a href="#" class="dropdown-item" data-value="<%= category.id %>"><%= category.name %></a>
             <% end %>
           </div>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="dropdown-menu w-full" id="month-dropdown" role="menu">
-          <div class="dropdown-content">
+          <div class="dropdown-content h-full overflow-y-auto">
             <a href="#" class="dropdown-item is-active" data-value=""><%= "All Months" %></a>
             <% Date::MONTHNAMES.drop(1).each_with_index do |month, index| %>
               <a href="#" class="dropdown-item" data-value="<%= index + 1 %>"><%= month %></a>

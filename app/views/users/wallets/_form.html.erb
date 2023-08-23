@@ -7,15 +7,15 @@
         <span class="icon is-small is-left">
           <i class="fa-solid fa-indian-rupee-sign"></i>
         </span>
-      </div>
       <%= render "shared/form_error_message", object: @wallet, field: :amount %>
+      </div>
     </div>
     <div class="field flex-grow">
       <%= form.label :month, "Select Month", class: "label required" %>
       <div class="control">
         <%= form.select :month, options_for_select(Date::MONTHNAMES.compact.map.with_index(1).to_a, nil), { prompt: "Select Month" }, { class: "input", id: "month_select" } %>
-      </div>
       <%= render "shared/form_error_message", object: @wallet, field: :month %>
+      </div>
     </div>
   </div>
   <div class="field">

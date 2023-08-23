@@ -17,10 +17,19 @@
 $primary: #35BB78;
 $success: $primary;
 $link: $primary ;
-$info:  $primary ;
 
 @import "bulma";
 
+
+::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: $primary;
+}
+
+::selection {
+  color: white;
+  background: $primary;
+}
 
 /* Track */
 ::-webkit-scrollbar {
@@ -69,6 +78,8 @@ label.required::after {
   }
 
 .field_with_errors {
+  display: flex;
+  flex-grow: 1;
   label{
     margin-bottom: 0.5em;
   }

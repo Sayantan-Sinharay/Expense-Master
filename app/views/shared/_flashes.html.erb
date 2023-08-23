@@ -1,9 +1,20 @@
-<section class="flash-container relative h-fit p-2">
+<section class="flash-container relative h-fit">
   <% flash.each do |type, message| %>
-    <div id="flash-message" class="container notification is-<%= type %> is-light fixed flex mx-auto h-fit z-50 w-1/2 right-1/2 transform translate-x-1/2">
-      <button class="delete"></button>
-      <div class="notification-content">
-        <%= message %>
+    <div id="flash-message" class="container notification is-<%= type %> is-light fixed flex mx-auto h-fit z-50 w-1/2 right-1/2 transform translate-x-1/2 m-4">
+      <button class="delete" aria-label="close"></button>
+      <div class="icon-text gap-2 notification-content">
+        <span class="icon text-2xl">
+          <% if type.to_s == "success" %>
+            <i class="fa-solid fa-circle-check has-text-primary"></i>
+          <% elsif type.to_s == "info" %>
+            <i class="fa-solid fa-circle-info has-text-info"></i>
+          <% else %>
+            <i class="fa-solid fa-circle-exclamation has-text-danger"></i>
+          <% end %>
+        </span>
+        <p>
+          <%= message %>
+        </p>
       </div>
     </div>
   <% end %>

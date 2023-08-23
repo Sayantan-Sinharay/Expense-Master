@@ -1,8 +1,13 @@
 $(document).ready(function() {
-  $("#users_list").append('<%= j render @user %>');
-  $("#invite_user-form").remove();
-  $("#form_toggle-button").show();
+  const usersList = $("#users_list");
+  const inviteUserForm = $("#invite_user-form");
+  const formToggleButton = $("#form_toggle-button");
+
+  usersList.prepend("<%= j render @user %>");
+  inviteUserForm.remove();
+  formToggleButton.show();
+
+  if (usersList.children().length) {
+    usersList.find("#list-message").remove();
+  }
 });
-
-
-

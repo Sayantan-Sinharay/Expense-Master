@@ -4,24 +4,37 @@ module Admin
   # Controller for managing dashboards in the admin panel.
   class DashboardsController < ApplicationController
     before_action :authenticate_admin
-    before_action :find_expense, only: %i[approve reject]
+    before_action :find_expense, only: %i[approved reject rejected]
     include Admin::DashboardsHelper
+    include NotificationsHelper
 
     def index
-      @expenses = Expense.order(created_at: :desc).all
+      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc)
     end
 
-    def approve
-      @expense.update(status: 'approved')
-      send_expense_status_update_notification(Current.user, @expense)
-      redirect_to admin_dashboards_path, success: 'Expense approved successfully.'
+    def approved
+      respond_to do |format|
+        if @expense.approved!
+          send_expense_status_update_notification(Current.user, @expense)
+          flash = { success: 'Expense approved successfully.' }
+          send_flash(Current.user, flash)
+          format.html { redirect_to admin_dashboards_path }
+          format.js {}
+        end
+      end
     end
 
     def reject
-      if validate_reason?
-        handel_valid_reason
-      else
-        handel_invalid_reason
+      respond_to(&:js)
+    end
+
+    def rejected
+      respond_to do |format|
+        if @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
+          handel_valid_reason(format)
+        else
+          handel_invalid_reason(format)
+        end
       end
     end
 
@@ -32,48 +45,16 @@ module Admin
       @expense = Expense.find(params[:id])
     end
 
-    def validate_reason?
-      if params[:expense][:rejection_reason].blank?
-        @expense.errors.add(:rejection_reason, 'Rejection reason cannot be blank')
-      elsif params[:expense][:rejection_reason].length > 255
-        @expense.errors.add(:rejection_reason, 'Rejection reason should be brief')
-      else
-        return true
-      end
-      false
-    end
-
-    def handel_valid_reason
-      @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
+    def handel_valid_reason(format)
       send_expense_status_update_notification(Current.user, @expense)
-      redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
+      flash = { danger: 'Expense rejected successfully' }
+      send_flash(Current.user, flash)
+      format.html { redirect admin_dashboards_path }
+      format.js {}
     end
 
-    def handel_invalid_reason
-      render :reject
-
+    def handel_invalid_reason(format)
+      format.js { render :reject }
     end
-
-    def validate_reason?
-      if params[:expense][:rejection_reason].blank?
-        @expense.errors.add(:rejection_reason, "Rejection reason cannot be blank") 
-      elsif params[:expense][:rejection_reason].length > 255
-        @expense.errors.add(:rejection_reason, "Rejection reason should be brief")
-      else
-        return true
-      end
-      return false
-    end
-
-    def handel_valid_reason
-      @expense.update(status: 'rejected', rejection_reason: params[:expense][:rejection_reason])
-      send_expense_status_update_notification(Current.user, @expense)
-      redirect_to admin_dashboards_path, danger: 'Expense rejected successfully.'
-    end
-
-    def handel_invalid_reason
-      render :reject
-    end
-
   end
 end

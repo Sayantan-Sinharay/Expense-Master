@@ -6,8 +6,10 @@ module Admin
     before_action :authenticate_admin
     before_action :set_user, only: [:destroy]
 
+    include NotificationsHelper
+
     def index
-      @users = User.get_non_admin_users(Current.user[:organization_id])
+      @users = User.order(created_at: :desc).get_non_admin_users(Current.user[:organization_id])
     end
 
     def new
@@ -16,11 +18,10 @@ module Admin
     end
 
     def create
-      @user = User.invite_user(Current.user, params[:user][:email])
-      @user.update(invitation_sent_at: Time.now)
       respond_to do |format|
-        if invitation_sent_successfully?
-          handle_successful_invitation(format)
+        if valid_email?
+          @user = User.create_user(@user)
+          handle_successful_invitation(format) if invitation_sent_successfully?
         else
           handle_failed_invitation(format)
         end
@@ -28,7 +29,9 @@ module Admin
     end
 
     def destroy
+      flash = { danger: "#{@user.email} has been removed!" }
       @user.destroy
+      send_flash(Current.user, flash)
       respond_to(&:js)
     end
 
@@ -36,7 +39,7 @@ module Admin
 
     # Checks if the user invitation was sent successfully.
     def invitation_sent_successfully?
-      @user.present? && @user.save
+      @user.valid? && @user.save
     end
 
     # Sends an invitation email to the invited user.
@@ -49,9 +52,15 @@ module Admin
       @user = User.find(params[:id])
     end
 
+    def valid_email?
+      @user = Current.user.organization.users.new(email: params[:user][:email])
+      @user.errors[:email].empty? unless @user.valid?
+    end
+
     # Handles successful user invitation.
     def handle_successful_invitation(format)
-      flash[:success] = "Invitation sent to #{params[:user][:email]}!"
+      flash = { success: "Invitation sent to #{params[:user][:email]}!" }
+      send_flash(Current.user, flash)
       format.html { redirect_to admin_users_path }
       format.js {}
       send_invitation_email
@@ -59,9 +68,8 @@ module Admin
 
     # Handles failed user invitation.
     def handle_failed_invitation(format)
-      flash.now[:danger] = "Failed to send invitation to #{params[:user][:email]}."
       format.html { render :new }
-      format.js { render :new } # TODO: create template error.js.erb to handle errors if any. Add status as well.
+      format.js { render :new }
     end
   end
 end
