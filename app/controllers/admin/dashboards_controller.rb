@@ -4,7 +4,7 @@ module Admin
   # Controller for managing dashboards in the admin panel.
   class DashboardsController < ApplicationController
     before_action :authenticate_admin
-    before_action :find_expense, only: %i[approve reject]
+    before_action :find_expense, only: %i[approved reject rejected]
     include Admin::DashboardsHelper
     include NotificationsHelper
 
@@ -12,9 +12,9 @@ module Admin
       @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc)
     end
 
-    def approve
+    def approved
       respond_to do |format|
-        if @expense.update(status: 'approved')
+        if @expense.approved!
           send_expense_status_update_notification(Current.user, @expense)
           flash = { success: "Expense approved successfully." }
           send_flash(Current.user, flash)
@@ -25,6 +25,10 @@ module Admin
     end
 
     def reject
+      respond_to(&:js)
+    end
+
+    def rejected
       respond_to do |format| 
         if @expense.update(status: "rejected", rejection_reason: params[:expense][:rejection_reason])
           handel_valid_reason(format)
@@ -47,11 +51,11 @@ module Admin
       flash = {danger: "Expense rejected successfully"}
       send_flash(Current.user, flash)
       format.html { redirect admin_dashboards_path }
-      format.js { render :success_reject }
+      format.js {}
     end
 
     def handel_invalid_reason(format)
-      format.js { render :error_reject }
+      format.js { render :reject }
     end
 
   end

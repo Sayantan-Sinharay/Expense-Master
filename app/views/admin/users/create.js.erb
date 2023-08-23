@@ -6,4 +6,8 @@ $(document).ready(function() {
   usersList.prepend("<%= j render @user %>");
   inviteUserForm.remove();
   formToggleButton.show();
+
+  if (usersList.children().length) {
+    usersList.find("#list-message").remove();
+  }
 });

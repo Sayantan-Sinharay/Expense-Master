@@ -1,7 +1,7 @@
-<div class="modal" id="rejection-modal" data-expense="<%= expense.id %>">
+<div class="modal" id="reject_modal">
   <div class="modal-background"></div>
   <div class="modal-card">
-    <%= form_with(model: expense, url: reject_admin_dashboard_path(expense), method: :put, local: false ,class: "reject-form is-danger") do |form| %>
+    <%= form_with(model: expense, url: rejected_admin_dashboard_path(expense), method: :put, local: false ,class: "reject-form is-danger") do |form| %>
       <header class="modal-card-head">
         <p class="modal-card-title text-2xl font-bold">Reject Expense</p>
         <span class="delete" aria-label="close"></span>
@@ -23,4 +23,4 @@
     <% end %>
   </div>
 </div>
-<%= javascript_pack_tag "admin/dashboards/modal" %>
+<%= javascript_pack_tag "modal" %>

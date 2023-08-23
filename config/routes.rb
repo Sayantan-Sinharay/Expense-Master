@@ -22,8 +22,9 @@ Rails.application.routes.draw do
     post 'user/create', to: 'users#create', as: :create_user
     delete 'user/destroy/:id', to: 'users#destroy', as: :delete_user
     resources :dashboards, only: [:index] do
-      put :approve, on: :member
-      put :reject, on: :member
+      put :approved, on: :member
+      get :reject, on: :member
+      put :rejected, on: :member
     end
     resources :categories do
       resources :subcategories

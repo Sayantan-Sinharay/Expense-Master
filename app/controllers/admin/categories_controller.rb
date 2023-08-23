@@ -39,9 +39,8 @@ module Admin
     end
 
     def destroy
-      @category.destroy
       flash = { danger: 'Category destroyed successfully.' }
-      send_flash(Current.user, flash)
+      send_flash(Current.user, flash) if @category.destroy
       respond_to(&:js)
     end
 
@@ -65,9 +64,8 @@ module Admin
     end
 
     def handle_invalid_category(format)
-      flash.now[:danger] = 'Failed to create category.'
       format.html { render :index }
-      format.js { render :error_create }
+      format.js { render :error_create } # look into this later
     end
 
     def handle_valid_update(format)
@@ -81,7 +79,7 @@ module Admin
       flash = { danger: 'Failed to update category.' }
       send_flash(Current.user, flash)
       format.html { render :index }
-      format.js { render :error_update }
+      format.js { render :error_update } # look into this later
     end
   end
 end

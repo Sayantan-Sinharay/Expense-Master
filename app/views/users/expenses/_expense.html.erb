@@ -59,10 +59,8 @@
       </div>
       <div class="dropdown-menu" id="dropdown-menu" role="menu">
         <div class="dropdown-content">
-          <%= link_to "Approve", approve_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put %>
-          <%= link_to "#", class: "dropdown-item reject", data: { toggle: "modal", target: "#rejection-modal" } do %>
-            Reject
-          <% end %>
+          <%= link_to "Approve", approved_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :put %>
+          <%= link_to "Reject", reject_admin_dashboard_path(expense), class: "dropdown-item", remote: true, method: :get %>
         </div>
       </div>
     </div>
@@ -87,5 +85,6 @@
   </div>
 </div>
 <% if expense.pending? %>
-  <%= render "admin/dashboards/modal", {expense: expense} %>
+  <div id="rejection-modal" data-expense="<%= expense.id %>">
+  </div>
 <% end %>

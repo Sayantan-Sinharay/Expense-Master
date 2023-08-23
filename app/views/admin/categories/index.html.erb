@@ -5,6 +5,8 @@
   </div>
   <div class="flex flex-col p-2 h-full overflow-y-auto accordion" id="category_list">
     <%= render partial: @categories %>
+    <% if @categories.length == 0 %>
+      <%= render "shared/message", object: "Category" %>
+    <% end %>
   </div>
 </section>
-<%= javascript_pack_tag 'admin/categories/index' %>

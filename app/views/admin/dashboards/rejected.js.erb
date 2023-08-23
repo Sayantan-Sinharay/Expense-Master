@@ -8,12 +8,22 @@ $(document).ready(function() {
   const statusElement = expenseElement.find("#expense-status");
   const pendingTabContent = $("#pending-tab");
   const rejectedTabContent = $("#rejected-tab");
+
+  if (pendingTabContent.children().length == 1) {
+    pendingTabContent.append("<%= j render "shared/message", object: "Pending Expenses" %>")
+  }
+
+  if (rejectedTabContent.children().length) {
+    rejectedTabContent.find("#list-message").remove();
+  }
   
   dropdownElement.remove();
 
   statusElement.append("<%= j render 'users/expenses/status', expense: @expense %>");
   
   // Move the expense item to the "Approved" tab
-  expenseElement.detach().appendTo(rejectedTabContent);
+  expenseElement.fadeOut("fast", function () {
+    $(this).detach().appendTo(rejectedTabContent);
+  });
   
 });

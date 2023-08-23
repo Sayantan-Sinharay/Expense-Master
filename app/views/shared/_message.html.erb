@@ -1,7 +1,3 @@
 <div class="flex w-full h-full items-center justify-center font-bold text-center text-2xl has-text-dark" id="list-message">
-  <% if Current.user&.is_admin? %>
-    <%= message %>
-  <% else %>
-    No <%= object.pluralize %> are found.
-  <% end %>
+  No <%= object.pluralize %> are found.
 </div>

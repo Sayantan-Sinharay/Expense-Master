@@ -1,6 +1,11 @@
 $(document).ready(function () {
+  const categoryList = $("#category_list")
   const categoryElement = $("#category_<%= @category.id %>");
   categoryElement.fadeOut("fast", function() {
     $(this).remove();
   });
+    console.log(categoryList.children().length);
+  if (categoryList.children().length == 1 ) {
+    categoryList.append("<%= j render "shared/message", object: "Category" %>")
+  } 
 });

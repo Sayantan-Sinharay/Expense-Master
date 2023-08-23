@@ -9,6 +9,9 @@
   </div>
   <div class="flex flex-col p-2 h-full overflow-y-auto" id="users_list">
     <%= render @users %>
+    <% if @users.length == 0 %>
+      <%= render "shared/message", object: "Users" %>
+    <% end %>
   </div>
 </section>
 <% javascript_pack_tag "admin/users/index"%>

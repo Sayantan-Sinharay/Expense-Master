@@ -1,5 +1,4 @@
-$(document).ready(function() {
-  const modalElement = $("#rejection-modal");
-  modalElement.addClass("is-active");
+$(document).ready(function () {
+  $("#rejection-modal").empty().append("<%= j render "modal", expense: @expense %>");
+  $("#rejection-modal").find(".modal").addClass("is-active");
 });
-
