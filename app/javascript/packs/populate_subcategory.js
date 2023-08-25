@@ -2,7 +2,7 @@
 function populateSubcategories(categoryId) {
   $("#subcategory_select").empty();
   $("#subcategory_select").prop("disabled", true);
-
+  
   if (categoryId) {
     $.ajax({
       url: "/admin/categories/" + categoryId + "/subcategories",
@@ -13,7 +13,6 @@ function populateSubcategories(categoryId) {
           value: null,
           text: "Select Sub-category",
         }).appendTo("#subcategory_select");
-
         response.forEach(function (subcategory) {
           $("<option>", {
             value: subcategory.id,

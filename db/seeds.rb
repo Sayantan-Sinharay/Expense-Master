@@ -61,7 +61,7 @@ PASSWORD = "Password#123"
 
   User.where(organization:).each do |user|
     Category.all.sample(5).each do |category|
-
+      
       # Create budgets
       subcategory = category.subcategories.sample
       Budget.create!(
