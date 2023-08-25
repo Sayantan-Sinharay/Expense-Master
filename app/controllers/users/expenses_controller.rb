@@ -39,7 +39,7 @@ module Users
     end
 
     def handle_invalid_expense
-      flash.now[:danger] = "Expense could not be created."
+      flash.now[:danger] = 'Expense could not be created.'
       render :new
     end
 
@@ -56,14 +56,18 @@ module Users
     def save_and_notify_expense
       if @expense.save
         send_notifications(Current.user, @expense)
-        flash[:success] = "Expense created successfully."
-        if params[:commit] == "Add Another"
-          redirect_to new_expense_path
-        else
-          redirect_to expenses_path
-        end
+        flash[:success] = 'Expense created successfully.'
+        redirect_after_successful_save
       else
         render :new
+      end
+    end
+
+    def redirect_after_successful_save
+      if params[:commit] == 'Add Another'
+        redirect_to new_expense_path
+      else
+        redirect_to expenses_path
       end
     end
   end

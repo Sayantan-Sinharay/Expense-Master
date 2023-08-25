@@ -18,5 +18,10 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.text :rejection_reason
       t.timestamps
     end
+
+    add_index :expenses, :year
+    add_index :expenses, :status
+    add_index :expenses, [:user_id, :status]
+    add_index :expenses, [:category_id, :status]
   end
 end

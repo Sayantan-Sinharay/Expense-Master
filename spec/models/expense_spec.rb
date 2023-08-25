@@ -30,10 +30,10 @@ RSpec.describe Expense, type: :model do
     expect(expense.errors[:amount]).to include("Amount can't be blank")
   end
 
-  it 'is not valid with a negative amount' do
+  it 'is not valid with a non-positive amount' do
     expense = build(:expense, user:, category:, amount: -50)
     expect(expense).not_to be_valid
-    expect(expense.errors[:amount]).to include('Amount must be greater than or equal to 0')
+    expect(expense.errors[:amount]).to include('Amount must be greater than 0')
   end
 
   it 'is valid without notes' do
@@ -112,5 +112,37 @@ RSpec.describe Expense, type: :model do
     expenses_within_range = Expense.where(date: Date.today - 1.month..Date.today)
     expect(expenses_within_range).to include(expense_in_range)
     expect(expenses_within_range).not_to include(expense_out_of_range)
+  end
+
+  it 'is not valid with rejected status and blank rejection reason' do
+    expense = create(:expense, user:, category:, status: 'rejected', rejection_reason: nil)
+    expect(expense).not_to be_valid
+    expect(expense.errors[:rejection_reason]).to include('Rejection reason cannot be blank')
+  end
+
+  it 'is not valid with rejected status and too long rejection reason' do
+    long_reason = 'a' * 256
+    expense = build(:expense, user:, category:)
+    expense.update(status: 'rejected', rejection_reason: long_reason)
+    expect(expense).not_to be_valid
+    expect(expense.errors[:rejection_reason]).to include('Rejection reason should be brief')
+  end
+
+  it 'is valid with rejected status and valid rejection reason' do
+    valid_reason = 'This expense is not within the budget'
+    expense = build(:expense, user:, category:, status: 'rejected', rejection_reason: valid_reason)
+    expect(expense).to be_valid
+  end
+
+  it 'can be scoped to get expenses within a specific organization' do
+    organization = create(:organization)
+    user_in_org = create(:user, organization:)
+    user_outside_org = create(:user)
+    expense_in_org = create(:expense, user: user_in_org, category:)
+    expense_outside_org = create(:expense, user: user_outside_org, category:)
+
+    org_expenses = Expense.expense_at_organization(organization)
+    expect(org_expenses).to include(expense_in_org)
+    expect(org_expenses).not_to include(expense_outside_org)
   end
 end

@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# rubocop:disable all
 
 # Represents a migration to create the budgets table.
 class CreateBudgets < ActiveRecord::Migration[6.1]
@@ -10,8 +10,10 @@ class CreateBudgets < ActiveRecord::Migration[6.1]
       t.decimal :amount, precision: 10, scale: 2
       t.text :notes
       t.integer :month, null: false
-      t.integer :year, null: false, default: -> { 'EXTRACT(year FROM CURRENT_TIMESTAMP)' }
+      t.integer :year, null: false, default: -> { "EXTRACT(year FROM CURRENT_TIMESTAMP)" }
       t.timestamps
     end
+
+    add_index :budgets, %i[month year]
   end
 end

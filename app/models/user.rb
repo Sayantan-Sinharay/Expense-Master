@@ -7,15 +7,17 @@ class User < ApplicationRecord
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
 
-  belongs_to :organization
+  belongs_to :organization, inverse_of: :users
   has_many :budgets, dependent: :destroy
   has_many :expenses, dependent: :destroy
   has_many :wallets, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
   validates :first_name, presence: { message: 'User must have a first name' },
+                         format: { with: /\A[a-zA-Z\s.']+\z/, message: 'First name is invalid' },
                          length: { maximum: 20, message: 'First name is too long.' }
-  validates :last_name, length: { maximum: 20, message: 'Last name is too long.' }
+  validates :last_name, length: { maximum: 20, message: 'Last name is too long.' },
+                        format: { with: /\A[a-zA-Z\s.']+\z/, message: 'Last name is invalid' }
   validates :email, presence: { message: 'User must have an email' },
                     uniqueness: { case_sensitive: false, message: 'Has already been taken' },
                     format: { with: EMAIL_REGEX, message: 'Is not a valid email format' }
@@ -53,8 +55,8 @@ class User < ApplicationRecord
   # Creates and returns a new user instance with a generated name and password.
   def self.create_user(user)
     password = PasswordGenerator.generate_password
-    user.update(first_name: "user#{User.last.id}",
-                last_name: user.organization.name,
+    user.update(first_name: 'First Name',
+                last_name: 'Last Name',
                 password:,
                 password_confirmation: password,
                 invitation_sent_at: Time.now)

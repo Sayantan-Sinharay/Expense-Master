@@ -1,6 +1,5 @@
-# frozen_string_literal: true
+# rubocop:disable all
 
-# spec/models/notification_spec.rb
 require 'rails_helper'
 
 RSpec.describe Notification, type: :model do

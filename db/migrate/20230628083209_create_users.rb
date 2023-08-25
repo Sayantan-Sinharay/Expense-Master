@@ -5,6 +5,7 @@
 class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
+      t.references :organization, null: false, foreign_key: true
       t.string :first_name, null: false
       t.string :last_name
       t.string :email, null: false
@@ -16,8 +17,9 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.datetime :confirmed_at
       t.string :reset_password_token
       t.datetime :reset_password_sent_at
-      t.references :organization, null: false, foreign_key: true
       t.timestamps
     end
+
+    add_index :users, :email
   end
 end

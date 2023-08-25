@@ -7,7 +7,7 @@ require 'prawn/table'
 class ExpenseReportService
   class << self
     def generate_and_send_monthly_report
-      Organization.all.each do |organization|
+      Organization.find_each do |organization|
         generate_and_send_report_for_organization(organization)
       end
     end
@@ -16,7 +16,7 @@ class ExpenseReportService
 
     def generate_and_send_report_for_organization(organization)
       users = User.get_non_admin_users(organization.id)
-      users.each do |user|
+      users.find_each(batch_size: 100) do |user|
         pdf_filename = generate_pdf(Expense.get_approved_expenses(user), user)
         send_report_email(user, pdf_filename)
         delete_temp_pdf(pdf_filename)
