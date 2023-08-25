@@ -5,7 +5,7 @@ class Wallet < ApplicationRecord
   belongs_to :user
 
   validates :amount, presence: { message: "Amount can't be blank" },
-                     numericality: { greater_than_or_equal_to: 0, message: 'Amount must be greater than or equal to 0' }
+                     numericality: { greater_than: 0, message: 'Amount must be greater than 0' }
   validates :month, presence: { message: "Month can't be blank" },
                     uniqueness: { scope: %i[user_id year], message: 'Wallet for this month already exists' }
 

@@ -10,7 +10,7 @@ class Expense < ApplicationRecord
   validates :category, presence: { message: 'Category must be selected' }
   validates :date, presence: { message: "Date can't be blank" }
   validates :amount, presence: { message: "Amount can't be blank" },
-                     numericality: { greater_than_or_equal_to: 0, message: 'Amount must be greater than or equal to 0' }
+                     numericality: { greater_than: 0, message: 'Amount must be greater than 0' }
   validates :notes, length: { maximum: 255, message: 'Please give a brief note (maximum is 255 characters)' }
   validate :valid_attachment_content_type, if: :attachment_attached?
   validate :valid_reason, if: -> { status == 'rejected' }, on: :update

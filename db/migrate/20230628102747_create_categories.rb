@@ -8,5 +8,7 @@ class CreateCategories < ActiveRecord::Migration[6.1]
       t.references :organization, null: false, foreign_key: true
       t.timestamps
     end
+
+    add_index :categories, :name
   end
 end

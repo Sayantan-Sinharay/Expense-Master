@@ -57,9 +57,17 @@ module Users
       if @expense.save
         send_notifications(Current.user, @expense)
         flash[:success] = 'Expense created successfully.'
-        redirect_to expenses_path
+        redirect_after_successful_save
       else
         render :new
+      end
+    end
+
+    def redirect_after_successful_save
+      if params[:commit] == 'Add Another'
+        redirect_to new_expense_path
+      else
+        redirect_to expenses_path
       end
     end
   end

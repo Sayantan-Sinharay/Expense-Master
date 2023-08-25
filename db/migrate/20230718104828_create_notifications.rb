@@ -9,5 +9,7 @@ class CreateNotifications < ActiveRecord::Migration[6.1]
       t.boolean :read, default: false
       t.timestamps
     end
+
+    add_index :notifications, :read
   end
 end
