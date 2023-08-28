@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_budgets_on_category_id"
-
     t.index ["month", "year"], name: "index_budgets_on_month_and_year"
     t.index ["subcategory_id"], name: "index_budgets_on_subcategory_id"
     t.index ["user_id"], name: "index_budgets_on_user_id"
@@ -67,7 +66,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.bigint "organization_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
     t.index ["name"], name: "index_categories_on_name"
     t.index ["organization_id"], name: "index_categories_on_organization_id"
   end
@@ -86,7 +84,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.text "rejection_reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
     t.index ["category_id", "status"], name: "index_expenses_on_category_id_and_status"
     t.index ["category_id"], name: "index_expenses_on_category_id"
     t.index ["status"], name: "index_expenses_on_status"
@@ -102,7 +99,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.boolean "read", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
     t.index ["read"], name: "index_notifications_on_read"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
@@ -122,7 +118,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
   end
 
   create_table "users", force: :cascade do |t|
-
     t.bigint "organization_id", null: false
     t.string "first_name", null: false
     t.string "last_name"
@@ -137,7 +132,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.datetime "reset_password_sent_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    
     t.index ["email"], name: "index_users_on_email"
     t.index ["organization_id"], name: "index_users_on_organization_id"
   end
@@ -149,7 +143,6 @@ ActiveRecord::Schema.define(version: 2023_07_18_104828) do
     t.integer "year", default: -> { "EXTRACT(year FROM CURRENT_TIMESTAMP)" }, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-
     t.index ["month", "year"], name: "index_wallets_on_month_and_year"
     t.index ["user_id", "month"], name: "index_wallets_on_user_id_and_month"
     t.index ["user_id"], name: "index_wallets_on_user_id"
