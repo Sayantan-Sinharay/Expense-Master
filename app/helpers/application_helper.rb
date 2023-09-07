@@ -14,4 +14,12 @@ module ApplicationHelper
   def invalid_route?
     @invalid_route ||= false
   end
+
+  def get_category_name(id)
+    Category.find_by(id:)&.name
+  end
+
+  def get_subcategory_name(id)
+    Subcategory.find_by(id:)&.name
+  end
 end

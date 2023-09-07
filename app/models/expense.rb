@@ -22,6 +22,9 @@ class Expense < ApplicationRecord
   scope :get_approved_expenses, lambda { |user|
     joins(:user).where(expenses: { user_id: user.id, status: 'approved' })
   }
+  scope :expense_at_organization, lambda { |organization|
+    joins(:user).where(users: { organization_id: organization.id })
+  }
 
   private
 
@@ -51,8 +54,4 @@ class Expense < ApplicationRecord
       errors.add(:rejection_reason, 'Rejection reason should be brief')
     end
   end
-
-  scope :expense_at_organization, lambda { |organization|
-    joins(:user).where(users: { organization_id: organization.id })
-  }
 end

@@ -46,12 +46,10 @@ module Admin
 
     private
 
-    # Finds and sets the category based on the ID parameter.
     def set_category
       @category = Category.find(params[:id])
     end
 
-    # Permits the category parameters.
     def category_params
       params.require(:category).permit(:name)
     end
