@@ -53,7 +53,6 @@ class SessionsController < ApplicationController
   private
 
   def load_user
-    binding.pry
     @user = User.find_by(email: params[:user][:email].downcase)
   end
 
