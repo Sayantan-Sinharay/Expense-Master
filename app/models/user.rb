@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 # Represents the user model in the application.
 class User < ApplicationRecord
-  has_secure_password
-
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
+
+  has_secure_password
 
   belongs_to :organization, inverse_of: :users
   has_many :budgets, dependent: :destroy
@@ -26,25 +28,22 @@ class User < ApplicationRecord
                        format: {
                          with: PASSWORD_REGEX,
                          message: 'Must include at least one lowercase letter, one uppercase letter, one digit' \
-                         ', and one special character'
+                                  ', and one special character'
                        }
   validates :password_confirmation, presence: { message: "Can't be blank" }, if: -> { password.present? }
 
   scope :get_non_admin_users, lambda { |organization_id|
     where(organization_id:, is_admin?: false)
   }
-
   scope :get_admin_users, lambda { |organization_id|
     where(organization_id:, is_admin?: true)
   }
-
   scope :year_wise_expenses, lambda { |user|
     joins(:expenses)
       .where(expenses: { user:, status: 'approved' })
       .group('expenses.year')
       .sum('expenses.amount')
   }
-
   scope :category_wise_expenses, lambda { |user|
     joins(:expenses)
       .where(expenses: { user:, status: 'approved' })
@@ -54,7 +53,7 @@ class User < ApplicationRecord
 
   # Creates and returns a new user instance with a generated name and password.
   def self.create_user(user)
-    password = PasswordGenerator.generate_password
+    password = User.generate_password
     user.update(first_name: 'First Name',
                 last_name: 'Last Name',
                 password:,
@@ -63,31 +62,29 @@ class User < ApplicationRecord
     user
   end
 
-  # A class that is used to generate a password
-  class PasswordGenerator
-    SYMBOLS = ('!'..'~').to_a.select { |c| c.match?(/\p{S}/) }
-    LOWERCASE_LETTERS = ('a'..'z').to_a
-    UPPERCASE_LETTERS = ('A'..'Z').to_a
-    NUMBERS = ('0'..'9').to_a
+  # Generates a random password with at least one uppercase, one lowercase, one digit, and one symbol.
+  def self.generate_password(length = 12)
+    required_characters = [
+      ('A'..'Z').to_a.sample,
+      ('a'..'z').to_a.sample,
+      ('0'..'9').to_a.sample,
+      ['!', '@', '#', '$', '%', '^', '&', '*'].sample
+    ]
 
-    def self.generate_password
-      initial_chars = initial_characters
-      remaining_chars = remaining_characters(initial_chars)
-      shuffle_characters(initial_chars + remaining_chars)
-    end
+    remaining_length = length - required_characters.length
 
-    def self.initial_characters
-      [SYMBOLS, LOWERCASE_LETTERS, UPPERCASE_LETTERS, NUMBERS].map(&:sample).join
-    end
+    random_characters = generate_random_characters(remaining_length)
 
-    def self.remaining_characters(initial_chars)
-      total_remaining_chars = SYMBOLS + LOWERCASE_LETTERS + UPPERCASE_LETTERS + NUMBERS
-      remaining_chars = (total_remaining_chars - initial_chars.chars).shuffle
-      remaining_chars.sample(8 - initial_chars.length).join
-    end
+    (required_characters + random_characters).shuffle.join
+  end
 
-    def self.shuffle_characters(password)
-      password.chars.shuffle.join
+  # Generates random characters of the specified length.
+  def self.generate_random_characters(length)
+    available_characters = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a + ['!', '@', '#', '$', '%', '^', '&',
+                                                                                  '*']
+
+    SecureRandom.random_bytes(length).each_byte.map do |byte|
+      available_characters[byte % available_characters.length]
     end
   end
 end

@@ -19,7 +19,7 @@ module Admin
           flash = { success: 'Expense approved successfully.' }
           send_flash(Current.user, flash)
           format.html { redirect_to admin_dashboards_path }
-          format.js {}
+          format.js
         end
       end
     end
@@ -40,7 +40,6 @@ module Admin
 
     private
 
-    # Finds an expense based on the ID parameter.
     def find_expense
       @expense = Expense.find(params[:id])
     end
@@ -50,7 +49,7 @@ module Admin
       flash = { danger: 'Expense rejected successfully' }
       send_flash(Current.user, flash)
       format.html { redirect admin_dashboards_path }
-      format.js {}
+      format.js
     end
 
     def handel_invalid_reason(format)

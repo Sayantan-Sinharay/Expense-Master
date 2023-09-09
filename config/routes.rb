@@ -1,16 +1,16 @@
 # rubocop:disable all
-# frozen_string_literal: true
-
 
 Rails.application.routes.draw do
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   root to: 'homes#index'
-  get 'home', to: 'homes#new', as: :home
-  get 'login', to: 'sessions#new', as: :login
+  get 'home', to: 'homes#new'
+  get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy', as: :logout
+  delete 'logout', to: 'sessions#destroy'
+  get 'forget_password', to: 'sessions#forget_password'
+  post 'forget_password', to: 'sessions#reset_password'
+  get 'reset_password', to: 'sessions#change_password'
+  patch 'reset_password', to: 'sessions#update_password'
   get 'user_registration', to: 'users#new'
   patch 'user_registration', to: 'users#create'
   resources :notifications, only: [:index]

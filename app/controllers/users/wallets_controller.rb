@@ -4,6 +4,7 @@ module Users
   # Controller for managing wallets for users.
   class WalletsController < ApplicationController
     before_action :authenticate_user
+
     def index
       @wallets = Current.user.wallets.order(month: :asc)
       @total_amount = Wallet.total_amount_for_current_year(Current.user)
@@ -25,12 +26,10 @@ module Users
 
     private
 
-    # Permits the wallet parameters.
     def wallet_params
       params.require(:wallet).permit(:amount, :month)
     end
 
-    # Handles failed wallet creation.
     def handle_failed_wallet_creation
       flash.now[:danger] = 'Wallet could not be created.'
       render :new

@@ -56,46 +56,41 @@ module Admin
 
     private
 
-    # Finds and sets the category based on the category_id parameter.
     def set_category
       @category = Category.find(params[:category_id])
     end
 
-    # Finds and sets the subcategory based on the ID parameter.
     def set_subcategory
       @subcategory = @category.subcategories.find(params[:id])
     end
 
-    # Permits the subcategory parameters.
     def subcategory_params
       params.require(:subcategory).permit(:name)
     end
 
-    # Saves the subcategory and handles success.
     def handle_successful_subcategory_creation(format)
       @subcategory.save
       flash = { success: 'Successfully created subcategory.' }
       send_flash(Current.user, flash)
       format.html { redirect_to admin_categories_path }
-      format.js {}
+      format.js
     end
 
-    # Handles failed subcategory creation.
     def handle_failed_subcategory_creation(format)
       format.html { redirect_to admin_categories_path }
-      format.js { render :error_create } # look into this later
+      format.js { render :error_create }
     end
 
     def handle_valid_update(format)
       flash = { success: 'Successfully updated subcategory.' }
       send_flash(Current.user, flash)
       format.html { redirect_to admin_categories_path }
-      format.js {}
+      format.js
     end
 
     def handle_invalid_update(format)
       format.html { redirect_to admin_categories_path }
-      format.js { render :error_create } # look into this later
+      format.js { render :error_create }
     end
   end
 end

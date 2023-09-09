@@ -1,7 +1,4 @@
 # rubocop:disable all
-# frozen_string_literal: true
-
-# Represents a migration to create the expenses table.
 class CreateExpenses < ActiveRecord::Migration[6.1]
   def change
     create_table :expenses do |t|
@@ -10,7 +7,7 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
       t.references :subcategory, foreign_key: true
       t.date :date
       t.integer :month, null: false
-      t.integer :year, null: false, default: -> { "EXTRACT(year FROM CURRENT_TIMESTAMP)" }
+      t.integer :year, null: false, default: -> { 'EXTRACT(year FROM CURRENT_TIMESTAMP)' }
       t.decimal :amount, precision: 10, scale: 2
       t.text :notes
       t.string :attachment
@@ -21,7 +18,7 @@ class CreateExpenses < ActiveRecord::Migration[6.1]
 
     add_index :expenses, :year
     add_index :expenses, :status
-    add_index :expenses, [:user_id, :status]
-    add_index :expenses, [:category_id, :status]
+    add_index :expenses, %i[user_id status]
+    add_index :expenses, %i[category_id status]
   end
 end

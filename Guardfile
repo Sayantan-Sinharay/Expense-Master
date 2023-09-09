@@ -1,19 +1,11 @@
-# rubocop:disable all
 # frozen_string_literal: true
 
 def extensions
   {
-    css: :css,
-    scss: :css,
-    sass: :css,
-    js: :js,
-    coffee: :js,
+    css: :css, scss: :css, sass: :css,
+    js: :js, coffee: :js,
     html: :html,
-    png: :png,
-    gif: :gif,
-    jpg: :jpg,
-    jpeg: :jpeg
-    # less: :less, # uncomment if you want LESS stylesheets done in the browser
+    png: :png, gif: :gif, jpg: :jpg, jpeg: :jpeg
   }
 end
 
@@ -21,8 +13,8 @@ def compiled_exts
   extensions.values.uniq
 end
 
-def asset_path(m, type)
-  path = m[1]
+def asset_path(path, type)
+  path = path[1]
   "/assets/#{path}.#{type}"
 end
 

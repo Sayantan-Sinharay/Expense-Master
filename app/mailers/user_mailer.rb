@@ -19,6 +19,15 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Signup Confirmation - Expense Master')
   end
 
+  def reset_password_email(token)
+    @user = params[:user]
+    @token = token
+    @title = 'Password Reset'
+    @to = @user
+
+    mail(to: @user.email, subject: 'Reset Password - Expense Master')
+  end
+
   def request_expense_approval_email
     @admin = params[:admin]
     @expense = params[:expense]

@@ -3,7 +3,7 @@
     <span class="flex items-center gap-2">
       <span class="text-2xl">Category:</span>
       <span class="text-xl">
-        <%= Category.find_by(id: expense.category_id)&.name %>
+        <%= get_category_name(expense.category_id) %>
       </span>
     </span>
     <span class="icon-text has-text-danger">
@@ -19,7 +19,7 @@
     <div class="subtitle m-0 flex items-center has-text-grey gap-2">
       <span class="text-lg">Sub-Category:</span>
       <span class="text-base">
-        <%= Subcategory.find_by(id: expense.subcategory_id)&.name %>
+        <%= get_subcategory_name(expense.subcategory_id) %>
       </span>
     </div>
   <% end %>
