@@ -3,7 +3,7 @@
 # Controller for handling user sessions (login and logout).
 class SessionsController < ApplicationController
   before_action :load_user, only: %i[create reset_password]
-  before_action :load_user_using_token, only: %i[change_password update_password]
+  before_action :load_user_from_token, only: %i[change_password update_password]
 
   def new
     @user = User.new
@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
   end
 
   def load_user_from_token
-    @user = User.find_by(params[:token], purpose: 'reset password')
+    @user = User.find_signed(params[:token], purpose: 'reset password')
   end
 
   def validate_params
