@@ -60,6 +60,26 @@ PASSWORD = 'Password#123'
   end
 
   User.where(organization:).each do |user|
+
+    unique_months = []
+    while unique_months.size <= 5
+      month = Faker::Number.between(from: 1, to: 12)
+      
+      unless unique_months.include?(month)
+        unique_months << month
+      end
+    end
+
+    unique_months.each do | month | 
+      # Create wallets
+      Wallet.create!(
+        user:,
+        amount: Faker::Number.between(from: 100, to: 1000),
+        month:,
+        year: Date.current.year
+      )
+    end
+
     Category.all.sample(5).each do |category|
       # Create budgets
       subcategory = category.subcategories.sample
@@ -68,14 +88,13 @@ PASSWORD = 'Password#123'
         category:,
         subcategory:,
         amount: Faker::Number.between(from: 100, to: 1000),
+        month: user.wallets.sample(1).first.month,
         notes: Faker::Lorem.sentence,
-        month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )
 
       # Create expenses
       subcategory = category.subcategories.sample
-      status = Expense.statuses.keys.sample
       Expense.create!(
         user:,
         category:,
@@ -83,20 +102,10 @@ PASSWORD = 'Password#123'
         date: Faker::Date.between(from: 6.months.ago, to: Date.current),
         amount: Faker::Number.between(from: 10, to: 100),
         notes: Faker::Lorem.sentence,
-        status:,
-        rejection_reason: status == 'rejected' ? Faker::Lorem.sentence : nil,
         month: Faker::Number.between(from: 1, to: 12),
         year: Date.current.year
       )
     end
-
-    # Create wallets
-    Wallet.create!(
-      user:,
-      amount: Faker::Number.between(from: 100, to: 1000),
-      month: Faker::Number.between(from: 1, to: 12),
-      year: Date.current.year
-    )
   end
 end
 

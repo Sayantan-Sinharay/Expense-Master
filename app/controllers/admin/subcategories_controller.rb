@@ -26,7 +26,7 @@ module Admin
       @subcategory = @category.subcategories.new(subcategory_params)
 
       respond_to do |format|
-        if @subcategory.valid?
+        if @subcategory.save
           handle_successful_subcategory_creation(format)
         else
           handle_failed_subcategory_creation(format)
@@ -69,7 +69,6 @@ module Admin
     end
 
     def handle_successful_subcategory_creation(format)
-      @subcategory.save
       flash = { success: 'Successfully created subcategory.' }
       send_flash(Current.user, flash)
       format.html { redirect_to admin_categories_path }

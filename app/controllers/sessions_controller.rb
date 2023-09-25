@@ -3,7 +3,7 @@
 # Controller for handling user sessions (login and logout).
 class SessionsController < ApplicationController
   before_action :load_user, only: %i[create reset_password]
-  before_action :load_user_using_token, only: %i[change_password update_password]
+  before_action :load_user_from_token, only: %i[change_password update_password]
 
   def new
     @user = User.new
@@ -53,11 +53,11 @@ class SessionsController < ApplicationController
   private
 
   def load_user
-    @user = User.find_by(email: params[:user][:email].downcase)
+    @user = User.find_by(email: params.dig(:user, :email)&.downcase)
   end
 
   def load_user_from_token
-    @user = User.find_by(params[:token], purpose: 'reset password')
+    @user = User.find_signed(params[:token], purpose: 'reset password')
   end
 
   def validate_params
@@ -68,15 +68,15 @@ class SessionsController < ApplicationController
   end
 
   def validate_email
-    params[:user][:email].present?
+    params.dig(:user, :email).present?
   end
 
   def validate_password
-    params[:user][:password].present?
+    params.dig(:user, :password).present?
   end
 
   def authenticate_user
-    @user&.authenticate(params[:user][:password])
+    @user&.authenticate(params.dig(:user, :password))
   end
 
   def handle_successful_login
@@ -109,11 +109,14 @@ class SessionsController < ApplicationController
 
   def generate_reset_password_token
     token = @user.signed_id(purpose: 'reset password', expires_in: 24.hours)
+    # @user.reset_password_sent_at = Time.now
+    # @user.reset_password_token = token
     @user.update(reset_password_token: token, reset_password_sent_at: Time.now)
     UserMailer.with(user: @user).reset_password_email(token).deliver_later
   end
 
   def update_user_password
-    @user.update(password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
+    @user.update(password: params.dig(:user, :password),
+                 password_confirmation: params.dig(:user, :password_confirmation))
   end
 end

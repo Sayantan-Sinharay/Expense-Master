@@ -10,10 +10,10 @@ class User < ApplicationRecord
   has_secure_password
 
   belongs_to :organization, inverse_of: :users
-  has_many :budgets, dependent: :destroy
-  has_many :expenses, dependent: :destroy
-  has_many :wallets, dependent: :destroy
-  has_many :notifications, dependent: :destroy
+  has_many :budgets, dependent: :destroy, inverse_of: :user
+  has_many :expenses, dependent: :destroy, inverse_of: :user
+  has_many :wallets, dependent: :destroy, inverse_of: :user
+  has_many :notifications, dependent: :destroy, inverse_of: :user
 
   validates :first_name, presence: { message: 'User must have a first name' },
                          format: { with: /\A[a-zA-Z\s.']+\z/, message: 'First name is invalid' },

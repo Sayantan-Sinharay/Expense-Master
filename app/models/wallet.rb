@@ -2,7 +2,7 @@
 
 # Represents the wallet model in the application.
 class Wallet < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, inverse_of: :wallets
 
   validates :amount, presence: { message: "Amount can't be blank" },
                      numericality: { greater_than: 0, message: 'Amount must be greater than 0' }

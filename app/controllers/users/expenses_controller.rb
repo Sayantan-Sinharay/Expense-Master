@@ -4,7 +4,8 @@ module Users
   # Controller for managing expenses for users.
   class ExpensesController < ApplicationController
     before_action :authenticate_user
-    before_action :set_expense, :set_subcategory, only: %i[create]
+    before_action :set_expense, :set_subcategory, only: [:create]
+
     include Users::ExpensesHelper
 
     def index

@@ -2,21 +2,19 @@
 
 # HomesController handles home-related actions.
 class HomesController < ApplicationController
-  # Home page action: Redirects the user to the appropriate path based on their role.
-  # If a user is logged in, it checks whether they are an admin or a regular user
-  # and redirects accordingly. If no user is logged in, it redirects to the login page.
   def index
-    if Current.user
-      if Current.user.is_admin?
-        redirect_to admin_index_path
-      else
-        redirect_to index_path
-      end
-    else
-      redirect_to login_path
-    end
+    redirect_to determine_path
   end
 
-  # New home page action: Renders the new home page.
   def new; end
+
+  private
+
+  def determine_path
+    if Current.user
+      Current.user.is_admin? ? admin_index_path : index_path
+    else
+      login_path
+    end
+  end
 end
