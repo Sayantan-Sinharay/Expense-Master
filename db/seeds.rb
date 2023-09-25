@@ -106,7 +106,6 @@ PASSWORD = 'Password#123'
         year: Date.current.year
       )
     end
-
   end
 end
 
