@@ -3,7 +3,7 @@
 # Represents the organization model in the application.
 class Organization < ApplicationRecord
   has_many :users, dependent: :destroy, inverse_of: :organization
-  has_many :categories, dependent: :destroy
+  has_many :categories, dependent: :destroy, inverse_of: :organization
 
   validates :name, presence: { message: "Organization name can't be blank" },
                    format: { with: /\A[a-zA-Z\s'\-,&]+\z/, message: 'Organization name is invalid' },

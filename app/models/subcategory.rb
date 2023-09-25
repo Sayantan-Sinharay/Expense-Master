@@ -2,7 +2,7 @@
 
 # Represents the subcategory model in the application.
 class Subcategory < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, inverse_of: :subcategories
   has_many :budgets, dependent: :nullify
   has_many :expenses, dependent: :nullify
 

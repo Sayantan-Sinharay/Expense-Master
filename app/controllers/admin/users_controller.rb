@@ -62,7 +62,6 @@ module Admin
       send_invitation_email
     end
 
-    # Handles failed user invitation.
     def handle_failed_invitation(format)
       format.html { render :new }
       format.js { render :new }

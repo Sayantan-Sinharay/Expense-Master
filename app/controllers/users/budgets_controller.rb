@@ -15,15 +15,10 @@ module Users
     end
 
     def create
-      if @budget.valid?
-        if valid_wallet?
-          handle_valid_budget
-        else
-          handle_invalid_wallet
-        end
+      if valid_budget? && valid_wallet?
+        handle_valid_budget
       else
-        flash.now[:danger] = 'Budget could not be created.'
-        render :new
+        handle_invalid_budget
       end
     end
 
@@ -53,11 +48,15 @@ module Users
       end
     end
 
+    def valid_budget?
+      @budget.valid?
+    end
+
     def valid_wallet?
       @wallet.present? && @wallet.amount >= @budget.amount
     end
 
-    def handle_invalid_wallet
+    def handle_invalid_budget
       flash.now[:danger] =
         @wallet.present? ? 'Please decrease the amount and try again.' : 'Please add some money to the wallet.'
       render :new

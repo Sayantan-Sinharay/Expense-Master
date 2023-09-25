@@ -2,10 +2,10 @@
 
 # Represents the category model in the application.
 class Category < ApplicationRecord
-  belongs_to :organization
+  belongs_to :organization, inverse_of: :categories
   has_many :subcategories, dependent: :destroy, inverse_of: :category
-  has_many :budgets, dependent: :destroy
-  has_many :expenses, dependent: :destroy
+  has_many :budgets, dependent: :destroy, inverse_of: :category
+  has_many :expenses, dependent: :destroy, inverse_of: :category
 
   validates :name, presence: { message: "Category name can't be blank" },
                    format: { with: /\A[a-zA-Z\s'\-,&]+\z/, message: 'Category name is invalid' },

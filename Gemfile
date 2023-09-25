@@ -26,9 +26,6 @@ group :development, :test do
   gem 'faker'
 end
 
-group :test do
-  gem 'rspec-rails'
-end
 group :development do
   gem 'better_errors', '~> 2.10', '>= 2.10.1'
   gem 'guard', '~> 2.18'
@@ -43,6 +40,8 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
+  gem 'rails-controller-testing'
+  gem 'rspec-rails'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   gem 'webdrivers'
 end

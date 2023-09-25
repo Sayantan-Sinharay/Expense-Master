@@ -11,8 +11,6 @@ class CreateWallets < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :wallets, :year
-    add_index :wallets, %i[user_id month]
-    add_index :wallets, %i[month year]
+    add_index :wallets, %i[user_id month year], unique: true
   end
 end

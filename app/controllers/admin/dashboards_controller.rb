@@ -5,6 +5,7 @@ module Admin
   class DashboardsController < ApplicationController
     before_action :authenticate_admin
     before_action :find_expense, only: %i[approved reject rejected]
+
     include Admin::DashboardsHelper
     include NotificationsHelper
 
@@ -48,7 +49,7 @@ module Admin
       send_expense_status_update_notification(Current.user, @expense)
       flash = { danger: 'Expense rejected successfully' }
       send_flash(Current.user, flash)
-      format.html { redirect admin_dashboards_path }
+      format.html { redirect_to admin_dashboards_path }
       format.js
     end
 

@@ -3,9 +3,9 @@
 # Represents the Expense model in the application.
 class Expense < ApplicationRecord
   has_one_attached :attachment
-  belongs_to :user
-  belongs_to :category, optional: true
-  belongs_to :subcategory, optional: true
+  belongs_to :user, inverse_of: :expenses
+  belongs_to :category, optional: true, inverse_of: :expenses
+  belongs_to :subcategory, optional: true, inverse_of: :expenses
 
   validates :category, presence: { message: 'Category must be selected' }
   validates :date, presence: { message: "Date can't be blank" }

@@ -2,7 +2,7 @@
 
 # Represents the budget model in the application.
 class Budget < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, inverse_of: :budgets
   belongs_to :category, optional: true
   belongs_to :subcategory, optional: true
 
