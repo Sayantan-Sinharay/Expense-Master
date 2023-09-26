@@ -42,7 +42,7 @@ RSpec.describe Users::ExpensesController, type: :controller do
 
         post :create,
              params: { expense: { category_id: category.id, amount: 100, date: Date.current,
-                                  attachment: fixture_file_upload('sample.jpeg') } }
+                                  attachment: fixture_file_upload('../../fixtures/sample.jpeg') } }
 
         expect(Expense.count).to eq(1)
         expect(flash[:success]).to eq('Expense created successfully.')

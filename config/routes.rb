@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+  get '/not_found', to: 'errors#not_found'
+  get '/internal_server_error', to: 'errors#internal_server_error'
   root to: 'homes#index'
   get 'home', to: 'homes#new'
   get 'login', to: 'sessions#new'
@@ -38,4 +40,6 @@ Rails.application.routes.draw do
     resources :wallets, only: %i[index new create]
     resources :reports, only: [:index]
   end
+
+  match '*unmatched', to: 'errors#not_found', via: :all
 end
