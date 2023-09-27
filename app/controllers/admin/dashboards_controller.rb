@@ -47,6 +47,8 @@ module Admin
 
     def handel_valid_reason(format)
       send_expense_status_update_notification(Current.user, @expense)
+      flash = { danger: 'Expense rejected successfully' }
+      send_flash(Current.user, flash)
       format.html { redirect_to admin_dashboards_path }
       format.js
     end
