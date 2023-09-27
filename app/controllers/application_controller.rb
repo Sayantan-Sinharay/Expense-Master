@@ -16,29 +16,25 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin
-    authenticate_role(true, 'shared/404_page', :not_found)
+    authenticate_role(true)
   end
 
   def authenticate_user
-    authenticate_role(false, 'shared/404_page', :not_found)
+    authenticate_role(false)
   end
 
-  def authenticate_role(is_admin, error_template, status)
+  def authenticate_role(is_admin)
     return handle_not_logged_in unless Current.user
 
     if Current.user.is_admin? == is_admin
       update_invalid_route(false)
     else
       update_invalid_route(true)
-      render_error_template(error_template, status)
+      redirect_to not_found_path
     end
   end
 
   def set_current_user
     Current.user = session[:user_id] ? User.find_by(id: session[:user_id]) : nil
-  end
-
-  def render_error_template(error_template, status)
-    render template: error_template, status:
   end
 end
