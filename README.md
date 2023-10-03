@@ -15,6 +15,8 @@ Before you begin, ensure that you have the following software and tools installe
 - Ruby version: 3.1.1
 - Database: PostgreSQL
 - Rails version: 6.1.7.3
+- Yarn version: 1.22.19
+- Node version: v16.20.0
 
 ## 2. Getting Started
 

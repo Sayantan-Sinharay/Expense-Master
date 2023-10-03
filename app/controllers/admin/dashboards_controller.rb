@@ -10,7 +10,7 @@ module Admin
     include NotificationsHelper
 
     def index
-      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc)
+      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc).includes([:attachment_attachment])
     end
 
     def approved
@@ -47,8 +47,8 @@ module Admin
 
     def handel_valid_reason(format)
       send_expense_status_update_notification(Current.user, @expense)
-      flash = { danger: 'Expense rejected successfully' }
-      send_flash(Current.user, flash)
+      @flash = { danger: 'Expense rejected successfully' }
+      send_flash(Current.user, @flash)
       format.html { redirect_to admin_dashboards_path }
       format.js
     end

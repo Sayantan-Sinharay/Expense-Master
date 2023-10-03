@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Admin::UsersController, type: :controller do
-  let(:admin_user) { create(:user, is_admin?: true) } # Assuming you have a User model and FactoryBot set up
-  let(:user) { create(:user) } # Assuming you have a User model and FactoryBot set up
+  let(:organization) { create(:organization) }
+  let(:admin_user) { create(:user, organization: , is_admin?: true) } # Assuming you have a User model and FactoryBot set up
+  let(:user) { create(:user, organization:, is_admin?: false) } # Assuming you have a User model and FactoryBot set up
 
   before { allow(controller).to receive(:authenticate_admin).and_return(true) }
 

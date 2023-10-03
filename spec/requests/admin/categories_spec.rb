@@ -2,19 +2,19 @@
 require 'rails_helper'
 
 RSpec.describe Admin::CategoriesController, type: :controller do
-  let(:admin_user) { create(:user, is_admin?: true) }
-  let(:category) { create(:category) }
+  let(:organization) { create(:organization) }
+  let(:admin_user) { create(:user, organization:, is_admin?: true) }
+  let(:category) { create(:category, organization:) }
 
   before { allow(controller).to receive(:authenticate_admin).and_return(true) }
 
   describe 'GET #index' do
     it 'assigns a new category and loads categories' do
       allow(Current).to receive(:user).and_return(admin_user)
-      
       get :index
-
+      
       expect(assigns(:category)).to be_a_new(Category)
-      expect(assigns(:categories)).to eq([category])
+      expect(assigns(:categories)).to match_array([category])
     end
   end
 

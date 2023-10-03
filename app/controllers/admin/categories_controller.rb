@@ -55,7 +55,7 @@ module Admin
     end
 
     def set_categories
-      @categories = Current.user.organization.categories.order(created_at: :desc).all
+      @categories = Current.user.organization.categories.order(created_at: :desc).includes(:subcategories)
     end
 
     def handle_valid_category(format)

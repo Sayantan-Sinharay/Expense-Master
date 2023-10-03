@@ -11,11 +11,13 @@ RSpec.describe NotificationsController, type: :controller do
 
   describe 'GET #index' do
     it 'renders the index template' do
+      allow(Current).to receive(:user).and_return(user)
       get :index
       expect(response).to render_template(:index)
     end
 
     it 'assigns the user\'s notifications to @notifications' do
+      allow(Current).to receive(:user).and_return(user)
       user.notifications << [notification1, notification2]
 
       get :index
@@ -24,6 +26,7 @@ RSpec.describe NotificationsController, type: :controller do
     end
 
     it 'marks all notifications as read' do
+      allow(Current).to receive(:user).and_return(user)
       user.notifications << [notification1, notification2]
 
       expect(controller).to receive(:mark_notifications_as_read).once

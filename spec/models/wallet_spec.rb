@@ -69,8 +69,8 @@ RSpec.describe Wallet, type: :model do
     end
 
     it 'can be scoped to get wallets for the current year' do
-      wallet_in_current_year = create(:wallet, user:, year: Date.current.year, month: 1)
-      wallet_in_previous_year = create(:wallet, user:, year: Date.current.year - 1, month: 1)
+      wallet_in_current_year = create(:wallet, user:, year: Date.current.year, month: 3)
+      wallet_in_previous_year = create(:wallet, user:, year: Date.current.year - 1, month: 3)
 
       wallets = Wallet.current_year
       expect(wallets).to include(wallet_in_current_year)

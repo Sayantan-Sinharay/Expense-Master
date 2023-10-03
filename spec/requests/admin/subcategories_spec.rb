@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Admin::SubcategoriesController, type: :controller do
-  let(:admin_user) { create(:user, is_admin?: true) } # Assuming you have a User model and FactoryBot set up
-  let(:category) { create(:category) } # Assuming you have a Category model and FactoryBot set up
+  let(:organization) {create(:organization)}
+  let(:admin_user) { create(:user, organization: ,is_admin?: true) } # Assuming you have a User model and FactoryBot set up
+  let(:category) { create(:category, organization:) } # Assuming you have a Category model and FactoryBot set up
   # Assuming you have a Subcategory model and FactoryBot set up
   let(:subcategory) do
     create(:subcategory, category:)
@@ -19,7 +20,7 @@ RSpec.describe Admin::SubcategoriesController, type: :controller do
       get :index, params: { category_id: category.id }
 
       expect(assigns(:subcategories)).to eq(subcategories)
-      expect(response).to render_template(:index)
+      expect(response).to render_template('admin/subcategories/_subcategory')
     end
 
     it 'renders JSON format when requested' do
@@ -28,7 +29,7 @@ RSpec.describe Admin::SubcategoriesController, type: :controller do
       get :index, params: { category_id: category.id, format: :json }
 
       expect(response).to have_http_status(:ok)
-      expect(response.content_type).to eq('application/json')
+      expect(response.content_type).to eq('application/json; charset=utf-8')
     end
   end
 
@@ -112,6 +113,4 @@ RSpec.describe Admin::SubcategoriesController, type: :controller do
       expect(response).to render_template('admin/subcategories/destroy')
     end
   end
-
-  # You can add more test cases as needed for other controller actions or scenarios.
 end
