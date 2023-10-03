@@ -9,7 +9,7 @@ module Users
     include Users::ExpensesHelper
 
     def index
-      @expenses = Current.user.expenses.order(created_at: :desc)
+      @expenses = Current.user.expenses.order(created_at: :desc).includes([:attachment_attachment])
     end
 
     def new

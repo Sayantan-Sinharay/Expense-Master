@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def handle_not_logged_in
     flash[:danger] = 'Please login to access the application.'
-    redirect_back(fallback_location: root_path)
+    redirect_to root_path
   end
 
   def authenticate_admin

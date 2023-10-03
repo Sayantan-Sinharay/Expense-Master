@@ -9,6 +9,6 @@ FactoryBot.define do
     date { Faker::Date.backward(days: 30) }
     amount { Faker::Number.decimal(l_digits: 2) }
     notes { Faker::Lorem.sentence }
-    status { :approved }
+    status { :pending }
   end
 end

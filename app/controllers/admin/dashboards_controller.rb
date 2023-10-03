@@ -10,7 +10,7 @@ module Admin
     include NotificationsHelper
 
     def index
-      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc)
+      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc).includes([:attachment_attachment])
     end
 
     def approved

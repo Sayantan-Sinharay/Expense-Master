@@ -30,8 +30,7 @@ module Admin
 
     def destroy
       flash = { danger: "#{@user.email} has been removed!" }
-      @user.destroy
-      send_flash(Current.user, flash)
+      send_flash(Current.user, flash) if @user.destroy
       respond_to(&:js)
     end
 

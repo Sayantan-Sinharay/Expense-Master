@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Users::BudgetsController, type: :controller do
-  let(:user) { create(:user) } # Assuming you have a User model and FactoryBot set up
-  let(:budget) { create(:budget, user:) }  # Assuming you have a Budget model and FactoryBot set up
-  let(:wallet) { create(:wallet, user:) }  # Assuming you have a Wallet model and FactoryBot set up
-  let(:category) { create(:category) } # Assuming you have a Category model and FactoryBot set up
-  # Assuming you have a Subcategory model and FactoryBot set up
+  let(:organization) { create(:organization) }
+  let(:user) { create(:user, organization:) } 
+  let(:budget) { create(:budget, user:) }
+  let(:wallet) { create(:wallet, user:) }
+  let(:category) { create(:category, organization:) }
   let(:subcategory) do
     create(:subcategory, category:)
   end
@@ -43,7 +43,7 @@ RSpec.describe Users::BudgetsController, type: :controller do
         allow(controller).to receive(:valid_wallet?).and_return(true)
 
         post :create,
-             params: { budget: { category_id: category.id, amount: 100, month: Date.current.strftime('%Y-%m') } }
+             params: { budget: { category_id: category.id, amount: 100, month: wallet.month } }
 
         expect(Budget.count).to eq(1)
         expect(flash[:success]).to eq('Budget created successfully.')
