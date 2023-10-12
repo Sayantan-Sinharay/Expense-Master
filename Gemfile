@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.1'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bullet', '~> 7.0'
 gem 'bulma-rails', '~> 0.9.4'
 gem 'chartkick', '~> 5.0', '>= 5.0.2'
 gem 'jbuilder', '~> 2.7'
@@ -14,6 +15,7 @@ gem 'prawn', '~> 2.4'
 gem 'prawn-table', '~> 0.2.2'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.3'
+gem 'ros-apartment', require: 'apartment'
 gem 'rubocop', require: false
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
@@ -49,5 +51,3 @@ end
 
 gem 'tailwindcss-rails', '~> 2.0'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem "bullet", "~> 7.0"

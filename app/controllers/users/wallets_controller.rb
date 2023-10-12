@@ -3,6 +3,7 @@
 module Users
   # Controller for managing wallets for users.
   class WalletsController < ApplicationController
+    before_action :require_login
     before_action :authenticate_user
 
     def index

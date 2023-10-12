@@ -4,7 +4,7 @@
       <%= form.label :category_id, "Select Category", class: "label required" %>
       <div class="control">
         <%= form.select :category_id, 
-               options_for_select(Current.user.organization.categories.all.collect { |c| [c.name, c.id] }, @budget.category_id), 
+               options_for_select(Current.user.organization.categories.collect { |c| [c.name, c.id] }, @budget.category_id), 
                { include_blank: "Select Category" },
                class: "input",
                id: "category_select" %>

@@ -3,6 +3,7 @@
 module Admin
   # Controller for managing dashboards in the admin panel.
   class DashboardsController < ApplicationController
+    before_action :require_login
     before_action :authenticate_admin
     before_action :find_expense, only: %i[approved reject rejected]
 

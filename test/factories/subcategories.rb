@@ -3,7 +3,7 @@
 # spec/factories/subcategories.rb
 FactoryBot.define do
   factory :subcategory do
-    name { Faker::Lorem.words(number: rand(2..5)).join(' ') }
+    name { Faker::Commerce.product_name }
     association :category
   end
 end

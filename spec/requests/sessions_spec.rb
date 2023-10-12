@@ -16,13 +16,13 @@ RSpec.describe SessionsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'redirects to root_path' do
-        post :create, params: { user: { email: user.email, password: 'password' } }
+        post :create, params: { user: { email: user.email, password: PASSWORD } }
         expect(response).to redirect_to(root_path)
       end
 
       it 'logs in the user' do
         expect(controller).to receive(:log_in).with(user)
-        post :create, params: { user: { email: user.email, password: 'password' } }
+        post :create, params: { user: { email: user.email, password: PASSWORD } }
       end
     end
 

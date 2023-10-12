@@ -6,35 +6,39 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :info, :error, :success
 
-  before_action :set_current_user
+  before_action :set_current_user, :set_no_cache
 
   private
 
-  def handle_not_logged_in
+  def set_current_user
+    Current.user = session[:user_id] ? User.find_by(id: session[:user_id]) : nil
+  end
+
+  def require_login
+    return if Current.user
+
     flash[:danger] = 'Please login to access the application.'
     redirect_to root_path
   end
 
   def authenticate_admin
-    authenticate_role(true)
+    authenticate_role({ is_admin?: true })
   end
 
   def authenticate_user
-    authenticate_role(false)
+    authenticate_role({ is_admin?: false })
   end
 
-  def authenticate_role(is_admin)
-    return handle_not_logged_in unless Current.user
+  def authenticate_role(role)
+    return unless Current.user&.is_admin? != role[:is_admin?]
 
-    if Current.user.is_admin? == is_admin
-      update_invalid_route(false)
-    else
-      update_invalid_route(true)
-      redirect_to not_found_path
-    end
+    update_invalid_route(true)
+    redirect_to not_found_path
   end
 
-  def set_current_user
-    Current.user = session[:user_id] ? User.find_by(id: session[:user_id]) : nil
+  def set_no_cache
+    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '-1'
   end
 end

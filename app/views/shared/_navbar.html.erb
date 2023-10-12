@@ -1,6 +1,6 @@
-<nav class="navbar container h-fit w-full top-0 is-spaced shadow-md" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <%= link_to root_path, class: "flex pr-5" do %>
+<nav class="navbar h-fit w-full top-0 is-spaced shadow-md" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand px-5">
+    <%= link_to root_path, class: "flex" do %>
       <%= image_tag("logo-full", alt: "Logo", class: "my-auto w-48" )%>
     <% end %>
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
@@ -9,10 +9,10 @@
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div id="navbar-menu" class="navbar-menu">
-    <div class="navbar-start">
+  <div id="navbar-menu" class="navbar-menu px-5">
+    <div class="navbar-start  w-fit">
       <% if !Current.user %>
-        <%= link_to "Home", home_path, class: "navbar-item button is-primary is-inverted hover:font-medium" %>
+        <%= link_to "Home", home_path, class: "navbar-item button is-primary is-inverted hover:font-medium " %>
       <% end %>
     </div>
     <div class="navbar-end">
@@ -38,7 +38,7 @@
           <% if Current.user %>
             <%= link_to "Logout", logout_path, method: :delete, class: "button font-medium is-danger is-light border-2 border-red-600 "%>
           <% else %>
-            <%= link_to "Register", login_path, class: "button is-primary font-medium" %>
+            <%= link_to "Register", register_path, class: "button is-primary font-medium" %>
           <% end %>
         </div>
       </div>

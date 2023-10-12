@@ -14,14 +14,14 @@
  *= require_self
  */
 
-$primary: #35BB78;
+$primary: #35bb78;
 $success: $primary;
-$link: $primary ;
+$link: $primary;
 
 @import "bulma";
 
-
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
+  /* Code for Firefox */
   color: white;
   background: $primary;
 }
@@ -66,22 +66,36 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   appearance: textfield;
 }
 
 label.required::after {
-    content: "*";
-    position: relative;
-    left: 5px;
-    color: $danger;
-  }
+  content: "*";
+  position: relative;
+  left: 5px;
+  color: $danger;
+}
 
 .field_with_errors {
   display: flex;
   flex-grow: 1;
-  label{
+  label {
     margin-bottom: 0.5em;
   }
 }
 
+// .checkbox__primary input[type="checkbox"] + .checkbox::before {
+//   border-color: #3498db !important;
+//   background-color: #3498db !important;
+// }
+
+// .checkbox__primary:checked + .checkbox::before {
+//   border-color: #3498db !important;
+//   background-color: #3498db !important;
+// }
+//
+// .custom-checkbox:checked + .checkbox::before {
+//   border-color: #3498db; /* Change the color to your desired color */
+//   background-color: #3498db; /* Change the color to your desired color */
+// }

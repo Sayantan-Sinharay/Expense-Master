@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   patch 'reset_password', to: 'sessions#update_password'
   get 'user_registration', to: 'users#new'
   patch 'user_registration', to: 'users#create'
+  get 'register', to: 'organizations#new'
+  post 'register', to: 'organizations#create'
   resources :notifications, only: [:index]
 
   namespace :admin do

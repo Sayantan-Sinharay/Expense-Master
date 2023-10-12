@@ -4,7 +4,7 @@
     <div class="field">
       <%= form.label :email, class: "label required" %>
       <div class="control">
-        <%= form.text_field :email, class: "input" %>
+        <%= form.text_field :email, class: "input", placeholder: "Email"%>
         <%= render "shared/form_error_message", object: @user, field: :email %>
       </div>
     </div>
@@ -20,5 +20,15 @@
       </div>
       <%= link_to "Forget Password?", forget_password_path, class:"text-primary ml-auto font-normal hover:underline" %>
     </div>
+    <%# <label class="checkbox flex gap-2 items-center w-fit checkbox__primary">
+      <input type="checkbox">
+      <span class="text-primary">
+        Remember me
+      </span>
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" class="custom-checkbox">
+      Remember me
+    </label> %>
   </div>
 <% end %>

@@ -1,4 +1,4 @@
-# spec/controllers/application_controller_spec.rb
+# rubocop:disable all
 
 require 'rails_helper'
 

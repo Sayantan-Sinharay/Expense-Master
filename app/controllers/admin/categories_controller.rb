@@ -3,6 +3,7 @@
 module Admin
   # Controller for managing categories in the admin panel.
   class CategoriesController < ApplicationController
+    before_action :require_login
     before_action :authenticate_admin
     before_action :set_categories, only: [:index]
     before_action :set_category, only: %i[edit update destroy]

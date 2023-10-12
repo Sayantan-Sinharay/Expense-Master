@@ -3,6 +3,7 @@
 module Users
   # Controller for managing budgets for users.
   class BudgetsController < ApplicationController
+    before_action :require_login
     before_action :authenticate_user
     before_action :set_budget_and_wallet, only: :create
 
@@ -55,7 +56,7 @@ module Users
     def valid_wallet?
       @wallet.present? && @wallet.amount >= @budget.amount
     end
-    
+
     def handle_invalid_budget
       flash.now[:danger] =
         @wallet.present? ? 'Please decrease the amount and try again.' : 'Please add some money to the wallet.'
