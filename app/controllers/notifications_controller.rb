@@ -2,7 +2,6 @@
 
 # Controller for managing notifications.
 class NotificationsController < ApplicationController
-  before_action :require_login
   after_action :mark_notifications_as_read, only: :index
 
   def index

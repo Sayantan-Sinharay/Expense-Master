@@ -3,7 +3,6 @@
 module Users
   # Controller for managing budgets for users.
   class BudgetsController < ApplicationController
-    before_action :require_login
     before_action :authenticate_user
     before_action :set_budget_and_wallet, only: :create
 
@@ -26,7 +25,7 @@ module Users
     private
 
     def budget_params
-      params.require(:budget).permit(:category_id, :amount, :notes, :month)
+      params.require(:budget).permit(:category_id, :subcategory_id, :amount, :notes, :month)
     end
 
     def set_budget_and_wallet

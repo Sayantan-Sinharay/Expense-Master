@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.references :organization, null: false, foreign_key: true
       t.string :first_name, null: false
       t.string :last_name
-      t.string :email, null: false
+      t.string :email, null: false, unique: true
       t.string :password_digest, null: false
       t.boolean :remember_me?, null: false, default: false
       t.boolean :is_admin?, null: false, default: false

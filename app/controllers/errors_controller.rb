@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ErrorsController < ApplicationController
+  skip_before_action :require_login
   def not_found
     update_invalid_route(true)
     render status: :not_found

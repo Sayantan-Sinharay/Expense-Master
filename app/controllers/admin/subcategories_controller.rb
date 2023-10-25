@@ -3,7 +3,6 @@
 module Admin
   # Controller for managing subcategories in the admin panel.
   class SubcategoriesController < ApplicationController
-    before_action :require_login
     before_action :authenticate_admin, except: :index
     before_action :set_category
     before_action :set_subcategory, only: %i[edit update destroy]

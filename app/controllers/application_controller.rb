@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   add_flash_types :info, :error, :success
 
-  before_action :set_current_user, :set_no_cache
+  before_action :set_current_user, :require_login, :set_no_cache
 
   private
 

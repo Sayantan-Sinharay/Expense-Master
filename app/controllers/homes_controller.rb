@@ -2,6 +2,7 @@
 
 # HomesController handles home-related actions.
 class HomesController < ApplicationController
+  skip_before_action :require_login
   def index
     redirect_to determine_path
   end

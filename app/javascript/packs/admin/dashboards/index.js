@@ -1,7 +1,6 @@
 $(document).ready(function () {
   $(".tab-link").click(function (event) {
     event.preventDefault();
-
     // Remove active class from all tab links
     $(".tab-link").parent().removeClass("is-active font-bold");
 

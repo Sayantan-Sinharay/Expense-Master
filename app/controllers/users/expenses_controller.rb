@@ -3,7 +3,6 @@
 module Users
   # Controller for managing expenses for users.
   class ExpensesController < ApplicationController
-    before_action :require_login
     before_action :authenticate_user
     before_action :set_expense, :set_subcategory, only: [:create]
 
@@ -74,3 +73,6 @@ module Users
     end
   end
 end
+
+Book.join(:author, :category).where('authors.id = ? AND categories.id = ?', authorId, categoryId).order
+Customer.join(orders: :payments).where('payment.method = ?', paymentMethod)

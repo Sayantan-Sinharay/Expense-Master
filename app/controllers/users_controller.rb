@@ -2,6 +2,7 @@
 
 # Controller for managing user account for users.
 class UsersController < ApplicationController
+  skip_before_action :require_login
   before_action :find_user_by_token, only: %i[new create]
 
   def new

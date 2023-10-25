@@ -8,7 +8,9 @@ $(document).ready(function () {
     hideFlashMessage("#flash-message");
   });
 
-  setTimeout(function () {
+  const hideFlashTimer = setTimeout(function () {
     hideFlashMessage("#flash-message");
-  }, 3000);
+  }, 8000);
+  hideFlashTimer();
+  clearTimeout(hideFlashTimer);
 });

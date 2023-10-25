@@ -3,7 +3,6 @@
 module Admin
   # Controller for managing dashboards in the admin panel.
   class DashboardsController < ApplicationController
-    before_action :require_login
     before_action :authenticate_admin
     before_action :find_expense, only: %i[approved reject rejected]
 
@@ -11,7 +10,8 @@ module Admin
     include NotificationsHelper
 
     def index
-      @expenses = Expense.expense_at_organization(Current.user.organization).order(created_at: :desc).includes([:attachment_attachment])
+      @expenses = Expense.expense_at_organization(Current.user.organization)
+                         .order(created_at: :desc).includes([:attachment_attachment])
     end
 
     def approved

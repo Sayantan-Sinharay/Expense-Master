@@ -1,3 +1,11 @@
 <% if object.errors.has_key?(field) %>
-  <p class="help font-medium is-danger"><%= object.errors[field].first.humanize %></p>
+  <% if local_assigns[:single] && single %>
+    <p class="help font-medium is-danger"><%= object.errors.where(field).first.full_message %></p>
+  <% else %>
+    <% object.errors.where(field).each do |error| %>
+      <% if (local_assigns[:exclude_type] && error.type != exclude_type) || true %>
+        <p class="help font-medium is-danger"><%= error.full_message %></p>
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

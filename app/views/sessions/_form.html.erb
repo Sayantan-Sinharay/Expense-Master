@@ -5,11 +5,11 @@
       <%= form.label :email, class: "label required" %>
       <div class="control">
         <%= form.text_field :email, class: "input", placeholder: "Email"%>
-        <%= render "shared/form_error_message", object: @user, field: :email %>
+        <%= render "shared/form_error_message", object: @user, field: :email, exclude_type: :taken, single: true %>
       </div>
     </div>
     <div class="password-container">
-      <%= render "shared/password_field", form: form, object: @user, field: :password %>
+      <%= render "shared/password_field", form: form, object: @user, field: :password, single: true %>
     </div>
     <div class="field is-grouped items-center font-medium">
       <div class="control">

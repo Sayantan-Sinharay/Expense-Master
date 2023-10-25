@@ -1,6 +1,13 @@
 # rubocop:disable all
 
 Rails.application.routes.draw do
+  class Subdomain
+    def self.matches?(request)
+      subdomains = %w{ www }
+      request.subdomain.present? && !subdomains.include?(request.subdomain) 
+    end
+  end
+
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   get '/not_found', to: 'errors#not_found'
   get '/internal_server_error', to: 'errors#internal_server_error'
@@ -44,4 +51,6 @@ Rails.application.routes.draw do
   end
 
   match '*unmatched', to: 'errors#not_found', via: :all
+
+  
 end

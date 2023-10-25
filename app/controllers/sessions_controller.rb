@@ -2,32 +2,30 @@
 
 # Controller for handling user sessions (login and logout).
 class SessionsController < ApplicationController
-  before_action :load_user, only: %i[create reset_password]
+  skip_before_action :require_login
   before_action :load_user_from_token, only: %i[change_password update_password]
+  before_action :new_user, only: %i[new forget_password change_password]
 
-  def new
-    @user = User.new
-  end
+  def new; end
 
   def create
-    if validate_params
-      if authenticate_user
-        handle_successful_login
-      else
-        handle_failed_login('Invalid email/password combination')
-      end
+    @user = User.new(login_params)
+    if load_user && authenticate_user
+      handle_successful_login
     else
-      render :new
+      handle_failed_login('Invalid email/password combination')
     end
   end
 
   def destroy
-    handle_logout
+    log_out
+    redirect_to root_path, success: 'Logged out successfully'
   end
 
   def forget_password; end
 
   def reset_password
+    @user = User.find_by(email: forget_password_params[:email])
     if @user.present?
       generate_reset_password_token
       flash[:success] = 'A reset password link has been sent to your email'
@@ -52,31 +50,22 @@ class SessionsController < ApplicationController
 
   private
 
-  def load_user
-    @user = User.find_by(email: params.dig(:user, :email)&.downcase)
-  end
-
   def load_user_from_token
     @user = User.find_signed(params[:token], purpose: 'reset password')
   end
 
-  def validate_params
-    valid_params = validate_email && validate_password
-    @user.errors.add(:email, "Email can't be blank") unless validate_email
-    @user.errors.add(:password, "Password can't be blank") unless validate_password
-    valid_params
-  end
+  def load_user
+    return if @user.valid?
 
-  def validate_email
-    params.dig(:user, :email).present?
-  end
+    return unless @user.errors.where(:email).first.type == :taken && @user.errors.where(:password).none? do |error|
+                    error.type == :blank
+                  end
 
-  def validate_password
-    params.dig(:user, :password).present?
+    @user = User.find_by(email: login_params[:email])
   end
 
   def authenticate_user
-    @user&.authenticate(params.dig(:user, :password))
+    @user.authenticate(login_params[:password])
   end
 
   def handle_successful_login
@@ -85,15 +74,8 @@ class SessionsController < ApplicationController
   end
 
   def handle_failed_login(message)
-    @user = User.new
-    @user.errors.add(:base, message)
-    flash.now[:danger] = @user.errors.full_messages.join(', ')
+    flash.now[:danger] = message
     render :new
-  end
-
-  def handle_logout
-    log_out
-    redirect_to root_path, success: 'Logged out successfully'
   end
 
   def log_in(user)
@@ -109,14 +91,27 @@ class SessionsController < ApplicationController
 
   def generate_reset_password_token
     token = @user.signed_id(purpose: 'reset password', expires_in: 24.hours)
-    # @user.reset_password_sent_at = Time.now
-    # @user.reset_password_token = token
     @user.update(reset_password_token: token, reset_password_sent_at: Time.now)
     UserMailer.with(user: @user).reset_password_email(token).deliver_later
   end
 
   def update_user_password
-    @user.update(password: params.dig(:user, :password),
-                 password_confirmation: params.dig(:user, :password_confirmation))
+    @user.update(change_password_params)
+  end
+
+  def login_params
+    params.require(:user).permit(:email, :password)
+  end
+
+  def forget_password_params
+    params.require(:user).permit(:email)
+  end
+
+  def change_password_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def new_user
+    @user = User.new
   end
 end

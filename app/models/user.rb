@@ -4,9 +4,6 @@ require 'securerandom'
 
 # Represents the user model in the application.
 class User < ApplicationRecord
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  PASSWORD_REGEX = /\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[[:^alnum:]])/x
-
   has_secure_password
 
   belongs_to :organization, inverse_of: :users
@@ -15,22 +12,23 @@ class User < ApplicationRecord
   has_many :wallets, dependent: :destroy, inverse_of: :user
   has_many :notifications, dependent: :destroy, inverse_of: :user
 
-  validates :first_name, presence: { message: 'User must have a first name' },
-                         format: { with: /\A[a-zA-Z\s.']+\z/, message: 'First name is invalid' },
-                         length: { maximum: 20, message: 'First name is too long.' }
-  validates :last_name, length: { maximum: 20, message: 'Last name is too long.' },
-                        format: { with: /\A[a-zA-Z\s.']+\z/, message: 'Last name is invalid' }
-  validates :email, presence: { message: 'User must have an email' },
-                    uniqueness: { case_sensitive: false, message: 'Has already been taken' },
-                    format: { with: EMAIL_REGEX, message: 'Is not a valid email format' }
-  validates :password, presence: { message: "Can't be blank" },
-                       length: { minimum: 8, message: 'Is too short (minimum is 8 characters)' },
+  validates :first_name, presence: { message: 'is required' },
+                         format: { with: /\A[a-zA-Z\s.']+\z/, message: 'is invalid' },
+                         length: { maximum: 20, message: 'is too long.' }
+  validates :last_name, length: { maximum: 20, message: 'is too long.' },
+                        format: { with: /\A[a-zA-Z\s.']+\z/, message: 'is invalid' }
+  validates :email, presence: { message: 'is required' },
+                    uniqueness: { case_sensitive: false, message: 'has already been taken' },
+                    format: { with: EMAIL_REGEX, message: 'is not in a valid format' }
+  validates :password, length: { minimum: 8, message: 'is too short (minimum is 8 characters)' },
                        format: {
                          with: PASSWORD_REGEX,
-                         message: 'Must include at least one lowercase letter, one uppercase letter, one digit' \
-                                  ', and one special character'
+                         message: 'must include at least one lowercase letter, one uppercase letter, ' \
+                                  'one digit, and one special character'
                        }
-  validates :password_confirmation, presence: { message: "Can't be blank" }, if: -> { password.present? }
+  validates :password_confirmation, presence: { message: "confirmation can't be blank" }, if: lambda {
+                                                                                                password.present?
+                                                                                              }
 
   scope :get_non_admin_users, lambda { |organization_id|
     where(organization_id:, is_admin?: false)
